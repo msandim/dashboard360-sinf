@@ -7,7 +7,6 @@ using Interop.ErpBS800;         // Use Primavera interop's [Path em C:\Program F
 using Interop.StdPlatBS800;
 using Interop.StdBE800;
 using ADODB;
-using Interop.IGcpBS800;
 
 namespace FirstREST.Lib_Primavera
 {
@@ -19,7 +18,6 @@ namespace FirstREST.Lib_Primavera
 
         public static bool InitializeCompany(string Company, string User, string Password)
         {
-            Engine.
             StdBSConfApl objAplConf = new StdBSConfApl();
             StdPlatBS Plataforma = new StdPlatBS();
             ErpBS MotorLE = new ErpBS();
