@@ -6,12 +6,12 @@ namespace FirstREST.Tests.Lib_Primavera
 {
 
     [TestClass]
-    public class PurchaseTest
+    public class SupplierTest
     {
         [TestMethod]
-        public void GetPurchasesTest()
+        public void GetSuppliersTest()
         {
-            PriIntegration.GetPurchases();
+            PriIntegration.GetSuppliers();
         }
     }
 }

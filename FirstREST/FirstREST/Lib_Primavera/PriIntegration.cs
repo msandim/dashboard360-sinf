@@ -15,32 +15,18 @@ namespace FirstREST.Lib_Primavera
 {
     public class PriIntegration
     {
-        #region Bill
-        private static void CalculateBillTotalValue(String id, out Model.Money value)
+        private static DateTime ParseDate(StdBELista list, String key)
         {
-            value = new Model.Money();
-            double totalValue = 0.0;
-
-            StdBELista billLines = PriEngine.Engine.Consulta(
-                "SELECT PrecoLiquido, Unidade " +
-                "FROM LinhasCompras " +
-                "WHERE IdCabecCompras='" + id + "' " +
-                "ORDER BY NumLinha "
-                );
-            while (!billLines.NoFim())
+            try
             {
-                totalValue += billLines.Valor("PrecoLiquido");
-                
-                String unit = billLines.Valor("Unidade");
-                if (unit != null && unit != "")
-                    value.Currency = unit;
-
-                billLines.Seguinte();
+                return list.Valor(key);
             }
-
-            value.Value = totalValue.ToString();
+            catch
+            {
+                return new DateTime(0);
+            }
         }
-        #endregion
+
         #region Purchase
         public static List<Model.Purchase> GetPurchases()
         {
@@ -51,24 +37,20 @@ namespace FirstREST.Lib_Primavera
                 return purchases;
 
             StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT id, DataDoc " + 
-                "FROM CabecCompras " + 
-                "WHERE TipoDoc='VGR' "
+                "SELECT Id, DataDoc, DataEntrega, PrecoLiquido, Unidade " + 
+                "FROM LinhasCompras "
                 );
             while (!list.NoFim())
             {
                 Model.Purchase purchase = new Model.Purchase();
 
-                // Set ID and document date:
+                // Set values:
                 purchase.ID = list.Valor("id");
-                purchase.PayedOn = list.Valor("DataDoc");
+                purchase.PayedOn = ParseDate(list, "DataDoc");
+                purchase.ProductReceivedOn = ParseDate(list, "DataEntrega");
+                purchase.Value = new Model.Money(list.Valor("PrecoLiquido"), list.Valor("Unidade"));
 
-                // Calculate bill's total value:
-                Model.Money value;
-                CalculateBillTotalValue(purchase.ID, out value);
-                purchase.Value = value;
-
-                // Add bill to the list:
+                // Add purchase to the list:
                 purchases.Add(purchase);
 
                 // Next item:
@@ -82,7 +64,37 @@ namespace FirstREST.Lib_Primavera
         // TODO
         #endregion
         #region Suppliers
-        // TODO
+        public static List<Model.Supplier> GetSuppliers()
+        {
+            // Create an empty list of suppliers:
+            List<Model.Supplier> suppliers = new List<Model.Supplier>();
+
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return suppliers;
+
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT Fornecedor, Nome, EncomendasPendentes " +
+                "FROM Fornecedores "
+                );
+            while (!list.NoFim())
+            {
+                Model.Supplier supplier = new Model.Supplier();
+
+                // Set values
+                supplier.ID = list.Valor("Fornecedor");
+                supplier.Name = list.Valor("Nome");
+                supplier.PendingOrdersValue = list.Valor("EncomendasPendentes");
+                // TODO there's no quantity, there's only the value of pending order's value, no currency too
+
+                // Add supplyer to the list:
+                suppliers.Add(supplier);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return suppliers;
+        }
         #endregion
         #region Costumers
         // TODO
