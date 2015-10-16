@@ -96,14 +96,81 @@ namespace FirstREST.Lib_Primavera
             return suppliers;
         }
         #endregion
+        #region Items
+        #endregion
         #region Costumers
         // TODO
         #endregion
         #region Employees
-        // TODO
+        public static List<Model.Employee> GetEmployees()
+        {
+            // Create an empty list of employees:
+            List<Model.Employee> employees = new List<Model.Employee>();
+
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return employees;
+
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT IdGDOC, Nome, Sexo, Vencimento, TipoMoeda, DataAdmissao, DataDemissao " +
+                "FROM Funcionarios "
+                );
+            while (!list.NoFim())
+            {
+                Model.Employee employee = new Model.Employee();
+
+                // Set values
+                employee.ID = list.Valor("IdGDOC");
+                employee.Name = list.Valor("Nome");
+                employee.Gender = list.Valor("Sexo") == "0" ? Model.Employee.GenderType.Male : Model.Employee.GenderType.Female;
+                employee.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
+                employee.HiredOn = ParseDate(list, "DataAdmissao");
+                employee.FiredOn = ParseDate(list, "DataDemissao");
+
+                // Add employee to the list:
+                employees.Add(employee);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return employees;
+        }
         #endregion
         #region Absences
-        // TODO
+        public static List<Model.Absence> GetAbsences()
+        {
+            // Create an empty list of absences:
+            List<Model.Absence> absences = new List<Model.Absence>();
+
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return absences;
+
+            // TODO
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT IdGDOC, Nome, Sexo, Vencimento, TipoMoeda, DataAdmissao, DataDemissao " +
+                "FROM Funcionarios "
+                );
+            while (!list.NoFim())
+            {
+                Model.Absence absence = new Model.Absence();
+
+                // Set values
+                /*absence.ID = list.Valor("IdGDOC");
+                absence.Name = list.Valor("Nome");
+                absence.Gender = list.Valor("Sexo") == "0" ? Model.Employee.GenderType.Male : Model.Employee.GenderType.Female;
+                absence.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
+                absence.HiredOn = ParseDate(list, "DataAdmissao");
+                absence.FiredOn = ParseDate(list, "DataDemissao");*/
+
+                // Add absence to the list:
+                absences.Add(absence);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return absences;
+        }
         #endregion
         #region Overtime Hours
         // TODO
