@@ -37,7 +37,7 @@ namespace FirstREST.Lib_Primavera
                 return purchases;
 
             StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Id, DataDoc, DataEntrega, PrecoLiquido, Unidade " + 
+                "SELECT Id, DataDoc, DataEntrega, PrecoLiquido, Unidade " +
                 "FROM LinhasCompras "
                 );
             while (!list.NoFim())
@@ -60,8 +60,43 @@ namespace FirstREST.Lib_Primavera
             return purchases;
         }
         #endregion
+
         #region Sales
-        // TODO
+        
+        public static List<Model.Sale> GetSales()
+        {
+            // Create an empty list of sales
+            List<Model.Sale> sales = new List<Model.Sale>();
+
+            //Initialize company
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return sales;
+
+            StdBELista list = PriEngine.Engine.Consulta("SELECT id, Data, DataDescarga From CabecDoc");
+            while (!list.NoFim())
+            {
+                Model.Sale sale = new Model.Sale();
+
+                // Set values:
+                sale.ID = list.Valor("id");
+                sale.PayedOn = ParseDate(list, "Data");
+                sale.ProductDeliveredOn = ParseDate(list, "DataDescarga");
+
+                StdBELista list2 = PriEngine.Engine.Consulta("SELECT CategoriaID, Unidade, PrecoLiquido from LinhasDoc where IdCabecDoc='" + sale.ID + "' order By NumLinha");
+                if(!list2.NoFim()) {
+                    sale.Category = list2.Valor("CategoriaID");
+                    sale.Value = new Model.Money(list2.Valor("PrecoLiquido"), list2.Valor("Unidade"));
+                }
+               
+                // Add purchase to the list:
+                sales.Add(sale);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return sales;
+        }
         #endregion
         #region Suppliers
         public static List<Model.Supplier> GetSuppliers()
@@ -137,6 +172,8 @@ namespace FirstREST.Lib_Primavera
         }
         #endregion
         #region Absences
+
+        /*
         public static List<Model.Absence> GetAbsences()
         {
             // Create an empty list of absences:
@@ -153,7 +190,7 @@ namespace FirstREST.Lib_Primavera
             while (!list.NoFim())
             {
                 Model.Absence absence = new Model.Absence();
-
+        */
                 // Set values
                 /*absence.ID = list.Valor("IdGDOC");
                 absence.Name = list.Valor("Nome");
@@ -161,7 +198,7 @@ namespace FirstREST.Lib_Primavera
                 absence.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
                 absence.HiredOn = ParseDate(list, "DataAdmissao");
                 absence.FiredOn = ParseDate(list, "DataDemissao");*/
-
+        /*
                 // Add absence to the list:
                 absences.Add(absence);
 
@@ -171,6 +208,7 @@ namespace FirstREST.Lib_Primavera
 
             return absences;
         }
+         * */
         #endregion
         #region Overtime Hours
         // TODO
@@ -657,6 +695,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
+
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();
@@ -746,5 +785,29 @@ namespace FirstREST.Lib_Primavera
         }
 
         #endregion DocsVenda
+
+
+
+
+        public static String testSQL(String sql, List<String> columns)
+        {
+            String response = "";
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                StdBELista list = PriEngine.Engine.Consulta(sql);
+                response += "Numero de linhas: " + list.NumLinhas() + "\n";
+                response += "Numero de colunas: " + list.NumColunas() + "\n";
+                while (!list.NoFim())
+                {
+                    foreach (String column in columns)
+                        response += column + ": " + list.Valor(column) + ";";
+                    response += "\n";
+                    list.Seguinte();
+                }
+            }
+            return response;
+        }
+
+
     }
 }

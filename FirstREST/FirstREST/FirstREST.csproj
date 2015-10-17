@@ -273,6 +273,7 @@
     <Compile Include="Lib_Primavera\Model\Employee.cs" />
     <Compile Include="Lib_Primavera\Model\Money.cs" />
     <Compile Include="Lib_Primavera\Model\Purchase.cs" />
+    <Compile Include="Lib_Primavera\Model\Sale.cs" />
     <Compile Include="Lib_Primavera\Model\Supplier.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
