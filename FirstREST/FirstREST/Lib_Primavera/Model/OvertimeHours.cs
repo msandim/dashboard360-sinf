@@ -4,8 +4,9 @@ using System.Web;
 
 namespace FirstREST.Lib_Primavera.Model
 {
-    public class Absence
+    public class OvertimeHours
     {
         public DateTime Date { get; set; }
+        public String Tempo { get; set; }
     }
 }

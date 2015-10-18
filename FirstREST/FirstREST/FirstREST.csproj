@@ -269,9 +269,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib_Primavera\Model\Absence.cs" />
     <Compile Include="Lib_Primavera\Model\Costumer.cs" />
     <Compile Include="Lib_Primavera\Model\Employee.cs" />
     <Compile Include="Lib_Primavera\Model\Money.cs" />
+    <Compile Include="Lib_Primavera\Model\OvertimeHours.cs" />
     <Compile Include="Lib_Primavera\Model\Purchase.cs" />
     <Compile Include="Lib_Primavera\Model\Sale.cs" />
     <Compile Include="Lib_Primavera\Model\Supplier.cs" />

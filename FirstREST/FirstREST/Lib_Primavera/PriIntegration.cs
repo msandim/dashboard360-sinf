@@ -173,8 +173,7 @@ namespace FirstREST.Lib_Primavera
         #endregion
         #region Absences
 
-        /*
-        public static List<Model.Absence> GetAbsences()
+        public static List<Model.Absence> GetAbsences(String employeeId)
         {
             // Create an empty list of absences:
             List<Model.Absence> absences = new List<Model.Absence>();
@@ -182,23 +181,16 @@ namespace FirstREST.Lib_Primavera
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return absences;
 
-            // TODO
+            // Get Data from Absence of the employee with ID=employeeId
             StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT IdGDOC, Nome, Sexo, Vencimento, TipoMoeda, DataAdmissao, DataDemissao " +
-                "FROM Funcionarios "
+                "SELECT Data FROM CadastroFaltas WHERE Funcionario='" + employeeId + "'"
                 );
+            
             while (!list.NoFim())
             {
                 Model.Absence absence = new Model.Absence();
-        */
-                // Set values
-                /*absence.ID = list.Valor("IdGDOC");
-                absence.Name = list.Valor("Nome");
-                absence.Gender = list.Valor("Sexo") == "0" ? Model.Employee.GenderType.Male : Model.Employee.GenderType.Female;
-                absence.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
-                absence.HiredOn = ParseDate(list, "DataAdmissao");
-                absence.FiredOn = ParseDate(list, "DataDemissao");*/
-        /*
+                absence.Date = list.Valor("Data");
+      
                 // Add absence to the list:
                 absences.Add(absence);
 
@@ -208,10 +200,39 @@ namespace FirstREST.Lib_Primavera
 
             return absences;
         }
-         * */
+        
         #endregion
         #region Overtime Hours
-        // TODO
+
+        public static List<Model.OvertimeHours> GetOvertimeHours(String employeeId)
+        {
+            // Create an empty list of absences:
+            List<Model.OvertimeHours> overtimeHours = new List<Model.OvertimeHours>();
+
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return overtimeHours;
+
+            // Get Data from Absence of the employee with ID=employeeId
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT Data, Tempo FROM CadastroHExtras WHERE Funcionario='" + employeeId + "'"
+                );
+
+            while (!list.NoFim())
+            {
+                Model.OvertimeHours overtimeHoursObj = new Model.OvertimeHours();
+                overtimeHoursObj.Date = list.Valor("Data");
+                overtimeHoursObj.Tempo = list.Valor("Tempo").ToString();
+
+                // Add absence to the list:
+                overtimeHours.Add(overtimeHoursObj);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return overtimeHours;
+        }
+
         #endregion
 
 
@@ -808,6 +829,6 @@ namespace FirstREST.Lib_Primavera
             return response;
         }
 
-
+        
     }
 }

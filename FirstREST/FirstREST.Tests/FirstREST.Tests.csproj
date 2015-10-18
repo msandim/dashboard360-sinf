@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="AbsenceTest.cs" />
     <Compile Include="EmployeeTest.cs" />
+    <Compile Include="OvertimeHoursTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\ValuesControllerTest.cs" />
     <Compile Include="PurchaseTest.cs" />
