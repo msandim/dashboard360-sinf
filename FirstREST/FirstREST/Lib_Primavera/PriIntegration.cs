@@ -72,22 +72,30 @@ namespace FirstREST.Lib_Primavera
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return sales;
 
-            StdBELista list = PriEngine.Engine.Consulta("SELECT id, Data, DataDescarga From CabecDoc");
+            //DataDescarga always null ?
+            StdBELista list = PriEngine.Engine.Consulta("SELECT id, DataVencimento, DataCarga From CabecDoc");
             while (!list.NoFim())
             {
                 Model.Sale sale = new Model.Sale();
 
                 // Set values:
                 sale.ID = list.Valor("id");
-                sale.PayedOn = ParseDate(list, "Data");
-                sale.ProductDeliveredOn = ParseDate(list, "DataDescarga");
+                sale.PayedOn = ParseDate(list, "DataVencimento");
+                sale.ProductDeliveredOn = ParseDate(list, "DataCarga");
 
-                StdBELista list2 = PriEngine.Engine.Consulta("SELECT CategoriaID, Unidade, PrecoLiquido from LinhasDoc where IdCabecDoc='" + sale.ID + "' order By NumLinha");
-                if(!list2.NoFim()) {
-                    sale.Category = list2.Valor("CategoriaID");
-                    sale.Value = new Model.Money(list2.Valor("PrecoLiquido"), list2.Valor("Unidade"));
+                StdBELista list2 = PriEngine.Engine.Consulta("SELECT Unidade, PrecoLiquido from LinhasDoc where IdCabecDoc='" + sale.ID + "' order By NumLinha");
+
+                double valor = 0;
+                String unidade = "";
+
+                while (!list2.NoFim())
+                {
+                    valor += list2.Valor("PrecoLiquido");
+                    unidade = list2.Valor("Unidade");
+                    list2.Seguinte();
                 }
                
+                sale.Value = new Model.Money(valor, unidade);
                 // Add purchase to the list:
                 sales.Add(sale);
 
