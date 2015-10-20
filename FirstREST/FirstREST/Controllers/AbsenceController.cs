@@ -9,9 +9,10 @@ namespace FirstREST.Controllers
 {
     public class AbsenceController : ApiController
     {
-        public string Get()
+        //GET api/Absence?employeeId=001
+        public IEnumerable<Lib_Primavera.Model.Absence> Get(String employeeId)
         {
-            return null; // TODO
+            return Lib_Primavera.PriIntegration.GetAbsences(employeeId);
         }
     }
 }

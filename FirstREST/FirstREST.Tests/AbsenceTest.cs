@@ -12,7 +12,7 @@ namespace FirstREST.Tests
         [TestMethod]
         public void GetAbsencesTest()
         {
-            List<Absence> absences = PriIntegration.GetAbsences("001");
+            //List<Absence> absences = PriIntegration.GetAbsences("001");
 
             //Used to test output, don't now why but Console.Writeline() doesn't work
             /*
@@ -26,7 +26,7 @@ namespace FirstREST.Tests
             //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT name FROM syscolumns WHERE id=OBJECT_ID('CadastroFaltas')", new List<string>(new string[] { "name" })));
 
             // Check dates of all Absences
-            //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT Data FROM CadastroFaltas", new List<string>(new string[] { "Data" })));
+            Assert.AreEqual("hello", PriIntegration.testSQL("SELECT Funcionario, Falta, Data, Horas, Tempo FROM CadastroFaltas Where Falta='F01'", new List<string>(new string[] { "Funcionario", "Falta", "Data", "Horas", "Tempo" })));
         }
     }
 }

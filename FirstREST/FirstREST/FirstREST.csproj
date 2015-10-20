@@ -257,12 +257,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AbsenceController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaleToFemaleRatioController.cs" />
+    <Compile Include="Controllers\OvertimeHoursController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -275,6 +278,7 @@
     <Compile Include="Lib_Primavera\Model\Money.cs" />
     <Compile Include="Lib_Primavera\Model\OvertimeHours.cs" />
     <Compile Include="Lib_Primavera\Model\Purchase.cs" />
+    <Compile Include="Lib_Primavera\Model\RecursosHumanos.cs" />
     <Compile Include="Lib_Primavera\Model\Sale.cs" />
     <Compile Include="Lib_Primavera\Model\Supplier.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />

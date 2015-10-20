@@ -15,7 +15,7 @@ namespace FirstREST.Tests
             
             List<Sale> sales = PriIntegration.GetSales();
 
-            //Used to test output, don't now why but Console.Writeline() doesn't work
+             //Used to test output, don't now why but Console.Writeline() doesn't work
             /*
             String response = "";
             foreach (Sale sale in sales)

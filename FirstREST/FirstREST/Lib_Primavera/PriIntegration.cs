@@ -8,6 +8,7 @@ using Interop.StdBE800;
 using Interop.GcpBE800;
 using ADODB;
 using Interop.IGcpBS800;
+using Interop.IRhpBS800;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;
 
@@ -220,6 +221,9 @@ namespace FirstREST.Lib_Primavera
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return overtimeHours;
 
+            
+
+
             // Get Data from Absence of the employee with ID=employeeId
             StdBELista list = PriEngine.Engine.Consulta(
                 "SELECT Data, Tempo FROM CadastroHExtras WHERE Funcionario='" + employeeId + "'"
@@ -243,6 +247,143 @@ namespace FirstREST.Lib_Primavera
 
         #endregion
 
+        #region MaleToFemaleRatio
+
+        public static float GetMaleToFemaleRatio()
+        {
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return 1;
+
+            StdBELista list = PriEngine.Engine.RecursosHumanos.Funcionarios.LstFuncionarios();
+            int males = 0;
+            int females = 0;
+
+            if (list.NoFim())
+                return 1;
+
+            while (!list.NoFim())
+            {
+                if (list.Valor("Sexo") == "1")
+                    males++;
+                else
+                    females++;
+               
+                list.Seguinte();
+            }
+
+            return (float) males / females;
+        }
+
+        #endregion
+
+        #region RecursosHumanos
+
+        public static String GetRecursosHumanos()
+        {
+           
+            Model.RecursosHumanos recursosHumanos = new Model.RecursosHumanos();
+
+            //Initialize company
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return "";
+            return null;
+            //Faltas
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.Faltas.LstFaltas();
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("Falta") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Absences: " + num.ToString();
+            */
+
+            //Overtime
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.HorasExtra.LstHorasExtra();
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("HorasExtra") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Absences: " + num.ToString();
+            */
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.CadastroHorasExtra.LstCadastroHorasExtra();
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("HoraExtra") + "\n";
+                response += list.Valor("Data") + "\n";
+                response += list.Valor("Tempo") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Overtimes: " + num.ToString();
+           */
+
+            //MaletoFemaleRatio
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.Funcionarios.LstFuncionarios();
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("Sexo") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Absences: " + num.ToString();
+            */
+
+            //Hired
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.ContratosTrabalho.LstContratosTrabalho();
+             StdBELista list2 = PriEngine.Engine.RecursosHumanos.
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("Contrato") + "\n";
+                //response += list.Valor("Data") + "\n";
+                //response += list.Valor("Funcionario") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Absences: " + num.ToString();
+             */
+            //Fired
+            /*
+            String response = "";
+            int num = 0;
+            StdBELista list = PriEngine.Engine.RecursosHumanos.ContratosTrabalho
+
+            while (!list.NoFim())
+            {
+                response += list.Valor("Contrato") + "\n";
+                //response += list.Valor("Data") + "\n";
+                //response += list.Valor("Funcionario") + "\n";
+                num++;
+                list.Seguinte();
+            }
+            return response + "\n Number of Absences: " + num.ToString();
+            */
+           // return recursosHumanos;
+        }
+
+        #endregion
 
         // Examples
         # region Cliente

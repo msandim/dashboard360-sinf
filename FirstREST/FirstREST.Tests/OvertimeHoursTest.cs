@@ -26,8 +26,16 @@ namespace FirstREST.Tests
             //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT name FROM syscolumns WHERE id=OBJECT_ID('CadastroHExtras')", new List<string>(new string[] { "name" })));
 
             // Check all Datas e Tempo from CadastroHExtras
-            //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT Data, Tempo FROM CadastroHExtras", new List<string>(new string[] { "Data, Tempo" })));
-            
+            //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT Funcionario, HoraExtra, Data, Tempo FROM CadastroHExtras", new List<string>(new string[] { "Funcionario", "HoraExtra", "Data", "Tempo" })));
+
+            // Check columns of HorasExtras table
+            //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT name FROM syscolumns WHERE id=OBJECT_ID('HorasExtras')", new List<string>(new string[] { "name" })));
+
+            // Check all Datas e Tempo from CadastroHExtras
+            //Assert.AreEqual("hello", PriIntegration.testSQL("SELECT HorasExtra FROM HorasExtras", new List<string>(new string[] { "HorasExtra" })));
+
+
+            // Assert.AreEqual("hello", PriIntegration.testSQL("SELECT name FROM syscolumns WHERE id=OBJECT_ID('Contratos')", new List<string>(new string[] { "name" })));
         }
     }
 }
