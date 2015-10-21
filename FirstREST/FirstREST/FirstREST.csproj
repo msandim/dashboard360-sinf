@@ -267,6 +267,7 @@
     <Compile Include="Controllers\MaleToFemaleRatioController.cs" />
     <Compile Include="Controllers\OvertimeHoursController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -278,7 +279,6 @@
     <Compile Include="Lib_Primavera\Model\Money.cs" />
     <Compile Include="Lib_Primavera\Model\OvertimeHours.cs" />
     <Compile Include="Lib_Primavera\Model\Purchase.cs" />
-    <Compile Include="Lib_Primavera\Model\RecursosHumanos.cs" />
     <Compile Include="Lib_Primavera\Model\Sale.cs" />
     <Compile Include="Lib_Primavera\Model\Supplier.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />

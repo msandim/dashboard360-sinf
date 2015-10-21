@@ -9,11 +9,16 @@ namespace FirstREST.Controllers
 {
     public class OvertimeHoursController : ApiController
     {
-  
-        //GET api/OvertimeHours?employeeId=001
-        public IEnumerable<Lib_Primavera.Model.OvertimeHours> Get(String employeeId)
+        //GET api/OvertimeHours
+        public IEnumerable<Lib_Primavera.Model.OvertimeHours> Get()
         {
-            return Lib_Primavera.PriIntegration.GetOvertimeHours(employeeId);
+            return Lib_Primavera.PriIntegration.GetOvertimeHours();
+        }
+
+        //GET api/OvertimeHours/001
+        public IEnumerable<Lib_Primavera.Model.OvertimeHours> Get(String id)
+        {
+            return Lib_Primavera.PriIntegration.GetOvertimeHours(id);
         }
     }
 }
