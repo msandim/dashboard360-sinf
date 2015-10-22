@@ -140,9 +140,40 @@ namespace FirstREST.Lib_Primavera
         }
         #endregion
         #region Items
+
+        //ja esta na sales -> tabela LinhasDoc.Artigo, bem como a sua categoria LinhasDoc.CategoriaID
+
         #endregion
+
         #region Costumers
-        // TODO
+        public static List<Model.Costumer> GetCostumers()
+        {
+            // Create an empty list of clients:
+            List<Model.Costumer> costumers = new List<Model.Costumer>();
+
+            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+                return costumers;
+
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT Fornecedor, Nome, EncomendasPendentes " +
+                "FROM Fornecedores "
+                );
+            while (!list.NoFim())
+            {
+                Model.Costumer costumer = new Model.Costumer();
+
+                // Set values
+                //do secostumer.ID = list.Valor("Fornecedor");
+
+                // Add costumer to the list:
+                costumers.Add(costumer);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return costumers;
+        }
         #endregion
         #region Employees
         public static List<Model.Employee> GetEmployees()
