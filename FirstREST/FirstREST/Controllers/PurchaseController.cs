@@ -9,9 +9,9 @@ namespace FirstREST.Controllers
 {
     public class PurchaseController : ApiController
     {
-        public IEnumerable<Lib_Primavera.Model.Purchase> Get(String initialDate, String finalDate) 
+        public IEnumerable<Lib_Primavera.Model.Purchase> Get(String initialDate, String finalDate, String documentType) 
         {
-            return Lib_Primavera.PriIntegration.GetPurchases(DateTime.Parse(initialDate), DateTime.Parse(finalDate));
+            return Lib_Primavera.PriIntegration.GetPurchases(DateTime.Parse(initialDate), DateTime.Parse(finalDate), documentType);
         }
     }
 }

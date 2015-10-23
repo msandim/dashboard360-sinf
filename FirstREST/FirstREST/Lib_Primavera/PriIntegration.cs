@@ -29,7 +29,7 @@ namespace FirstREST.Lib_Primavera
         }
 
         #region Purchase
-        public static List<Model.Purchase> GetPurchases(DateTime initialDate, DateTime finalDate)
+        public static List<Model.Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
         {
             // Create an empty list of purchases:
             List<Model.Purchase> purchases = new List<Model.Purchase>();
@@ -41,14 +41,15 @@ namespace FirstREST.Lib_Primavera
                 "SELECT Id, Moeda, TipoDoc " +
                 "FROM CabecCompras " +
                 "WHERE DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
-                "AND (TipoDoc = 'VFA' OR TipoDoc = 'VGR' OR TipoDoc = 'VNC')"
+                "AND TipoDoc='" + documentType + "'"
                 );
+            //"AND (TipoDoc = 'VFA' OR TipoDoc = 'VGR' OR TipoDoc = 'VNC')"
 
             while (!purchasesQuery.NoFim())
             {
                 String purchaseId = purchasesQuery.Valor("Id");
                 String currency = purchasesQuery.Valor("Moeda");
-                String documentType = purchasesQuery.Valor("TipoDoc");
+                //String documentType = purchasesQuery.Valor("TipoDoc");
 
                 StdBELista linesQuery = PriEngine.Engine.Consulta(
                     "SELECT Id, DataDoc, PrecoLiquido, Artigo " +
