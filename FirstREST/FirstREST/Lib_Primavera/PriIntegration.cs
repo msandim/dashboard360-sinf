@@ -38,43 +38,44 @@ namespace FirstREST.Lib_Primavera
                 return purchases;
 
             StdBELista purchasesQuery = PriEngine.Engine.Consulta(
-                "SELECT Id, Moeda, TipoDoc " +
+                "SELECT CabecCompras.Id AS CabecComprasId, CabecCompras.Nome AS CabecComprasNome, CabecCompras.Entidade AS CabecComprasEntidade, CabecCompras.Moeda AS CabecComprasMoeda, CabecCompras.DataDoc AS CabecComprasDataDoc, CabecCompras.TipoDoc AS CabecComprasTipoDoc, CabecCompras.DataVencimento AS CabecComprasDataVencimento, CabecCompras.DataDescarga AS CabecComprasDataDescarga, " +
+                "LinhasCompras.Id AS LinhasComprasId, LinhasCompras.PrecoLiquido AS LinhasComprasPrecoLiquido, " +
+                "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
+                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao " +
                 "FROM CabecCompras " +
-                "WHERE DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
-                "AND TipoDoc='" + documentType + "'"
+                "INNER JOIN LinhasCompras ON LinhasCompras.IdCabecCompras=CabecCompras.Id " +
+                "INNER JOIN Artigo ON Artigo.Artigo=LinhasCompras.Artigo " +
+                "INNER JOIN Familias ON Artigo.Familia=Familias.Familia " +
+                "WHERE CabecCompras.DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND CabecCompras.DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
+                "AND CabecCompras.TipoDoc='" + documentType + "'"
                 );
-            //"AND (TipoDoc = 'VFA' OR TipoDoc = 'VGR' OR TipoDoc = 'VNC')"
 
-            while (!purchasesQuery.NoFim())
+            while(!purchasesQuery.NoFim())
             {
-                String purchaseId = purchasesQuery.Valor("Id");
-                String currency = purchasesQuery.Valor("Moeda");
-                //String documentType = purchasesQuery.Valor("TipoDoc");
+                Model.Purchase purchase = new Model.Purchase();
 
-                StdBELista linesQuery = PriEngine.Engine.Consulta(
-                    "SELECT Id, DataDoc, PrecoLiquido, Artigo " +
-                    "FROM LinhasCompras " +
-                    "WHERE IdCabecCompras='" + purchaseId + "'"
-                    );
-                while (!linesQuery.NoFim())
-                {
-                    Model.Purchase purchase = new Model.Purchase();
+                // Set values:
+                purchase.ID = purchasesQuery.Valor("LinhasComprasId");
+                purchase.DocumentDate = ParseDate(purchasesQuery, "CabecComprasDataDoc");
+                purchase.DocumentType = purchasesQuery.Valor("CabecComprasTipoDoc");
+                purchase.DueDate = ParseDate(purchasesQuery, "CabecComprasDataVencimento");
+                purchase.ReceptionDate = ParseDate(purchasesQuery, "CabecComprasDataDescarga");
+                purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
+                purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
+                purchase.Value = new Model.Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
+                
+                Model.Product product = new Model.Product();
+                product.Brand = purchasesQuery.Valor("ArtigoMarca");
+                product.Model = purchasesQuery.Valor("ArtigoModelo");
+                product.Description = purchasesQuery.Valor("ArticoDescricao");
+                product.FamilyId = purchasesQuery.Valor("FamiliaId");
+                product.FamilyDescription = purchasesQuery.Valor("FamiliaDescricao");
+                purchase.Product = product;
 
-                    // Set values:
-                    purchase.ID = linesQuery.Valor("Id");
-                    purchase.DocumentDate = ParseDate(linesQuery, "DataDoc");
-                    purchase.DocumentType = documentType;
-                    purchase.Product = linesQuery.Valor("Artigo");
-                    purchase.Value = new Model.Money(linesQuery.Valor("PrecoLiquido"), currency);
+                // Add purchase to the list:
+                purchases.Add(purchase);
 
-                    // Add purchase to the list:
-                    purchases.Add(purchase);
-
-                    // Next line in the purchase document:
-                    linesQuery.Seguinte();
-                }
-
-                // Next purchase document:
+                // Next line in the purchase document:
                 purchasesQuery.Seguinte();
             }
 
