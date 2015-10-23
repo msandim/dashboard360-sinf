@@ -37,21 +37,21 @@ namespace FirstREST.Lib_Primavera
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return purchases;
 
-            ;
-
             StdBELista purchasesQuery = PriEngine.Engine.Consulta(
-                "SELECT Id, Moeda " +
+                "SELECT Id, Moeda, TipoDoc " +
                 "FROM CabecCompras " +
-                "WHERE DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "'"
+                "WHERE DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
+                "AND (TipoDoc = 'VFA' OR TipoDoc = 'VGR' OR TipoDoc = 'VNC')"
                 );
 
             while (!purchasesQuery.NoFim())
             {
                 String purchaseId = purchasesQuery.Valor("Id");
                 String currency = purchasesQuery.Valor("Moeda");
+                String documentType = purchasesQuery.Valor("TipoDoc");
 
                 StdBELista linesQuery = PriEngine.Engine.Consulta(
-                    "SELECT Id, DataDoc, DataEntrega, PrecoLiquido " +
+                    "SELECT Id, DataDoc, PrecoLiquido, Artigo " +
                     "FROM LinhasCompras " +
                     "WHERE IdCabecCompras='" + purchaseId + "'"
                     );
@@ -61,8 +61,9 @@ namespace FirstREST.Lib_Primavera
 
                     // Set values:
                     purchase.ID = linesQuery.Valor("Id");
-                    purchase.PayedOn = ParseDate(linesQuery, "DataDoc");
-                    purchase.ProductReceivedOn = ParseDate(linesQuery, "DataEntrega");
+                    purchase.DocumentDate = ParseDate(linesQuery, "DataDoc");
+                    purchase.DocumentType = documentType;
+                    purchase.Product = linesQuery.Valor("Artigo");
                     purchase.Value = new Model.Money(linesQuery.Valor("PrecoLiquido"), currency);
 
                     // Add purchase to the list:
