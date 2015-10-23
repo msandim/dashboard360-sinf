@@ -15,6 +15,4 @@ namespace FirstREST.Controllers
             return Lib_Primavera.PriIntegration.GetSales();
         }
     }
-
-
 }

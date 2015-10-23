@@ -29,7 +29,7 @@ namespace FirstREST.Lib_Primavera
         }
 
         #region Purchase
-        public static List<Model.Purchase> GetPurchases()
+        public static List<Model.Purchase> GetPurchases(DateTime initialDate, DateTime finalDate)
         {
             // Create an empty list of purchases:
             List<Model.Purchase> purchases = new List<Model.Purchase>();
@@ -37,25 +37,43 @@ namespace FirstREST.Lib_Primavera
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return purchases;
 
-            StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Id, DataDoc, DataEntrega, PrecoLiquido, Unidade " +
-                "FROM LinhasCompras "
+            ;
+
+            StdBELista purchasesQuery = PriEngine.Engine.Consulta(
+                "SELECT Id, Moeda " +
+                "FROM CabecCompras " +
+                "WHERE DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "'"
                 );
-            while (!list.NoFim())
+
+            while (!purchasesQuery.NoFim())
             {
-                Model.Purchase purchase = new Model.Purchase();
+                String purchaseId = purchasesQuery.Valor("Id");
+                String currency = purchasesQuery.Valor("Moeda");
 
-                // Set values:
-                purchase.ID = list.Valor("id");
-                purchase.PayedOn = ParseDate(list, "DataDoc");
-                purchase.ProductReceivedOn = ParseDate(list, "DataEntrega");
-                purchase.Value = new Model.Money(list.Valor("PrecoLiquido"), list.Valor("Unidade"));
+                StdBELista linesQuery = PriEngine.Engine.Consulta(
+                    "SELECT Id, DataDoc, DataEntrega, PrecoLiquido " +
+                    "FROM LinhasCompras " +
+                    "WHERE IdCabecCompras='" + purchaseId + "'"
+                    );
+                while (!linesQuery.NoFim())
+                {
+                    Model.Purchase purchase = new Model.Purchase();
 
-                // Add purchase to the list:
-                purchases.Add(purchase);
+                    // Set values:
+                    purchase.ID = linesQuery.Valor("Id");
+                    purchase.PayedOn = ParseDate(linesQuery, "DataDoc");
+                    purchase.ProductReceivedOn = ParseDate(linesQuery, "DataEntrega");
+                    purchase.Value = new Model.Money(linesQuery.Valor("PrecoLiquido"), currency);
 
-                // Next item:
-                list.Seguinte();
+                    // Add purchase to the list:
+                    purchases.Add(purchase);
+
+                    // Next line in the purchase document:
+                    linesQuery.Seguinte();
+                }
+
+                // Next purchase document:
+                purchasesQuery.Seguinte();
             }
 
             return purchases;
@@ -63,7 +81,7 @@ namespace FirstREST.Lib_Primavera
         #endregion
 
         #region Sales
-        
+
         public static List<Model.Sale> GetSales()
         {
             // Create an empty list of sales
@@ -256,13 +274,13 @@ namespace FirstREST.Lib_Primavera
             StdBELista list = PriEngine.Engine.Consulta(
                 "SELECT Data FROM CadastroFaltas WHERE Funcionario='" + employeeId + "'"
                 );
-            
+
             while (!list.NoFim())
             {
                 Model.Absence absence = new Model.Absence();
                 absence.EmployeeId = employeeId;
                 absence.Date = list.Valor("Data");
-      
+
                 // Add absence to the list:
                 absences.Add(absence);
 
@@ -272,7 +290,7 @@ namespace FirstREST.Lib_Primavera
 
             return absences;
         }
-        
+
         #endregion
 
         #region Overtime Hours
@@ -376,11 +394,11 @@ namespace FirstREST.Lib_Primavera
                     males++;
                 else
                     females++;
-               
+
                 list.Seguinte();
             }
 
-            return (float) males / females;
+            return (float)males / females;
         }
 
         #endregion
@@ -978,6 +996,6 @@ namespace FirstREST.Lib_Primavera
             return response;
         }
 
-        
+
     }
 }

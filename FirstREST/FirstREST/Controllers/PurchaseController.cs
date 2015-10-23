@@ -11,7 +11,7 @@ namespace FirstREST.Controllers
     {
         public IEnumerable<Lib_Primavera.Model.Purchase> Get()
         {
-            return Lib_Primavera.PriIntegration.GetPurchases();
+            return Lib_Primavera.PriIntegration.GetPurchases(DateTime.Parse("2014-04-30"), DateTime.Parse("2014-05-05"));
         }
     }
 }
