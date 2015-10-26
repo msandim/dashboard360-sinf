@@ -134,65 +134,6 @@ namespace FirstREST.Lib_Primavera
 
             return sales;
         }
-        public static List<Supplier> GetSuppliers()
-        {
-            // Create an empty list of suppliers:
-            List<Model.Supplier> suppliers = new List<Model.Supplier>();
-
-            if (!PriEngine.InitializeCompany(Settings.Default.Company.Trim(), Settings.Default.User.Trim(), Settings.Default.Password.Trim()))
-                return suppliers;
-
-            StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Fornecedor, Nome, EncomendasPendentes " +
-                "FROM Fornecedores "
-                );
-            while (!list.NoFim())
-            {
-                Model.Supplier supplier = new Model.Supplier();
-
-                // Set values
-                supplier.ID = list.Valor("Fornecedor");
-                supplier.Name = list.Valor("Nome");
-                supplier.PendingOrdersValue = list.Valor("EncomendasPendentes");
-                // TODO there's no quantity, there's only the value of pending order's value, no currency too
-
-                // Add supplyer to the list:
-                suppliers.Add(supplier);
-
-                // Next item:
-                list.Seguinte();
-            }
-
-            return suppliers;
-        }
-        public static List<Costumer> GetCostumers()
-        {
-            // Create an empty list of clients:
-            List<Costumer> costumers = new List<Costumer>();
-
-            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
-                return costumers;
-
-            StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Fornecedor, Nome, EncomendasPendentes " +
-                "FROM Fornecedores "
-                );
-            while (!list.NoFim())
-            {
-                Costumer costumer = new Model.Costumer();
-
-                // Set values
-                //do secostumer.ID = list.Valor("Fornecedor");
-
-                // Add costumer to the list:
-                costumers.Add(costumer);
-
-                // Next item:
-                list.Seguinte();
-            }
-
-            return costumers;
-        }
         public static List<Employee> GetEmployees()
         {
             // Create an empty list of employees:
@@ -213,7 +154,7 @@ namespace FirstREST.Lib_Primavera
                 employee.ID = list.Valor("IdGDOC");
                 employee.Name = list.Valor("Nome");
                 employee.Gender = list.Valor("Sexo") == "0" ? Employee.GenderType.Male : Employee.GenderType.Female;
-                employee.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
+                employee.Salary = new Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
                 employee.HiredOn = ParseDate(list, "DataAdmissao");
                 employee.FiredOn = ParseDate(list, "DataDemissao");
 
@@ -226,7 +167,7 @@ namespace FirstREST.Lib_Primavera
 
             return employees;
         }
-        public static List<Absence> GetAbsences() // Returns a List of all absences of all employees
+        public static List<Absence> GetAbsences(DateTime initialDate, DateTime finalDate) // Returns a List of all absences of all employees
         {
             // Create an empty list of absences:
             List<Model.Absence> absences = new List<Model.Absence>();
@@ -236,7 +177,8 @@ namespace FirstREST.Lib_Primavera
 
             // Get Data from Absence of the employee with ID=employeeId
             StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Funcionario, Data FROM CadastroFaltas"
+                "SELECT Funcionario, Data FROM CadastroFaltas " +
+                "WHERE Data >= '" + initialDate.ToString("yyyyMMdd") + "' AND Data <= '" + finalDate.ToString("yyyyMMdd") + "' "
                 );
 
             while (!list.NoFim())
