@@ -11,6 +11,8 @@ using Interop.IGcpBS800;
 using Interop.IRhpBS800;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;
+using FirstREST.Lib_Primavera.Model;
+using FirstREST.Properties;
 
 namespace FirstREST.Lib_Primavera
 {
@@ -28,8 +30,7 @@ namespace FirstREST.Lib_Primavera
             }
         }
 
-        #region Purchase
-        public static List<Model.Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
+        public static List<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
         {
             // Create an empty list of purchases:
             List<Model.Purchase> purchases = new List<Model.Purchase>();
@@ -50,9 +51,9 @@ namespace FirstREST.Lib_Primavera
                 "AND CabecCompras.TipoDoc='" + documentType + "'"
                 );
 
-            while(!purchasesQuery.NoFim())
+            while (!purchasesQuery.NoFim())
             {
-                Model.Purchase purchase = new Model.Purchase();
+                Purchase purchase = new Model.Purchase();
 
                 // Set values:
                 purchase.ID = purchasesQuery.Valor("LinhasComprasId");
@@ -63,8 +64,8 @@ namespace FirstREST.Lib_Primavera
                 purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
                 purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
                 purchase.Value = new Model.Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
-                
-                Model.Product product = new Model.Product();
+
+                Product product = new Model.Product();
                 product.Brand = purchasesQuery.Valor("ArtigoMarca");
                 product.Model = purchasesQuery.Valor("ArtigoModelo");
                 product.Description = purchasesQuery.Valor("ArticoDescricao");
@@ -81,59 +82,64 @@ namespace FirstREST.Lib_Primavera
 
             return purchases;
         }
-        #endregion
-
-        #region Sales
-
-        public static List<Model.Sale> GetSales()
+        public static List<Sale> GetSales(DateTime initialDate, DateTime finalDate, String documentType)
         {
             // Create an empty list of sales
-            List<Model.Sale> sales = new List<Model.Sale>();
+            List<Sale> sales = new List<Model.Sale>();
 
             //Initialize company
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return sales;
 
             //DataDescarga always null ?
-            StdBELista list = PriEngine.Engine.Consulta("SELECT IdCabecDoc, Id, Artigo, CategoriaID, Comissao, Data, DataEntrega, PrecUnit, Quantidade, Unidade, Vendedor FROM LinhasDoc");
-            while (!list.NoFim())
+            StdBELista salesQuery = PriEngine.Engine.Consulta(
+                "SELECT CabecDoc.Id AS CabecDocId, CabecDoc.Nome AS CabecDocNome, CabecDoc.Entidade AS CabecDocEntidade, CabecDoc.Moeda AS CabecDocMoeda, CabecDoc.TipoDoc AS CabecDocTipoDoc, CabecDoc.Data AS CabecDocData, CabecDoc.DataVencimento AS CabecDocDataVencimento, CabecDoc.DataCarga AS CabecDocDataCarga, CabecDoc.DataDescarga AS CabecDocsDataDescarga, " +
+                "LinhasDoc.Id AS LinhasDocId, LinhasDoc.PrecoLiquido AS LinhasDocPrecoLiquido, " +
+                "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
+                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao " +
+                "FROM CabecDoc " +
+                "INNER JOIN LinhasDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id " +
+                "INNER JOIN Artigo ON Artigo.Artigo = LinhasDoc.Artigo " +
+                "INNER JOIN Familias ON Artigo.Familia = Familias.Familia " +
+                "WHERE CabecDoc.Data >= '" + initialDate.ToString("yyyyMMdd") + "' AND CabecDoc.Data <= '" + finalDate.ToString("yyyyMMdd") + "' " +
+                "AND CabecDoc.TipoDoc='" + documentType + "'"
+                );
+
+            while (!salesQuery.NoFim())
             {
-                Model.Sale sale = new Model.Sale();
+                Sale sale = new Model.Sale();
 
-                // Set values:
-                sale.ID = list.Valor("Id");
-                sale.Item = list.Valor("Artigo");
-                sale.Category = list.Valor("CategoriaID");
-                sale.Comission = list.Valor("Comissao");
-                sale.PayedOn = ParseDate(list, "DataVencimento");
-                sale.ProductDeliveredOn = ParseDate(list, "DataCarga");
-                sale.Value = new Model.Money(list.Valor("PrecUnit") * list.Valor("Quantidade"), list.Valor("Unidade"));
-                sale.EmployeeId = list.Valor("Vendedor");
+                sale.ID = salesQuery.Valor("LinhasDocId");
+                sale.DocumentDate = ParseDate(salesQuery, "CabecDocData");
+                sale.DocumentType = salesQuery.Valor("CabecDocTipoDoc");
+                sale.DueDate = ParseDate(salesQuery, "CabecDocDataVencimento");
+                sale.ReceptionDate = ParseDate(salesQuery, "CabecDocsDataDescarga");
+                sale.ClientId = salesQuery.Valor("CabecDocEntidade");
+                sale.ClientName = salesQuery.Valor("CabecDocNome");
+                sale.Value = new Model.Money(salesQuery.Valor("LinhasDocPrecoLiquido"), salesQuery.Valor("CabecDocMoeda"));
 
-                //Get Client (Entidade, Nome or Utilizador)
-                String cabecDoc = list.Valor("IdCabecDoc");
-                StdBELista list2 = PriEngine.Engine.Consulta("SELECT Entidade FROM CabecDoc WHERE Id='" + cabecDoc + "'");
-
-                if (!list2.NoFim())
-                    sale.Costumer = list2.Valor("Entidade");
+                Product product = new Model.Product();
+                product.Brand = salesQuery.Valor("ArtigoMarca");
+                product.Model = salesQuery.Valor("ArtigoModelo");
+                product.Description = salesQuery.Valor("ArticoDescricao");
+                product.FamilyId = salesQuery.Valor("FamiliaId");
+                product.FamilyDescription = salesQuery.Valor("FamiliaDescricao");
+                sale.Product = product;
 
                 sales.Add(sale);
 
                 // Next item:
-                list.Seguinte();
+                salesQuery.Seguinte();
             }
 
             return sales;
         }
-
-        #endregion
-        #region Suppliers
-        public static List<Model.Supplier> GetSuppliers()
+        public static List<Supplier> GetSuppliers()
         {
             // Create an empty list of suppliers:
             List<Model.Supplier> suppliers = new List<Model.Supplier>();
 
-            if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
+            if (!PriEngine.InitializeCompany(Settings.Default.Company.Trim(), Settings.Default.User.Trim(), Settings.Default.Password.Trim()))
                 return suppliers;
 
             StdBELista list = PriEngine.Engine.Consulta(
@@ -159,18 +165,10 @@ namespace FirstREST.Lib_Primavera
 
             return suppliers;
         }
-        #endregion
-        #region Items
-
-        //ja esta na sales -> tabela LinhasDoc.Artigo, bem como a sua categoria LinhasDoc.CategoriaID
-
-        #endregion
-
-        #region Costumers
-        public static List<Model.Costumer> GetCostumers()
+        public static List<Costumer> GetCostumers()
         {
             // Create an empty list of clients:
-            List<Model.Costumer> costumers = new List<Model.Costumer>();
+            List<Costumer> costumers = new List<Costumer>();
 
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
                 return costumers;
@@ -181,7 +179,7 @@ namespace FirstREST.Lib_Primavera
                 );
             while (!list.NoFim())
             {
-                Model.Costumer costumer = new Model.Costumer();
+                Costumer costumer = new Model.Costumer();
 
                 // Set values
                 //do secostumer.ID = list.Valor("Fornecedor");
@@ -195,9 +193,7 @@ namespace FirstREST.Lib_Primavera
 
             return costumers;
         }
-        #endregion
-        #region Employees
-        public static List<Model.Employee> GetEmployees()
+        public static List<Employee> GetEmployees()
         {
             // Create an empty list of employees:
             List<Model.Employee> employees = new List<Model.Employee>();
@@ -211,12 +207,12 @@ namespace FirstREST.Lib_Primavera
                 );
             while (!list.NoFim())
             {
-                Model.Employee employee = new Model.Employee();
+                Employee employee = new Employee();
 
                 // Set values
                 employee.ID = list.Valor("IdGDOC");
                 employee.Name = list.Valor("Nome");
-                employee.Gender = list.Valor("Sexo") == "0" ? Model.Employee.GenderType.Male : Model.Employee.GenderType.Female;
+                employee.Gender = list.Valor("Sexo") == "0" ? Employee.GenderType.Male : Employee.GenderType.Female;
                 employee.Salary = new Model.Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
                 employee.HiredOn = ParseDate(list, "DataAdmissao");
                 employee.FiredOn = ParseDate(list, "DataDemissao");
@@ -230,12 +226,7 @@ namespace FirstREST.Lib_Primavera
 
             return employees;
         }
-        #endregion
-
-        #region Absences
-
-        // Returns a List of all absences of all employees
-        public static List<Model.Absence> GetAbsences()
+        public static List<Absence> GetAbsences() // Returns a List of all absences of all employees
         {
             // Create an empty list of absences:
             List<Model.Absence> absences = new List<Model.Absence>();
@@ -263,9 +254,7 @@ namespace FirstREST.Lib_Primavera
 
             return absences;
         }
-
-        // Returns a List of all absences of the employee with the given employeeId
-        public static List<Model.Absence> GetAbsences(String employeeId)
+        public static List<Absence> GetAbsences(String employeeId)
         {
             // Create an empty list of absences:
             List<Model.Absence> absences = new List<Model.Absence>();
@@ -292,13 +281,8 @@ namespace FirstREST.Lib_Primavera
             }
 
             return absences;
-        }
-
-        #endregion
-
-        #region Overtime Hours
-
-        public static List<Model.OvertimeHours> GetOvertimeHours()
+        } // Returns a List of all absences of the employee with the given employeeId
+        public static List<OvertimeHours> GetOvertimeHours()
         {
             // Create an empty list of absences:
             List<Model.OvertimeHours> overtimeHours = new List<Model.OvertimeHours>();
@@ -332,8 +316,7 @@ namespace FirstREST.Lib_Primavera
 
             return overtimeHours;
         }
-
-        public static List<Model.OvertimeHours> GetOvertimeHours(String employeeId)
+        public static List<OvertimeHours> GetOvertimeHours(String employeeId)
         {
             // Create an empty list of absences:
             List<Model.OvertimeHours> overtimeHours = new List<Model.OvertimeHours>();
@@ -374,11 +357,6 @@ namespace FirstREST.Lib_Primavera
 
             return overtimeHours;
         }
-
-        #endregion
-
-        #region MaleToFemaleRatio
-
         public static float GetMaleToFemaleRatio()
         {
             if (!PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()))
@@ -403,8 +381,6 @@ namespace FirstREST.Lib_Primavera
 
             return (float)males / females;
         }
-
-        #endregion
 
         // Examples
         # region Cliente
@@ -977,9 +953,6 @@ namespace FirstREST.Lib_Primavera
 
         #endregion DocsVenda
 
-
-
-
         public static String testSQL(String sql, List<String> columns)
         {
             String response = "";
@@ -998,7 +971,5 @@ namespace FirstREST.Lib_Primavera
             }
             return response;
         }
-
-
     }
 }

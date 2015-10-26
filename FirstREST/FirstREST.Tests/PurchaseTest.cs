@@ -11,7 +11,7 @@ namespace FirstREST.Tests.Lib_Primavera
         [TestMethod]
         public void GetPurchasesTest()
         {
-            PriIntegration.GetPurchases();
+            //PriIntegration.GetPurchases();
         }
     }
 }
