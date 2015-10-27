@@ -33,12 +33,12 @@ namespace FirstREST.Lib_Primavera
         public static List<PendingReceivable> getPendingReceivables(DateTime initialDate, DateTime finalDate, String documentType)
         {
             // +++++
-            // moeda, valorretencao,
+            // Moeda, ValorTotal, tipoDoc, Entidade, TipoEntidade (C/F), DataVenc, DataDoc, Estado, 
         }
 
         public static List<PendingPayable> getPendingPayables(DateTime initialDate, DateTime finalDate, String documentType)
         {
-
+            // --
         }
 
         public static List<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
