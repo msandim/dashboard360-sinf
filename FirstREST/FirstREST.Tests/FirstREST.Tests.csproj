@@ -120,7 +120,6 @@
     <Compile Include="Controllers\ValuesControllerTest.cs" />
     <Compile Include="PurchaseTest.cs" />
     <Compile Include="SalesTest.cs" />
-    <Compile Include="SupplierTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
