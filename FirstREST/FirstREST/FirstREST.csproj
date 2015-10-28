@@ -272,6 +272,7 @@
     <Compile Include="Lib_Primavera\Model\Absence.cs" />
     <Compile Include="Lib_Primavera\Model\Costumer.cs" />
     <Compile Include="Lib_Primavera\Model\Employee.cs" />
+    <Compile Include="Lib_Primavera\Model\GenderCounter.cs" />
     <Compile Include="Lib_Primavera\Model\Money.cs" />
     <Compile Include="Lib_Primavera\Model\OvertimeHours.cs" />
     <Compile Include="Lib_Primavera\Model\Pending.cs" />

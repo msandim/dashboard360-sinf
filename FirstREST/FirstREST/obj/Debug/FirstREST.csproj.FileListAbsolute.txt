@@ -353,3 +353,5 @@ C:\Users\user\Documents\Projects\SINF\dashboard\FirstREST\FirstREST\bin\zh-Hant\
 C:\Users\user\Documents\Projects\SINF\dashboard\FirstREST\FirstREST\obj\Debug\FirstREST.dll
 C:\Users\user\Documents\Projects\SINF\dashboard\FirstREST\FirstREST\obj\Debug\FirstREST.pdb
 C:\Users\user\Documents\Projects\SINF\dashboard\FirstREST\FirstREST\obj\Debug\FirstREST.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\dashboard360-sinf.git\FirstREST\FirstREST\obj\Debug\FirstREST.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\dashboard360-sinf.git\FirstREST\FirstREST\obj\Debug\FirstREST.dll

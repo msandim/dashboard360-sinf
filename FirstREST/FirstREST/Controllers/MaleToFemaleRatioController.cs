@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstREST.Lib_Primavera.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +11,9 @@ namespace FirstREST.Controllers
     public class MaleToFemaleRatioController : ApiController
     {
         //GET api/FemaleToMaleRatio
-        public float Get()
+        public GenderCounter Get(String initialDate, String finalDate)
         {
-            return Lib_Primavera.PriIntegration.GetMaleToFemaleRatio();
+            return Lib_Primavera.PriIntegration.GetGenderCounting(DateTime.Parse(initialDate), DateTime.Parse(finalDate));
         }
     }
 }
