@@ -19,9 +19,11 @@ namespace FirstREST.Controllers
         }
 
         //GET api/Absence/001
+        /*
         public IEnumerable<Absence> Get(String id)
         {
             return PriIntegration.GetAbsences(id);
         }
+         */
     }
 }
