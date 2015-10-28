@@ -10,7 +10,7 @@ namespace FirstREST.Controllers
 {
     using Lib_Primavera;
 
-    public class MaleToFemaleRatioController : ApiController
+    public class MaleToFemaleController : ApiController
     {
         //GET api/FemaleToMaleRatio
         public GenderCounter Get(DateTime initialDate, DateTime finalDate)
