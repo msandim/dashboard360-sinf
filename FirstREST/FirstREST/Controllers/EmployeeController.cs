@@ -12,9 +12,9 @@ namespace FirstREST.Controllers
     public class EmployeeController : ApiController
     {
         // GET api/employee
-        public IEnumerable<Employee> Get()
+        public IEnumerable<Employee> Get(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetEmployees();
+            return PriIntegration.GetEmployees(initialDate, finalDate);
         }
     }
 }

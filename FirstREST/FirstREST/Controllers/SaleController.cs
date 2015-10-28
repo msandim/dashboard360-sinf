@@ -8,12 +8,14 @@ using FirstREST.Lib_Primavera;
 
 namespace FirstREST.Controllers
 {
+    using Lib_Primavera.Model;
+
     public class SaleController : ApiController
     {
         //GET api/Sales
-        public IEnumerable<Lib_Primavera.Model.Sale> Get(String initialDate, String finalDate, String documentType)
+        public IEnumerable<Sale> Get(DateTime initialDate, DateTime finalDate, String documentType)
         {
-            return PriIntegration.GetSales(DateTime.Parse(initialDate), DateTime.Parse(finalDate), documentType);
+            return PriIntegration.GetSales(initialDate, finalDate, documentType);
         }
     }
 }

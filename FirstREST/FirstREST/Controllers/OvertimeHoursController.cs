@@ -7,16 +7,19 @@ using System.Web.Http;
 
 namespace FirstREST.Controllers
 {
+    using Lib_Primavera;
+    using Lib_Primavera.Model;
+
     public class OvertimeHoursController : ApiController
     {
         //GET api/OvertimeHours
-        public IEnumerable<Lib_Primavera.Model.OvertimeHours> Get()
+        public IEnumerable<OvertimeHours> Get(DateTime initialDate, DateTime finalDate)
         {
-            return Lib_Primavera.PriIntegration.GetOvertimeHours();
+            return PriIntegration.GetOvertimeHours(initialDate, finalDate);
         }
 
         //GET api/OvertimeHours/001
-        public IEnumerable<Lib_Primavera.Model.OvertimeHours> Get(String id)
+        public IEnumerable<OvertimeHours> Get(String id)
         {
             return Lib_Primavera.PriIntegration.GetOvertimeHours(id);
         }

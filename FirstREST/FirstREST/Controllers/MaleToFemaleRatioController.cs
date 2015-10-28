@@ -8,12 +8,14 @@ using System.Web.Http;
 
 namespace FirstREST.Controllers
 {
+    using Lib_Primavera;
+
     public class MaleToFemaleRatioController : ApiController
     {
         //GET api/FemaleToMaleRatio
-        public GenderCounter Get(String initialDate, String finalDate)
+        public GenderCounter Get(DateTime initialDate, DateTime finalDate)
         {
-            return Lib_Primavera.PriIntegration.GetGenderCounting(DateTime.Parse(initialDate), DateTime.Parse(finalDate));
+            return PriIntegration.GetGenderCounting(initialDate, finalDate);
         }
     }
 }

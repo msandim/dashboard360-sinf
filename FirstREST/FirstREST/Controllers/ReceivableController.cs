@@ -12,9 +12,9 @@ namespace FirstREST.Controllers
     public class ReceivableController : ApiController
     {
         // GET api/receivable
-        public IEnumerable<Pending> Get(String initialDate, String finalDate)
+        public IEnumerable<Pending> Get(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetPendingReceivables(DateTime.Parse(initialDate), DateTime.Parse(finalDate));
+            return PriIntegration.GetPendingReceivables(initialDate, finalDate);
         }
     }
 }
