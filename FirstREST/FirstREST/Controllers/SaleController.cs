@@ -12,7 +12,7 @@ namespace FirstREST.Controllers
 
     public class SaleController : ApiController
     {
-        //GET api/Sales
+        //GET api/sale
         public IEnumerable<Sale> Get(DateTime initialDate, DateTime finalDate, String documentType)
         {
             return PriIntegration.GetSales(initialDate, finalDate, documentType);

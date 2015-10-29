@@ -11,6 +11,7 @@ namespace FirstREST.Controllers
 
     public class PurchaseController : ApiController
     {
+        //GET api/purchase
         public IEnumerable<Purchase> Get(DateTime initialDate, DateTime finalDate, String documentType) 
         {
             return Lib_Primavera.PriIntegration.GetPurchases(initialDate, finalDate, documentType);

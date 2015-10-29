@@ -12,18 +12,10 @@ namespace FirstREST.Controllers
 
     public class OvertimeHourController : ApiController
     {
-        //GET api/OvertimeHours
+        //GET api/overtimeHours
         public IEnumerable<OvertimeHours> Get(DateTime initialDate, DateTime finalDate)
         {
             return PriIntegration.GetOvertimeHours(initialDate, finalDate);
         }
-
-        //GET api/OvertimeHours/001
-        /*
-        public IEnumerable<OvertimeHours> Get(String id)
-        {
-            return Lib_Primavera.PriIntegration.GetOvertimeHours(id);
-        }
-        */
     }
 }

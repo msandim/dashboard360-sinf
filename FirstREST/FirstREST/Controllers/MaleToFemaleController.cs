@@ -12,7 +12,7 @@ namespace FirstREST.Controllers
 
     public class MaleToFemaleController : ApiController
     {
-        //GET api/FemaleToMaleRatio
+        //GET api/MaleToFemale
         public GenderCounter Get(DateTime initialDate, DateTime finalDate)
         {
             return PriIntegration.GetGenderCounting(initialDate, finalDate);

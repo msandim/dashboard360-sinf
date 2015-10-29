@@ -96,7 +96,7 @@ namespace FirstREST.Lib_Primavera
 
             while (!purchasesQuery.NoFim())
             {
-                Purchase purchase = new Model.Purchase();
+                Purchase purchase = new Purchase();
 
                 // Set values:
                 purchase.ID = purchasesQuery.Valor("LinhasComprasId");
@@ -106,9 +106,9 @@ namespace FirstREST.Lib_Primavera
                 purchase.ReceptionDate = ParseDate(purchasesQuery, "CabecComprasDataDescarga");
                 purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
                 purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
-                purchase.Value = new Model.Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
+                purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
 
-                Product product = new Model.Product();
+                Product product = new Product();
                 product.Brand = purchasesQuery.Valor("ArtigoMarca");
                 product.Model = purchasesQuery.Valor("ArtigoModelo");
                 product.Description = purchasesQuery.Valor("ArticoDescricao");
@@ -128,7 +128,7 @@ namespace FirstREST.Lib_Primavera
         public static List<Sale> GetSales(DateTime initialDate, DateTime finalDate, String documentType)
         {
             // Create an empty list of sales
-            List<Sale> sales = new List<Model.Sale>();
+            List<Sale> sales = new List<Sale>();
 
             //Initialize company
             if (!InitializeCompany())
@@ -151,7 +151,7 @@ namespace FirstREST.Lib_Primavera
 
             while (!salesQuery.NoFim())
             {
-                Sale sale = new Model.Sale();
+                Sale sale = new Sale();
 
                 sale.ID = salesQuery.Valor("LinhasDocId");
                 sale.DocumentDate = ParseDate(salesQuery, "CabecDocData");
@@ -162,7 +162,7 @@ namespace FirstREST.Lib_Primavera
                 sale.ClientName = salesQuery.Valor("CabecDocNome");
                 sale.Value = new Model.Money(salesQuery.Valor("LinhasDocPrecoLiquido"), salesQuery.Valor("CabecDocMoeda"));
 
-                Product product = new Model.Product();
+                Product product = new Product();
                 product.Brand = salesQuery.Valor("ArtigoMarca");
                 product.Model = salesQuery.Valor("ArtigoModelo");
                 product.Description = salesQuery.Valor("ArticoDescricao");
@@ -315,79 +315,6 @@ namespace FirstREST.Lib_Primavera
             return new GenderCounter(males, females);
         } // Returns <male,female> format
 
-
-
-        // !!! Functions to delete !!!
-        public static List<OvertimeHours> GetOvertimeHours(String employeeId)
-        {
-            // Create an empty list of absences:
-            List<OvertimeHours> overtimeHours = new List<OvertimeHours>();
-
-            if (!InitializeCompany())
-                return overtimeHours;
-
-            /*
-            // Get Data from Absence of the employee with ID=employeeId BD
-            StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Funcionario, Data, Tempo FROM CadastroHExtras WHERE Funcionario='" + employeeId + "'"
-                );
-            */
-
-            // Get Data from Absence of the employee with ID=employeeId Not BD
-            StdBELista list = PriEngine.Engine.RecursosHumanos.CadastroHorasExtra.LstCadastroHorasExtra();
-
-            while (!list.NoFim())
-            {
-                Model.OvertimeHours overtimeHoursObj = new Model.OvertimeHours();
-
-                if (list.Valor("Funcionario") != employeeId)
-                {
-                    list.Seguinte();
-                    continue;
-                }
-
-                overtimeHoursObj.EmployeeId = employeeId;
-                overtimeHoursObj.Date = list.Valor("Data");
-                overtimeHoursObj.Time = list.Valor("Tempo").ToString();
-
-                // Add absence to the list:
-                overtimeHours.Add(overtimeHoursObj);
-
-                // Next item:
-                list.Seguinte();
-            }
-
-            return overtimeHours;
-        }
-        public static List<Absence> GetAbsences(String employeeId)
-        {
-            // Create an empty list of absences:
-            List<Absence> absences = new List<Absence>();
-
-            if (!InitializeCompany())
-                return absences;
-
-            // Get Data from Absence of the employee with ID=employeeId
-            StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT Data FROM CadastroFaltas WHERE Funcionario='" + employeeId + "'"
-                );
-
-            while (!list.NoFim())
-            {
-                Absence absence = new Absence();
-                absence.EmployeeId = employeeId;
-                absence.Date = list.Valor("Data");
-
-                // Add absence to the list:
-                absences.Add(absence);
-
-                // Next item:
-                list.Seguinte();
-            }
-
-            return absences;
-        } // Returns a List of all absences of the employee with the given employeeId
-
         // Function to initialize the default company:
         private static bool InitializeCompany()
         {
@@ -395,7 +322,7 @@ namespace FirstREST.Lib_Primavera
         }
 
         // Function to test SQL queries:
-        public static String testSQL(String sql, List<String> columns)
+        public static String TestSQL(String sql, List<String> columns)
         {
             String response = "";
             if (PriEngine.InitializeCompany(Settings.Default.Company.Trim(), Settings.Default.User.Trim(), Settings.Default.Password.Trim()) == true)
