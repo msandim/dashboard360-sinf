@@ -262,7 +262,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaleToFemaleController.cs" />
-    <Compile Include="Controllers\OvertimeHoursController.cs" />
+    <Compile Include="Controllers\OvertimeHourController.cs" />
     <Compile Include="Controllers\PayableController.cs" />
     <Compile Include="Controllers\ReceivableController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
