@@ -192,7 +192,7 @@ namespace FirstREST.Lib_Primavera
                 "SELECT IdGDOC, Nome, Sexo, Vencimento, TipoMoeda, DataAdmissao, DataDemissao " +
                 "FROM Funcionarios " +
                 "WHERE DataAdmissao <= '" + finalDate.ToString("yyyyMMdd") + "' " +
-                " AND (DataDemissao <= '" + initialDate.ToString("yyyyMMdd") + "' OR DataDemissao IS NULL) " +
+                " AND (DataDemissao >= '" + initialDate.ToString("yyyyMMdd") + "' OR DataDemissao IS NULL) " +
                 "ORDER BY DataAdmissao"
                 );
             while (!list.NoFim())
