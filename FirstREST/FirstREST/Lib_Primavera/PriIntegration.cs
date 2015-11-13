@@ -47,7 +47,7 @@ namespace FirstREST.Lib_Primavera
                 return output;
 
             StdBELista pendingDocumentsQuery = PriEngine.Engine.Consulta(
-                "SELECT ValorTotal, Moeda, TipoDoc, Entidade, TipoEntidade, Estado, DataVenc, DataDoc " +
+                "SELECT ValorPendente, Moeda, TipoDoc, Entidade, TipoEntidade, Estado, DataVenc, DataDoc " +
                 "FROM Pendentes " +
                 "WHERE ValorTotal " + (receivables ? ">" : "<") + " 0 " +
                 " AND DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
@@ -56,7 +56,7 @@ namespace FirstREST.Lib_Primavera
             while(!pendingDocumentsQuery.NoFim())
             {
                 Pending pendingDocument = new Pending();
-                pendingDocument.TotalValue = new Money(pendingDocumentsQuery.Valor("ValorTotal"), pendingDocumentsQuery.Valor("Moeda"));
+                pendingDocument.PendingValue = new Money(pendingDocumentsQuery.Valor("ValorPendente"), pendingDocumentsQuery.Valor("Moeda"));
                 pendingDocument.DocumentDate = pendingDocumentsQuery.Valor("DataDoc");
                 pendingDocument.DocumentType = pendingDocumentsQuery.Valor("TipoDoc");
                 pendingDocument.DueDate = pendingDocumentsQuery.Valor("DataVenc");

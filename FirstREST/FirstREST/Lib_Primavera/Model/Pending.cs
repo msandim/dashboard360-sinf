@@ -13,6 +13,6 @@ namespace FirstREST.Lib_Primavera.Model
         public String State { get; set; }
         public String Entity { get; set; }
         public String EntityType { get; set; }
-        public Money TotalValue { get; set; }
+        public Money PendingValue { get; set; }
     }
 }
