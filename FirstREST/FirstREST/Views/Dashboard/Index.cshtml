@@ -14,7 +14,7 @@
                     <span class="info-box-icon bg-red"><i class="ion ion-social-euro"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Payables</span>
-                        <span class="info-box-number">@Html.Encode(ViewData["payables"])</span>
+                        <span class="info-box-number">@ViewBag.PayablesValue</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -26,7 +26,7 @@
                     <span class="info-box-icon bg-green"><i class="ion ion-social-euro"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Receivables</span>
-                        <span class="info-box-number">@Html.Encode(ViewData["receivables"])</span>
+                        <span class="info-box-number">@ViewBag.ReceivablesValue</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -37,7 +37,7 @@
                     <span class="info-box-icon bg-yellow"><i class="ion ion-ios-cart-outline"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Net Purchases Gloval Values</span>
-                        <span class="info-box-number">@Html.Encode(ViewData["net_purchases_global_values"])</span>
+                        <span class="info-box-number">@ViewBag.NetPurchasesValue</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -49,7 +49,7 @@
                     <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Net Sales Glocal Values</span>
-                        <span class="info-box-number">@Html.Encode(ViewData["net_sales_global_values"])</span>
+                        <span class="info-box-number">@ViewBag.NetSalesValue</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -61,7 +61,7 @@
                     <span class="info-box-icon bg-purple"><i class="ion ion-ios-people-outline"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Labor cost per employee</span>
-                        <span class="info-box-number">@Html.Encode(ViewData["labor_cost_per_employee"])</span>
+                        <span class="info-box-number">@ViewBag.LaborCostValue</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
