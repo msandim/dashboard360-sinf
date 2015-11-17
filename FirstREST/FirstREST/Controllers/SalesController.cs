@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace FirstREST.Controllers
 {
+    using Models;
+    using Lib_Primavera.Model;
+
     public class SalesController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            ViewBag.NetSalesValue = await SalesManager.GetNetSales(DateTime.Parse("2014-04-01"), DateTime.Parse("2016-06-01"), "ECL");
+
             return View();
         }
     }
