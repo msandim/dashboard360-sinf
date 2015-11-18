@@ -120,21 +120,40 @@ function create_top_customers() {
 
 function create_sales_by_category(data) {
     var ctx = $("#sales_by_category_chart").get(0).getContext("2d");
-    /*
+
+    
+    var values = [];
+    var label = "";
+    var value = "";
     $.each(data, function () {
         $.each(this, function (k, v) {
-            alert(k + "  " + v);
+            if (k == "Product") {
+                label = v["FamilyId"];
+            }
+            else if (k == "Value") {
+                value = v["Value"];
+            }
         });
+
+        values[label] = value;
+        return;
+        if (label in Object.keys(values)) 
+            values[label] = value;
+        else 
+            values[label] += value;
     });
-    */
-    var pie_data = [
-        {
-            value: data[0]["Value"]["Value"],
-            color: "yellow",
-            label: data[0]["Product"]["FamilyId"]
+
+    var pie_data = [];
+    var keys = Object.keys(values);
+    var i = 0;
+    for (var key in keys) {
+        pie_data[i] = {
+            value: values[keys[key]],
+            color: "#"+((1<<24)*Math.random()|0).toString(16).slice(-6),
+            label: keys[key]
         }
-        
-    ];
+        i++;
+    }
 
     var options = {
         animation: false,
