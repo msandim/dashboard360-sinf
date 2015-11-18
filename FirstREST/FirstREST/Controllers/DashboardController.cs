@@ -25,10 +25,10 @@ namespace FirstREST.Controllers
             ViewBag.ReceivablesValue = await FinancialManager.GetReceivables(first, last);
 
             //Get Net Purchases Gloval Value
-            ViewBag.NetPurchasesValue = await PurchasesManager.GetNetPurchases(first, last, "VFA");
+            ViewBag.NetPurchasesValue = await PurchasesManager.GetNetPurchases(first, last);
 
             //Get Net Sales Gloval Value
-            ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last, "ECL");
+            ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last);
 
             //Get Labor Cost per Employee
             ViewBag.LaborCostValue = 0;
