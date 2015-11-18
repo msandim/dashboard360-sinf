@@ -286,6 +286,7 @@
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Models\BaseURL.cs" />
     <Compile Include="Models\FinancialManager.cs" />
+    <Compile Include="Models\NetUtils.cs" />
     <Compile Include="Models\PurchasesManager.cs" />
     <Compile Include="Models\SalesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

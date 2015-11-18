@@ -49,7 +49,7 @@ namespace FirstREST.Lib_Primavera
             StdBELista pendingDocumentsQuery = PriEngine.Engine.Consulta(
                 "SELECT ValorPendente, Moeda, TipoDoc, Entidade, TipoEntidade, Estado, DataVenc, DataDoc " +
                 "FROM Pendentes " +
-                "WHERE ValorTotal " + (receivables ? ">" : "<") + " 0 " +
+                "WHERE TipoEntidade = " + (receivables ? "'C'" : "'F'") +
                 " AND DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
                 "ORDER BY DataDoc"
                 );
