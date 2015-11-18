@@ -11,7 +11,7 @@ namespace FirstREST.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            ViewBag.NetSalesValue = await SalesManager.GetNetSales(DateTime.Parse("2014-04-01"), DateTime.Parse("2016-06-01"), "ECL");
+            ViewBag.NetSalesValue = await SalesManager.GetNetSales(DateTime.Parse("2014-04-01"), DateTime.Parse("2016-06-01"));
 
             return View();
         }
