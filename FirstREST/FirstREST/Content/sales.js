@@ -98,7 +98,7 @@ function create_net_sales() {
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [three_years_ago_value, two_years_ago_value, one_year_ago_value, today_value]
+                data: [three_years_ago_value.toFixed(2), two_years_ago_value.toFixed(2), one_year_ago_value.toFixed(2), today_value.toFixed(2)]
             }
         ]
     };
@@ -137,7 +137,7 @@ function create_sales_by_category(data) {
     var i = 0;
     for (var key in keys) {
         pie_data[i] = {
-            value: values[keys[key]],
+            value: values[keys[key]].toFixed(2),
             color: "#"+((1<<24)*Math.random()|0).toString(16).slice(-6),
             label: keys[key]
         }
@@ -225,7 +225,7 @@ function create_top_customers(data) {
 
     //Add top 10 rows
     for (var i = 0; i < 10 && i < clients.length; i++) {
-        table.append('<tr role="row" class="odd"><td>' + clients[i].clientId + '</td><td>' + clients[i].clientName + '</td><td>' + clients[i].value + '</td></tr>');
+        table.append('<tr role="row" class="odd"><td>' + clients[i].clientId + '</td><td>' + clients[i].clientName + '</td><td>' + clients[i].value.toFixed(2) + '</td></tr>');
     }
 
     //Table end body
