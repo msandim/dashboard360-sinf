@@ -31,6 +31,85 @@ namespace Dashboard.Models.Primavera
             }
         }
 
+        private static List<ClassLine> GetBalanceSheet(Nullable<int> year)
+        {
+            List<ClassLine> output = new List<ClassLine>();
+
+            if (!InitializeCompany())
+                return output;
+
+            String query = "SELECT * FROM AcumuladosContas ";
+
+            if (year.HasValue)
+                query += "WHERE Ano = " + year.Value.ToString();
+            else
+                query += "ORDER BY Ano DESC";
+
+            StdBELista balanceSheetQuery = PriEngine.Engine.Consulta(query);
+
+            while (!balanceSheetQuery.NoFim())
+            {
+                ClassLine line = new ClassLine();
+
+                line.ano = balanceSheetQuery.Valor("Ano");
+                line.conta = balanceSheetQuery.Valor("Conta");
+                line.moeda = balanceSheetQuery.Valor("Moeda");
+                line.mes00CR = balanceSheetQuery.Valor("Mes00CR");
+                line.mes01CR = balanceSheetQuery.Valor("Mes01CR");
+                line.mes02CR = balanceSheetQuery.Valor("Mes02CR");
+                line.mes03CR = balanceSheetQuery.Valor("Mes03CR");
+                line.mes04CR = balanceSheetQuery.Valor("Mes04CR");
+                line.mes05CR = balanceSheetQuery.Valor("Mes05CR");
+                line.mes06CR = balanceSheetQuery.Valor("Mes06CR");
+                line.mes07CR = balanceSheetQuery.Valor("Mes07CR");
+                line.mes08CR = balanceSheetQuery.Valor("Mes08CR");
+                line.mes09CR = balanceSheetQuery.Valor("Mes09CR");
+                line.mes10CR = balanceSheetQuery.Valor("Mes10CR");
+                line.mes11CR = balanceSheetQuery.Valor("Mes11CR");
+                line.mes12CR = balanceSheetQuery.Valor("Mes12CR");
+                line.mes13CR = balanceSheetQuery.Valor("Mes13CR");
+                line.mes14CR = balanceSheetQuery.Valor("Mes14CR");
+                line.mes15CR = balanceSheetQuery.Valor("Mes15CR");
+
+                line.mes00DB = balanceSheetQuery.Valor("Mes00DB");
+                line.mes01DB = balanceSheetQuery.Valor("Mes01DB");
+                line.mes02DB = balanceSheetQuery.Valor("Mes02DB");
+                line.mes03DB = balanceSheetQuery.Valor("Mes03DB");
+                line.mes04DB = balanceSheetQuery.Valor("Mes04DB");
+                line.mes05DB = balanceSheetQuery.Valor("Mes05DB");
+                line.mes06DB = balanceSheetQuery.Valor("Mes06DB");
+                line.mes07DB = balanceSheetQuery.Valor("Mes07DB");
+                line.mes08DB = balanceSheetQuery.Valor("Mes08DB");
+                line.mes09DB = balanceSheetQuery.Valor("Mes09DB");
+                line.mes10DB = balanceSheetQuery.Valor("Mes10DB");
+                line.mes11DB = balanceSheetQuery.Valor("Mes11DB");
+                line.mes12DB = balanceSheetQuery.Valor("Mes12DB");
+                line.mes13DB = balanceSheetQuery.Valor("Mes13DB");
+                line.mes14DB = balanceSheetQuery.Valor("Mes14DB");
+                line.mes15DB = balanceSheetQuery.Valor("Mes15DB");
+
+                line.mes01OR = balanceSheetQuery.Valor("Mes01OR");
+                line.mes02OR = balanceSheetQuery.Valor("Mes02OR");
+                line.mes03OR = balanceSheetQuery.Valor("Mes03OR");
+                line.mes04OR = balanceSheetQuery.Valor("Mes04OR");
+                line.mes05OR = balanceSheetQuery.Valor("Mes05OR");
+                line.mes06OR = balanceSheetQuery.Valor("Mes06OR");
+                line.mes07OR = balanceSheetQuery.Valor("Mes07OR");
+                line.mes08OR = balanceSheetQuery.Valor("Mes08OR");
+                line.mes09OR = balanceSheetQuery.Valor("Mes09OR");
+                line.mes10OR = balanceSheetQuery.Valor("Mes10OR");
+                line.mes11OR = balanceSheetQuery.Valor("Mes11OR");
+                line.mes12OR = balanceSheetQuery.Valor("Mes12OR");
+
+                line.tipoLancamento = balanceSheetQuery.Valor("TipoLancamento");
+                line.naturezaOR = balanceSheetQuery.Valor("NaturezaOR");
+                
+                output.Add(line);
+                balanceSheetQuery.Seguinte();
+            }
+            return output;
+        }
+
         // Pending payments:
         public static List<Pending> GetPendingReceivables(DateTime initialDate, DateTime finalDate)
         {
