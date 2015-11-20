@@ -70,7 +70,9 @@ namespace Dashboard.Models
 
         public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
         {
-            var sales = await GetSaleValues(initialDate, finalDate);
+            int year = 0;
+            //var sales = await GetSaleValues(initialDate, finalDate);
+            var sales = await GetSaleValues(year);
             var pendings = await GetPendingValues(initialDate, finalDate);
 
             return sales + pendings;

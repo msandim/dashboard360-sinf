@@ -13,7 +13,8 @@ namespace Dashboard.Controllers.API
     {
         public IEnumerable<Double> GetSales(DateTime initialDate, DateTime finalDate)
         {
-            return SalesManager.GetNetSales(initialDate, finalDate);
+            //return SalesManager.GetNetSales(initialDate, finalDate);
+            return null;
         }
     }
 }
