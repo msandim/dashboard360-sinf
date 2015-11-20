@@ -16,7 +16,7 @@ function load_sales_by_category() {
 
     $.ajax({
 
-        url: 'http://localhost:49822/api/primavera/sale',
+        url: 'http://localhost:49822/api/sales/sales_by_category',
         type: 'Get',
         data: {
             initialDate: formatDate(five_years_ago),

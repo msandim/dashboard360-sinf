@@ -21,8 +21,10 @@ namespace Dashboard.Models
             return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd") + "&documentType=" + documentType;
         }
 
-        private static async Task<Double> GetSaleValues(DateTime initialDate, DateTime finalDate)
+        private static async Task<Double> GetSaleValues(int year)
         {
+            DateTime initialDate = new DateTime();
+            DateTime finalDate = new DateTime();
             // Create a HTTP Client:
             var client = new HttpClient();
 
