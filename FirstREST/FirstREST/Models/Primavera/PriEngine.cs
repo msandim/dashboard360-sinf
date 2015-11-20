@@ -8,11 +8,10 @@ using Interop.StdPlatBS800;
 using Interop.StdBE800;
 using ADODB;
 
-namespace FirstREST.Lib_Primavera
+namespace Dashboard.Models.Primavera
 {
     public class PriEngine
     {
-
         public static StdPlatBS Platform { get; set; }
         public static ErpBS Engine { get; set; }
 

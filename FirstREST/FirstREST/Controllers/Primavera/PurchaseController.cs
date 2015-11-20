@@ -5,16 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace FirstREST.Controllers
+namespace Dashboard.Controllers.Primavera
 {
-    using Lib_Primavera.Model;
+    using Models.Primavera;
+    using Models.Primavera.Model;
 
     public class PurchaseController : ApiController
     {
         //GET api/purchase
         public IEnumerable<Purchase> Get(DateTime initialDate, DateTime finalDate, String documentType) 
         {
-            return Lib_Primavera.PriIntegration.GetPurchases(initialDate, finalDate, documentType);
+            return PriIntegration.GetPurchases(initialDate, finalDate, documentType);
         }
     }
 }

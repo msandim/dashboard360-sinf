@@ -1,21 +1,21 @@
-﻿using FirstREST.Lib_Primavera.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace FirstREST.Controllers
+namespace Dashboard.Controllers.Primavera
 {
-    using Lib_Primavera;
+    using Models.Primavera;
+    using Models.Primavera.Model;
 
     public class MaleToFemaleController : ApiController
     {
         //GET api/MaleToFemale
         public GenderCounter Get(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetGenderCounting(initialDate, finalDate);
+            return PriIntegration.GetGenderCount(initialDate, finalDate);
         }
     }
 }

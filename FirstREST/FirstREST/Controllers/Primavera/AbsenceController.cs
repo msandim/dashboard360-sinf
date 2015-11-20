@@ -5,10 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace FirstREST.Controllers
+namespace Dashboard.Controllers.Primavera
 {
-    using Lib_Primavera;
-    using Lib_Primavera.Model;
+    using Models.Primavera;
+    using Models.Primavera.Model;
 
     public class AbsenceController : ApiController
     {

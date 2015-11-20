@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace FirstREST.Controllers
+namespace Dashboard.Controllers
 {
     using Models;
-    using Lib_Primavera.Model;
 
     public class DashboardController : Controller
     {

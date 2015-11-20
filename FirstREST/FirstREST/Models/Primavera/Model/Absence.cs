@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web;
 
-namespace FirstREST.Lib_Primavera.Model
+namespace Dashboard.Models.Primavera.Model
 {
     public class Absence
     {

@@ -11,11 +11,12 @@ using Interop.IGcpBS800;
 using Interop.IRhpBS800;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;
-using FirstREST.Lib_Primavera.Model;
-using FirstREST.Properties;
 
-namespace FirstREST.Lib_Primavera
+namespace Dashboard.Models.Primavera
 {
+    using Dashboard.Properties;
+    using Model;
+
     public class PriIntegration
     {
         private static DateTime ParseDate(StdBELista list, String key)
@@ -287,7 +288,7 @@ namespace FirstREST.Lib_Primavera
 
             return overtimeHours;
         }
-        public static GenderCounter GetGenderCounting(DateTime initialDate, DateTime finalDate)
+        public static GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
             if (!InitializeCompany())
                 return new GenderCounter(-1,-1);

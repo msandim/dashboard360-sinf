@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace FirstREST.Areas.HelpPage
+namespace Dashboard.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

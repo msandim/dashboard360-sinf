@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FirstREST</RootNamespace>
-    <AssemblyName>FirstREST</AssemblyName>
+    <RootNamespace>Dashboard</RootNamespace>
+    <AssemblyName>Dashboard</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -258,32 +258,32 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\API\AbsenceController.cs" />
+    <Compile Include="Controllers\Primavera\AbsenceController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\API\EmployeeController.cs" />
+    <Compile Include="Controllers\Primavera\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\API\MaleToFemaleController.cs" />
-    <Compile Include="Controllers\API\OvertimeHourController.cs" />
-    <Compile Include="Controllers\API\PayableController.cs" />
-    <Compile Include="Controllers\API\ReceivableController.cs" />
-    <Compile Include="Controllers\API\PurchaseController.cs" />
-    <Compile Include="Controllers\API\SaleController.cs" />
+    <Compile Include="Controllers\Primavera\MaleToFemaleController.cs" />
+    <Compile Include="Controllers\Primavera\OvertimeHourController.cs" />
+    <Compile Include="Controllers\Primavera\PayableController.cs" />
+    <Compile Include="Controllers\Primavera\PrimaveraController.cs" />
+    <Compile Include="Controllers\Primavera\ReceivableController.cs" />
+    <Compile Include="Controllers\Primavera\PurchaseController.cs" />
+    <Compile Include="Controllers\Primavera\SaleController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Lib_Primavera\Model\Absence.cs" />
-    <Compile Include="Lib_Primavera\Model\Costumer.cs" />
-    <Compile Include="Lib_Primavera\Model\Employee.cs" />
-    <Compile Include="Lib_Primavera\Model\GenderCounter.cs" />
-    <Compile Include="Lib_Primavera\Model\Money.cs" />
-    <Compile Include="Lib_Primavera\Model\OvertimeHours.cs" />
-    <Compile Include="Lib_Primavera\Model\Pending.cs" />
-    <Compile Include="Lib_Primavera\Model\Product.cs" />
-    <Compile Include="Lib_Primavera\Model\Purchase.cs" />
-    <Compile Include="Lib_Primavera\Model\Sale.cs" />
-    <Compile Include="Lib_Primavera\PriIntegration.cs" />
-    <Compile Include="Lib_Primavera\PriEngine.cs" />
+    <Compile Include="Models\Primavera\Model\Absence.cs" />
+    <Compile Include="Models\Primavera\Model\Employee.cs" />
+    <Compile Include="Models\Primavera\Model\GenderCounter.cs" />
+    <Compile Include="Models\Primavera\Model\Money.cs" />
+    <Compile Include="Models\Primavera\Model\OvertimeHours.cs" />
+    <Compile Include="Models\Primavera\Model\Pending.cs" />
+    <Compile Include="Models\Primavera\Model\Product.cs" />
+    <Compile Include="Models\Primavera\Model\Purchase.cs" />
+    <Compile Include="Models\Primavera\Model\Sale.cs" />
+    <Compile Include="Models\Primavera\PriIntegration.cs" />
+    <Compile Include="Models\Primavera\PriEngine.cs" />
     <Compile Include="Models\BaseURL.cs" />
     <Compile Include="Models\FinancialManager.cs" />
     <Compile Include="Models\PurchasesManager.cs" />

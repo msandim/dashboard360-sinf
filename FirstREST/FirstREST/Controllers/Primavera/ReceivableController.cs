@@ -4,11 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using FirstREST.Lib_Primavera;
-using FirstREST.Lib_Primavera.Model;
 
-namespace FirstREST.Controllers
+namespace Dashboard.Controllers.Primavera
 {
+    using Models.Primavera;
+    using Models.Primavera.Model;
+
     public class ReceivableController : ApiController
     {
         // GET api/receivable

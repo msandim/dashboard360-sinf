@@ -16,7 +16,7 @@ function load_sales_by_category() {
 
     $.ajax({
 
-        url: 'http://localhost:49822/api/sale',
+        url: 'http://localhost:49822/api/primavera/sale',
         type: 'Get',
         data: {
             initialDate: formatDate(five_years_ago),
@@ -35,7 +35,7 @@ function load_sales_by_category() {
 function get_load_sales(initDate, finalDate) {
     var result = "failed";
     $.ajax({
-        url: 'http://localhost:49822/api/sale',
+        url: 'http://localhost:49822/api/primavera/sale',
         type: 'Get',
         async: false,
         data: {
@@ -229,7 +229,7 @@ function load_top_customers() {
     var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1)
 
     $.ajax({
-        url: 'http://localhost:49822/api/sale',
+        url: 'http://localhost:49822/api/primavera/sale',
         type: 'Get',
         data: {
             initialDate: formatDate(five_years_ago),

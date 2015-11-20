@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FirstREST.Models
+namespace Dashboard.Models
 {
-    using Lib_Primavera.Model;
+    using Models.Primavera.Model;
 
     public class FinancialManager
     {
