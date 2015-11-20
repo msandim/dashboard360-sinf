@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace FirstREST.Areas.HelpPage
+namespace Dashboard.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

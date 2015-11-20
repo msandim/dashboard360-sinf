@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FirstREST.Properties {
+namespace Dashboard.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

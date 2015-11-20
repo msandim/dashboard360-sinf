@@ -1,9 +1,9 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using FirstREST.Areas.HelpPage.Models;
+using Dashboard.Areas.HelpPage.Models;
 
-namespace FirstREST.Areas.HelpPage.Controllers
+namespace Dashboard.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

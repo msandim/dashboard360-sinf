@@ -4,29 +4,96 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+        
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="~/Content/themes/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- jvectormap -->
+        <link rel="stylesheet" href="~/Content/themes/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/Content/themes/dist/css/AdminLTE.min.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="~/Content/themes/dist/css/skins/_all-skins.min.css">
 </head>
-<body>
-    <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a href="~/">ASP.NET Web API</a></p>
-            </div>
-            <div class="float-right">
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-    @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+                <!-- Logo -->
+                <a href="" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><b>360º</b></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><b>360º Dashboard</b></span>
+                </a>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <!-- Navbar Right Menu -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+
+                            <li>@Html.ActionLink("Global Dashboard", "Index", "Dashboard", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Financial and Accounting", "Index", "Financial", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Supply Chain", "Index", "Supply", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sales", "Index", "Sales", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Human Resources", "Index", "HR", new { area = "" }, null)</li>
+
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs">Alexander Pierce</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <p>
+                                            Alexander Pierce - Web Developer
+                                            <small>Member since Nov. 2012</small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Body -->
+                                    <li class="user-body">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Followers</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Sales</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Friends</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.row -->
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- Control Sidebar Toggle Button -->
+                            <li>@Html.ActionLink("Login/Logout", "Index", "Session", new { area = "" }, null)</li>
+                        </ul>
+                    </div>
+                </nav>
+        </header>
+        @RenderBody()
+     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-namespace FirstREST.Areas.HelpPage
+namespace Dashboard.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

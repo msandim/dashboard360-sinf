@@ -1,0 +1,75 @@
+﻿<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Global Dashboard</h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="ion ion-social-euro"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Payables</span>
+                        <span class="info-box-number">@ViewBag.PayablesValue</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="ion ion-social-euro"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Receivables</span>
+                        <span class="info-box-number">@ViewBag.ReceivablesValue</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-cart-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Net Purchases Gloval Values</span>
+                        <span class="info-box-number">@ViewBag.NetPurchasesValue</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Net Sales Glocal Values</span>
+                        <span class="info-box-number">@ViewBag.NetSalesValue</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-purple"><i class="ion ion-ios-people-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Labor cost per employee</span>
+                        <span class="info-box-number">@ViewBag.LaborCostValue</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+        </div>
+   </section>
+</div>
+<script src="~/Content/themes/plugins/jquery/jQuery-2.1.4.min.js"></script>
+<script src="~/Content/dashboard.js"></script>

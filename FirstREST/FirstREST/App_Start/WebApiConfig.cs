@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace FirstREST
+namespace Dashboard
 {
     public static class WebApiConfig
     {
@@ -11,8 +11,8 @@ namespace FirstREST
         {
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { action = RouteParameter.Optional, id = RouteParameter.Optional }
             );
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.

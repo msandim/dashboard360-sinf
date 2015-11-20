@@ -1,0 +1,93 @@
+﻿<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Sales Dashboard</h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Info boxes -->
+        <div class="row">
+            
+            <div class="col-md-6">
+
+                <!-- Net sales Line chart -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Net Sales Global Value</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="net_sales_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+
+                <!-- Sales by category Donut gchart -->
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Sales by Category</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="sales_by_category_chart" style="height: 286px; width: 572px;" width="572" height="286"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.info-box -->
+                
+            </div>
+            <!-- /.info-box -->
+
+            <div class="col-md-6">
+
+                <!-- Top 10 customers -->
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Top 10 Costumers</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                                <div class="col-sm-12">
+                                    <table id="top_customers" class="table table-bordered table-hover dataTable" role="grid">
+                                        
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        
+        
+            
+        </div>
+    </section>
+</div>
+
+<!-- jQuery 2.1.4 -->
+<script src="~/Content/themes/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="~/Content/themes/bootstrap/js/bootstrap.min.js"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="~/Content/themes/plugins/chartjs/Chart.min.js"></script>
+
+<script src="~/Content/sales.js"></script>
+
