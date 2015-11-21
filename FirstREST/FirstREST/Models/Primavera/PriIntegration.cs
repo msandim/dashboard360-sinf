@@ -31,21 +31,14 @@ namespace Dashboard.Models.Primavera
             }
         }
 
-        private static List<ClassLine> GetBalanceSheet(Nullable<int> year)
+        public static List<ClassLine> GetBalanceSheet()
         {
             List<ClassLine> output = new List<ClassLine>();
 
             if (!InitializeCompany())
                 return output;
 
-            String query = "SELECT * FROM AcumuladosContas ";
-
-            if (year.HasValue)
-                query += "WHERE Ano = " + year.Value.ToString();
-            else
-                query += "ORDER BY Ano DESC";
-
-            StdBELista balanceSheetQuery = PriEngine.Engine.Consulta(query);
+            StdBELista balanceSheetQuery = PriEngine.Engine.Consulta("SELECT * FROM AcumuladosContas ORDER BY Ano DESC");
 
             while (!balanceSheetQuery.NoFim())
             {
