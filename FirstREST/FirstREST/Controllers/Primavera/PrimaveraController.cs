@@ -61,7 +61,7 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("balance_sheet")]
-        public IEnumerable<ClassLine> GetBalanceSheet()
+        public Dictionary<String, ClassLine> GetBalanceSheet()
         {
             return PriIntegration.GetBalanceSheet();
         }

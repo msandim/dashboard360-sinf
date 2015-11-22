@@ -39,13 +39,15 @@ namespace Dashboard.Models
             var response = await client.GetAsync(uri);
 
             // Get response:
-            var balance_table = await response.Content.ReadAsAsync<IEnumerable<ClassLine>>();
+            Dictionary<string, ClassLine> balance_table = await response.Content.ReadAsAsync<Dictionary<string, ClassLine>>();
 
             BalanceSheet balance = new BalanceSheet();
 
+            //colocar numa hashtable
+            //fazer as somas das colunas para as linhas que interessam
             //make the balance calculation
             var query = from item in balance_table 
-                        select item.mes13DB.Value ;
+                        select item..mes13DB.Value ;
 
 
             return query.Sum();

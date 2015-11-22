@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Dashboard.Models.Primavera.Model
 {
@@ -39,5 +40,9 @@ namespace Dashboard.Models.Primavera.Model
         //-----------------------------------------
         //7 - 6 ganhos de nao sei que
         //...revenues
+        BalanceSheet(Dictionary<string, ClassLine> balance_sheet)
+        {
+
+        }
     }
 }

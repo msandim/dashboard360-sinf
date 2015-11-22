@@ -31,9 +31,9 @@ namespace Dashboard.Models.Primavera
             }
         }
 
-        public static List<ClassLine> GetBalanceSheet()
+        public static Dictionary<string, ClassLine> GetBalanceSheet()
         {
-            List<ClassLine> output = new List<ClassLine>();
+            Dictionary<string, ClassLine> output = new Dictionary<string, ClassLine>();
 
             if (!InitializeCompany())
                 return output;
@@ -97,7 +97,7 @@ namespace Dashboard.Models.Primavera
                 line.tipoLancamento = balanceSheetQuery.Valor("TipoLancamento");
                 line.naturezaOR = balanceSheetQuery.Valor("NaturezaOR");
                 
-                output.Add(line);
+                output.Add(line.ano + line.conta.ToString(), line);
                 balanceSheetQuery.Seguinte();
             }
             return output;
