@@ -5,6 +5,8 @@ namespace Dashboard.Models.Net
 {
     public class PathBuilder : IPathBuilder
     {
+        public Path BasePath { get; set; }
+        public String Action { get; set; }
         public DateTime InitialDate { get; set; }
         public DateTime FinalDate { get; set; }
         public String DocumentType { get; set; }
@@ -12,7 +14,10 @@ namespace Dashboard.Models.Net
         
         public Path Build()
         {
-            Path path = new Path(PathConstants.BASE_PATH_API_PRIMAVERA);
+            Path path = BasePath != null ? BasePath : PathConstants.BasePath;
+
+            if (Action != null)
+                path.BasePath += "/" + Action;
 
             if (InitialDate == null && FinalDate == null && DocumentType == null)
                 return path;
@@ -41,6 +46,19 @@ namespace Dashboard.Models.Net
         private String FormatDate(DateTime date)
         {
             return date.ToString("yyyy-MM-dd");
+        }
+
+        public static Path Build(Path basePath, String action, DateTime initialDate, DateTime finalDate, String documentType)
+        {
+            PathBuilder builder = new PathBuilder();
+
+            builder.BasePath = basePath;
+            builder.Action = action;
+            builder.InitialDate = initialDate;
+            builder.FinalDate = finalDate;
+            builder.DocumentType = documentType;
+
+            return builder.Build();
         }
     }
 }

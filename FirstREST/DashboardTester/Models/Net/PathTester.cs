@@ -10,13 +10,13 @@ namespace DashboardTester.Models.Net
         [TestMethod]
         public void TestPath()
         {
-            Path path = new Path(PathConstants.BASE_PATH_API_PRIMAVERA);
+            Path path = PathConstants.BasePathAPIPrimavera;
 
             path.AddParameter("initialDate", "2015-01-02");
             path.AddParameter("finalDate", "2015-01-05");
 
             String actual = path.ToString();
-            String expected = PathConstants.BASE_PATH_API_PRIMAVERA + "?initialDate=2015-01-02&finalDate=2015-01-05";
+            String expected = PathConstants.BasePathAPIPrimavera + "?initialDate=2015-01-02&finalDate=2015-01-05";
 
             Assert.AreEqual(expected, actual);
         }

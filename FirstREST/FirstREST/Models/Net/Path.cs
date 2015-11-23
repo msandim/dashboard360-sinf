@@ -38,7 +38,7 @@ namespace Dashboard.Models.Net
             this.dirty = true;
         }
 
-        public String ToString()
+        public override String ToString()
         {
             if(this.dirty)
             {
