@@ -22,7 +22,8 @@ namespace Dashboard.Models
             var response = await client.GetAsync(uri);
 
             // Get response:
-            var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            var pendings = new List<Pending>();
 
             // Get a query list of all net sale values:
             var payablesQuery = from pending in pendings
@@ -45,7 +46,8 @@ namespace Dashboard.Models
             var response = await client.GetAsync(uri);
 
             // Get response:
-            var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            var pendings = new List<Pending>();
 
             // Get a query list of all net sale values:
             var receivablesQuery = from pending in pendings
