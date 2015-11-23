@@ -266,7 +266,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Net\NetHelper.cs" />
+    <Compile Include="Models\Net\Path.cs" />
+    <Compile Include="Models\PagesData\BalanceSheet.cs" />
+    <Compile Include="Models\PagesData\Metric.cs" />
+    <Compile Include="Models\PagesData\Year.cs" />
+    <Compile Include="Models\Net\IPathBuilder.cs" />
+    <Compile Include="Models\Net\PathBuilder.cs" />
+    <Compile Include="Models\Net\PathConstants.cs" />
     <Compile Include="Models\Primavera\Model\Absence.cs" />
+    <Compile Include="Models\Primavera\Model\ClassLine.cs" />
     <Compile Include="Models\Primavera\Model\Employee.cs" />
     <Compile Include="Models\Primavera\Model\GenderCounter.cs" />
     <Compile Include="Models\Primavera\Model\Money.cs" />
@@ -277,7 +286,6 @@
     <Compile Include="Models\Primavera\Model\Sale.cs" />
     <Compile Include="Models\Primavera\PriIntegration.cs" />
     <Compile Include="Models\Primavera\PriEngine.cs" />
-    <Compile Include="Models\BaseURL.cs" />
     <Compile Include="Models\FinancialManager.cs" />
     <Compile Include="Models\PurchasesManager.cs" />
     <Compile Include="Models\SalesManager.cs" />

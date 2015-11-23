@@ -52,13 +52,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Models\PagesData\BalanceSheetTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Net\PathBuilderTester.cs" />
+    <Compile Include="Models\Net\PathTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FirstREST\Dashboard.csproj">
       <Project>{5cb9423f-6a15-49a7-8855-a3ba947d56c3}</Project>
       <Name>Dashboard</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
