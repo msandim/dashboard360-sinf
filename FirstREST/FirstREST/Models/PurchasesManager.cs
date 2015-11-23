@@ -22,7 +22,8 @@ namespace Dashboard.Models
             var response = await client.GetAsync(uri);
 
             // Get response:
-            var purchases = await response.Content.ReadAsAsync<IEnumerable<Purchase>>();
+            //var purchases = await response.Content.ReadAsAsync<IEnumerable<Purchase>>();
+            var purchases = new List<Purchase>();
 
             var query = from item in purchases
                         select item.Value.Value;
@@ -43,7 +44,8 @@ namespace Dashboard.Models
             var response = await client.GetAsync(uri);
 
             // Get response:
-            var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
+            var pendings = new List<Pending>();
 
             var creditNote = from item in pendings
                              where item.DocumentType == "VNC"
