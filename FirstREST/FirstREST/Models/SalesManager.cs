@@ -20,6 +20,38 @@ namespace Dashboard.Models
         {
             return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd") + "&documentType=" + documentType;
         }
+        private static String BuildRequestURI(String controller)
+        {
+            return BASE_URI + controller;
+        }
+
+        private static async Task<Double> GetBalanceSheet()
+        {
+            DateTime initialDate = new DateTime();
+            DateTime finalDate = new DateTime();
+            // Create a HTTP Client:
+            var client = new HttpClient();
+
+            // Build request URI:
+            var uri = BuildRequestURI("/Balance_sheet");
+
+            // Make a request:
+            var response = await client.GetAsync(uri);
+
+            // Get response:
+            Dictionary<string, ClassLine> balance_table = await response.Content.ReadAsAsync<Dictionary<string, ClassLine>>();
+
+            BalanceSheet balance = new BalanceSheet();
+
+            //colocar numa hashtable
+            //fazer as somas das colunas para as linhas que interessam
+            //make the balance calculation
+            var query = from item in balance_table 
+                        select item..mes13DB.Value ;
+
+
+            return query.Sum();
+        }
 
         private static async Task<Double> GetSaleValues(int year)
         {

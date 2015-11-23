@@ -59,5 +59,11 @@ namespace Dashboard.Controllers.Primavera
         {
             return PriIntegration.GetSales(initialDate, finalDate, documentType);
         }
+
+        [ActionName("balance_sheet")]
+        public Dictionary<String, ClassLine> GetBalanceSheet()
+        {
+            return PriIntegration.GetBalanceSheet();
+        }
     }
 }
