@@ -10,20 +10,9 @@ namespace Dashboard.Models
 
     public class PurchasesManager
     {
-        private const String BASE_URI = BaseURL.VALUE + "/api";
-
-        private static String BuildRequestURI(String controller, DateTime initialDate, DateTime finalDate)
-        {
-            return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd");
-        }
-        private static String BuildRequestURI(String controller, DateTime initialDate, DateTime finalDate, String documentType)
-        {
-            return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd") + "&documentType=" + documentType;
-        }
-
         private static async Task<Double> GetPurchaseValues(DateTime initialDate, DateTime finalDate)
         {
-            // Create a HTTP Client:
+            /*// Create a HTTP Client:
             var client = new HttpClient();
 
             // Build request URI:
@@ -38,12 +27,13 @@ namespace Dashboard.Models
             var query = from item in purchases
                         select item.Value.Value;
 
-            return query.Sum();
+            return query.Sum();*/
+            return 0;
         }
 
         private static async Task<Double> GetPendingValues(DateTime initialDate, DateTime finalDate)
         {
-            // Create a HTTP Client:
+            /*// Create a HTTP Client:
             var client = new HttpClient();
 
             // Build request URI:
@@ -63,7 +53,8 @@ namespace Dashboard.Models
                             where item.DocumentType == "VND"
                             select item.PendingValue.Value;
 
-            return debitNote.Sum() - creditNote.Sum();
+            return debitNote.Sum() - creditNote.Sum();*/
+            return 0;
         }
 
         public static async Task<Double> GetNetPurchases(DateTime initialDate, DateTime finalDate)

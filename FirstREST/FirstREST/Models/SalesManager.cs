@@ -10,52 +10,9 @@ namespace Dashboard.Models
 
     public class SalesManager
     {
-        private const String BASE_URI = BaseURL.VALUE + "/api";
-
-        private static String BuildRequestURI(String controller, DateTime initialDate, DateTime finalDate)
-        {
-            return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd");
-        }
-        private static String BuildRequestURI(String controller, DateTime initialDate, DateTime finalDate, String documentType)
-        {
-            return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd") + "&documentType=" + documentType;
-        }
-        private static String BuildRequestURI(String controller)
-        {
-            return BASE_URI + controller;
-        }
-
-        private static async Task<Double> GetBalanceSheet()
-        {
-            DateTime initialDate = new DateTime();
-            DateTime finalDate = new DateTime();
-            // Create a HTTP Client:
-            var client = new HttpClient();
-
-            // Build request URI:
-            var uri = BuildRequestURI("/Balance_sheet");
-
-            // Make a request:
-            var response = await client.GetAsync(uri);
-
-            // Get response:
-            Dictionary<string, ClassLine> balance_table = await response.Content.ReadAsAsync<Dictionary<string, ClassLine>>();
-
-            BalanceSheet balance = new BalanceSheet();
-
-            //colocar numa hashtable
-            //fazer as somas das colunas para as linhas que interessam
-            //make the balance calculation
-            var query = from item in balance_table 
-                        select item..mes13DB.Value ;
-
-
-            return query.Sum();
-        }
-
         private static async Task<Double> GetSaleValues(int year)
         {
-            DateTime initialDate = new DateTime();
+            /*DateTime initialDate = new DateTime();
             DateTime finalDate = new DateTime();
             // Create a HTTP Client:
             var client = new HttpClient();
@@ -73,12 +30,13 @@ namespace Dashboard.Models
             var query = from item in sales
                         select item.Value.Value;
 
-            return query.Sum();
+            return query.Sum();*/
+            return 0;
         }
 
         private static async Task<Double> GetPendingValues(DateTime initialDate, DateTime finalDate)
         {
-            // Create a HTTP Client:
+            /*// Create a HTTP Client:
             var client = new HttpClient();
 
             // Build request URI:
@@ -99,7 +57,9 @@ namespace Dashboard.Models
                             where item.DocumentType == "ND"
                             select item.PendingValue.Value;
 
-            return debitNote.Sum() - creditNote.Sum();
+            return debitNote.Sum() - creditNote.Sum();*/
+
+            return 0;
         }
 
         public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)

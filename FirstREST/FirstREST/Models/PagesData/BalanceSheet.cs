@@ -53,8 +53,8 @@ namespace Dashboard.Models.PagesData
 
             for (int i = 0; i < 12; i++)
             {
-                Double month = class_data.values[i + 16] - class_data.values[i + 1]; //CR - DB 
-                year_data.addMonth(month);
+                //Double month = class_data.values[i + 16] - class_data.values[i + 1]; //CR - DB 
+                //year_data.addMonth(month);
             }
 
             return year_data;

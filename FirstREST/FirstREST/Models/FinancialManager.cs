@@ -10,17 +10,9 @@ namespace Dashboard.Models
 
     public class FinancialManager
     {
-        private const String BASE_URI = BaseURL.VALUE + "/api/";
-
-        private static String BuildRequestURI(String controller, DateTime initialDate, DateTime finalDate)
-        {
-            return BASE_URI + controller + "?initialDate=" + initialDate.ToString("yyyy-MM-dd") + "&finalDate=" + finalDate.ToString("yyyy-MM-dd");
-        }
-
- 
         public static async Task<Double> GetPayables(DateTime initialDate, DateTime finalDate)
         {
-            // Create a HTTP Client:
+            /*// Create a HTTP Client:
             var client = new HttpClient();
 
             // Build request URI:
@@ -37,12 +29,13 @@ namespace Dashboard.Models
                                 select pending.PendingValue.Value;
 
             // Sum all values in the query list:
-            return payablesQuery.Sum();
+            return payablesQuery.Sum();*/
+            return 0;
         }
 
         public static async Task<Double> GetReceivables(DateTime initialDate, DateTime finalDate)
         {
-            // Create a HTTP Client:
+            /*// Create a HTTP Client:
             var client = new HttpClient();
 
             // Build request URI:
@@ -59,7 +52,8 @@ namespace Dashboard.Models
                                     select pending.PendingValue.Value;
 
             // Sum all values in the query list:
-            return receivablesQuery.Sum();
+            return receivablesQuery.Sum();*/
+            return 0;
         }
     }
 }
