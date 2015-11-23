@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dashboard.Models.Primavera.Model;
 
-namespace Dashboard.Models.Primavera.Model
+namespace Dashboard.Models.PagesData
 {
     public class BalanceSheet
     {
@@ -52,13 +53,7 @@ namespace Dashboard.Models.Primavera.Model
 
             for (int i = 0; i < 12; i++)
             {
-                Double month;
-
-                if (t_left_side)
-                    month = class_data.values[i + 16] - class_data.values[i + 1]; //CR - DB 
-                else
-                    month = class_data.values[i + 1] - class_data.values[i + 16]; //DB - CR 
-
+                Double month = class_data.values[i + 16] - class_data.values[i + 1]; //CR - DB 
                 year_data.addMonth(month);
             }
 
