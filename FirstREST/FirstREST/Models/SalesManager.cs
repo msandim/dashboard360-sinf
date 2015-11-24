@@ -33,22 +33,16 @@ namespace Dashboard.Models
             var client = new HttpClient();
 
             // Build request URI:
-            var uri = BuildRequestURI("/Balance_sheet");
+            var uri = BuildRequestURI("/Sale", initialDate, finalDate, "FA");
 
             // Make a request:
             var response = await client.GetAsync(uri);
 
             // Get response:
-            Dictionary<string, ClassLine> balance_table = await response.Content.ReadAsAsync<Dictionary<string, ClassLine>>();
+            var sales = await response.Content.ReadAsAsync<IEnumerable<Purchase>>();
 
-            BalanceSheet balance = new BalanceSheet();
-
-            //colocar numa hashtable
-            //fazer as somas das colunas para as linhas que interessam
-            //make the balance calculation
-            var query = from item in balance_table 
-                        select item..mes13DB.Value ;
-
+            var query = from item in sales
+                        select item.Value.Value;
 
             return query.Sum();
         }

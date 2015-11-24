@@ -7,16 +7,136 @@ namespace Dashboard.Models.PagesData
     public class BalanceSheet
     {
         public String moeda { get; set; }
-        Dictionary<String, Metric> metrics;
+        public Dictionary<String, Metric> metrics;
 
-        public BalanceSheet(Dictionary<int, Dictionary<string, ClassLine>> balance_sheet) 
+        public BalanceSheet(Dictionary<int, Dictionary<string, ClassLine>> balance_sheet)       
         {
             //prepare a list with the metrics
-            Dictionary<String, Metric> metrics = new Dictionary<string, Metric>();
+            metrics = new Dictionary<string, Metric>();
+
+            prepareDirectMetrics();
             
-            metrics.Add("cash", new Metric("cash", "11", true));
-            metrics.Add("accounts_receivable", new Metric("accounts_receivable", "21", true));
-            metrics.Add("accounts_payable", new Metric("accounts_payable", "22", true));
+            foreach (KeyValuePair<int, Dictionary<string, ClassLine>> entry in balance_sheet) //for each year
+            {
+                moeda = entry.Value["11"].moeda; //methods for the first class line - calculate moeda
+                Year year_data; //for each year calculate all the metrics
+               
+                foreach (KeyValuePair<String, Metric> metric in metrics)
+                {
+                    Metric in_analysis_metric = metric.Value; //for each metric
+
+                    ClassLine class_data;
+                    if(entry.Value.TryGetValue(in_analysis_metric.class_code, out class_data)) //go get the class line obtained from primavera
+                    {
+                        year_data = calculateMetric(entry.Key, class_data, in_analysis_metric.left_T_side); //calculate the metric for the year
+                        in_analysis_metric.years_data.Add(year_data); //add year to metric
+                    }
+                    //metrics[metric.Key] = in_analysis_metric; //consult metric to the dictionary for update -> overrides old value if exists
+                }
+            }
+
+            prepareIndirectMetrics();
+        }
+
+        private void prepareDirectMetrics()
+        {
+            //-- 1 -- Meios financeiros liquidos
+            metrics.Add("cash", new Metric("cash", "11", true)); //************************
+            metrics.Add("depositos ordem", new Metric("depositos ordem", "12", true));
+            metrics.Add("depositos prazo", new Metric("depositos prazo", "13", true));
+            metrics.Add("outros depositos", new Metric("outros depositos", "14", true));
+            metrics.Add("titulos negociaveis", new Metric("titulos negociaveis", "15", true));
+            metrics.Add("outras aplicacoes", new Metric("outras aplicacoes", "18", true));
+            metrics.Add("ajustes de aplicacoes", new Metric("ajustes de aplicacoes", "19", true));
+
+            //-- 2 -- Contas a receber e a pagar
+            metrics.Add("accounts_receivable", new Metric("accounts_receivable", "21", true)); //************************
+            metrics.Add("accounts_payable", new Metric("accounts_payable", "22", true)); //************************
+            metrics.Add("emprestimos obtidos", new Metric("emprestimos obtidos", "23", true));
+            metrics.Add("estados e outros entes", new Metric("estados e outros entes", "24", true));
+            metrics.Add("acionistas", new Metric("acionistas", "25", true));
+            metrics.Add("outros devedores e credores", new Metric("outros devedores e credores", "26", true));
+            metrics.Add("acrescimos e diferimentos", new Metric("acrescimos e diferimentos", "27", true));
+            metrics.Add("ajuste dividas a receber", new Metric("ajuste dividas a receber", "28", true));
+            metrics.Add("provisoes", new Metric("provisoes", "29", true));
+
+            //-- 3 -- Inventários e activos biologicos                     
+            metrics.Add("purchases", new Metric("purchases", "31", true)); //***************************
+            metrics.Add("mercadorias", new Metric("mercadorias", "32", true));
+            metrics.Add("produtos acabados", new Metric("produtos acabados", "33", true));
+            metrics.Add("subprodutos", new Metric("subprodutos", "34", true));
+            metrics.Add("produtos e trabalhos", new Metric("produtos e trabalhos", "35", true));
+            metrics.Add("materias primas", new Metric("materias primas", "36", true));
+            metrics.Add("adiantamento", new Metric("adiantamento", "37", true));
+            metrics.Add("regularizacao", new Metric("regularizacao", "38", true));
+            metrics.Add("ajustamentos", new Metric("ajustamentos", "39", true));
+
+            //-- 4 -- Investimentos
+            metrics.Add("investimentos", new Metric("investimentos", "41", true));
+            metrics.Add("imobilizacoes1", new Metric("imobilizacoes1", "42", true));
+            metrics.Add("imobilizacoes2", new Metric("imobilizacoes2", "43", true));
+            metrics.Add("imobilizacoes3", new Metric("imobilizacoes3", "44", true));
+            metrics.Add("imobilizacoes4", new Metric("imobilizacoes4", "45", true));
+            metrics.Add("imobilizacoes5", new Metric("imobilizacoes5", "46", true));
+            metrics.Add("amortizacoes", new Metric("amortizacoes", "48", true));
+            metrics.Add("ajust finan", new Metric("ajust finan", "49", true));
+
+            //-- 5 -- capital proprio e resultados                    //**********************************
+            metrics.Add("capital", new Metric("capital", "51", true));
+            metrics.Add("acoes quotas proprias", new Metric("acoes quotas proprias", "52", true));
+            metrics.Add("prestacoes", new Metric("prestacoes", "53", true));
+            metrics.Add("premio emissao acoes", new Metric("premio emissao acoes", "54", true));
+            metrics.Add("ajustes partes cap", new Metric("ajustes partes cap", "55", true));
+            metrics.Add("reservas reav", new Metric("reservas reav", "56", true));
+            metrics.Add("reservas", new Metric("reservas", "57", true));
+            metrics.Add("resultados transitados", new Metric("resultados transitados", "59", true));
+
+            //-- 6 -- gastos
+            metrics.Add("custo merc. vend", new Metric("Custo merc. vend", "61", true)); //***************************
+            metrics.Add("forn serv externos", new Metric("Forn serv externos", "62", true));
+            metrics.Add("impostos", new Metric("impostos", "63", true));
+            metrics.Add("custos pessoal", new Metric("custos pessoal", "64", true)); //***************************
+            metrics.Add("outros custos", new Metric("outros custos", "65", true));
+            metrics.Add("amortizacoes e ajust externo", new Metric("amortizacoes e ajust externo", "66", true));
+            metrics.Add("provisoes exercicio", new Metric("provisoes exercicio", "67", true));
+            metrics.Add("custos perdas financeiras", new Metric("custos perdas financeiras", "68", true));
+            metrics.Add("custos perdas extra", new Metric("custos perdas extra", "69", true));
+
+            //-- 7 -- vendas
+            metrics.Add("sales", new Metric("sales", "71", true)); //**************************************
+            metrics.Add("prestacoes serv", new Metric("prestacoes serv", "72", true));
+            metrics.Add("proveitos suplementares", new Metric("prestacoes serv", "73", true));
+            metrics.Add("subsidios explo", new Metric("subsidios explo", "74", true));
+            metrics.Add("trabalhos propria", new Metric("trabalhos propria", "75", true));
+            metrics.Add("outros proveitos e ganhos", new Metric("outros proveitos e ganhos", "76", true));
+            metrics.Add("reversoes", new Metric("reversoes", "77", true));
+            metrics.Add("proveitos e ganhos", new Metric("proveitos e ganhos", "78", true));
+            metrics.Add("proveitos e ganhos extra", new Metric("proveitos e ganhos extra", "79", true));
+
+            //-- 8 -- resultados
+            metrics.Add("resultados operacionais", new Metric("resultados operacionais", "81", true));
+            metrics.Add("resultados financeiros", new Metric("resultados financeiros", "82", true));
+            metrics.Add("resultados correntes", new Metric("resultados correntes", "83", true));
+            metrics.Add("resultados extra", new Metric("resultados extra", "84", true));
+            metrics.Add("resultados antes imposto", new Metric("resultados antes imposto", "85", true));
+            metrics.Add("imposto sem rendimento do exercicio", new Metric("imposto sem rendimento do exercicio", "86", true));
+            metrics.Add("resultado liquido do exercicio", new Metric("resultado liquido do exercicio", "88", true));
+            metrics.Add("dividendos antecipados", new Metric("dividendos antecipados", "89", true));
+
+            //-- 9 -- mais coisas fofas
+            metrics.Add("contas reflectidas", new Metric("contas reflectidas", "91", true));
+            metrics.Add("periodizacao custos", new Metric("periodizacao custos", "92", true));
+            metrics.Add("existencias", new Metric("existencias", "93", true));
+            metrics.Add("centro custo", new Metric("centro custo", "94", true));
+            metrics.Add("custo producao", new Metric("custo producao", "95", true));
+            metrics.Add("desvios", new Metric("desvios", "96", true));
+            metrics.Add("dif incorporacao", new Metric("dif incorporacao", "97", true));
+            metrics.Add("resultados funcoes", new Metric("resultados funcoes", "98", true));
+        }
+
+        private void prepareIndirectMetrics()
+        {
+            calculateIndirectMetric("inventario", new List<string>(new String[] { "cash", "accounts_receivable" }));
             //metrics.Add("inventory", new Metric("inventory", "31", true));
             //metrics.Add("total_current_assets", new Metric("total_current_assets", "?", true));
             //metrics.Add("total_non_current_assets", new Metric("total_non_current_assets", "?", true));
@@ -28,22 +148,19 @@ namespace Dashboard.Models.PagesData
             //metrics.Add("net_worth", new Metric("net_worth", "?", false));
             //metrics.Add("total_liabilities_and_net_worth", new Metric("total_liabilities_and_net_worth", "?", false));
 
-            //calculate the metrics
-            foreach (KeyValuePair<int, Dictionary<string, ClassLine>> entry in balance_sheet) //for each year
+        }
+
+        private void calculateIndirectMetric(String metric_name, List<String> submetrics_names)
+        {
+            Metric result_metric = new Metric(metric_name, metric_name, true);
+
+            foreach(String submetric_name in submetrics_names)
             {
-                Year year_data;
-
-                //calculate each metric - cash
-                foreach (KeyValuePair<String, Metric> metric in metrics)
-                {
-                    Metric in_analysis_metric = metric.Value;
-
-                    ClassLine class_data;
-                    entry.Value.TryGetValue(in_analysis_metric.class_code, out class_data);
-                    year_data = calculateMetric(entry.Key, class_data, in_analysis_metric.left_T_side);
-                    in_analysis_metric.years_data.Add(year_data);
-                }
+                Metric submetric = metrics[submetric_name];
+                result_metric = result_metric + submetric;
             }
+
+            metrics.Add(metric_name, result_metric);
         }
 
         private Year calculateMetric(int year, ClassLine class_data, bool t_left_side)
@@ -53,10 +170,9 @@ namespace Dashboard.Models.PagesData
 
             for (int i = 0; i < 12; i++)
             {
-                Double month = class_data.values[i + 16] - class_data.values[i + 1]; //CR - DB 
+                Double month = class_data.values[i + 1] - class_data.values[i + 17]; //CR - DB 
                 year_data.addMonth(month);
             }
-
             return year_data;
         }
     }

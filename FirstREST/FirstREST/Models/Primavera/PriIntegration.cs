@@ -31,76 +31,101 @@ namespace Dashboard.Models.Primavera
             }
         }
 
-        public static Dictionary<string, ClassLine> GetBalanceSheet()
+        public static Dictionary<int, Dictionary<string, ClassLine>> GetBalanceSheet()
         {
-            Dictionary<string, ClassLine> output = new Dictionary<string, ClassLine>();
+            //OUTPUT
+            Dictionary<int, Dictionary<string, ClassLine>> output = new Dictionary<int, Dictionary<string, ClassLine>>();
 
+            //STABLISH PRIMAVERA COMMUNICATION
             if (!InitializeCompany())
                 return output;
-
             StdBELista balanceSheetQuery = PriEngine.Engine.Consulta("SELECT * FROM AcumuladosContas ORDER BY Ano DESC");
+
+            //COMPLETE OUTPUT
+            Dictionary<string, ClassLine> year_balance = new Dictionary<string, ClassLine>();
+            int past_year = 0;
 
             while (!balanceSheetQuery.NoFim())
             {
                 ClassLine line = new ClassLine();
-
                 line.ano = balanceSheetQuery.Valor("Ano");
-                line.conta = balanceSheetQuery.Valor("Conta");
-                line.moeda = balanceSheetQuery.Valor("Moeda");
-                line.mes00CR = balanceSheetQuery.Valor("Mes00CR");
-                line.mes01CR = balanceSheetQuery.Valor("Mes01CR");
-                line.mes02CR = balanceSheetQuery.Valor("Mes02CR");
-                line.mes03CR = balanceSheetQuery.Valor("Mes03CR");
-                line.mes04CR = balanceSheetQuery.Valor("Mes04CR");
-                line.mes05CR = balanceSheetQuery.Valor("Mes05CR");
-                line.mes06CR = balanceSheetQuery.Valor("Mes06CR");
-                line.mes07CR = balanceSheetQuery.Valor("Mes07CR");
-                line.mes08CR = balanceSheetQuery.Valor("Mes08CR");
-                line.mes09CR = balanceSheetQuery.Valor("Mes09CR");
-                line.mes10CR = balanceSheetQuery.Valor("Mes10CR");
-                line.mes11CR = balanceSheetQuery.Valor("Mes11CR");
-                line.mes12CR = balanceSheetQuery.Valor("Mes12CR");
-                line.mes13CR = balanceSheetQuery.Valor("Mes13CR");
-                line.mes14CR = balanceSheetQuery.Valor("Mes14CR");
-                line.mes15CR = balanceSheetQuery.Valor("Mes15CR");
 
-                line.mes00DB = balanceSheetQuery.Valor("Mes00DB");
-                line.mes01DB = balanceSheetQuery.Valor("Mes01DB");
-                line.mes02DB = balanceSheetQuery.Valor("Mes02DB");
-                line.mes03DB = balanceSheetQuery.Valor("Mes03DB");
-                line.mes04DB = balanceSheetQuery.Valor("Mes04DB");
-                line.mes05DB = balanceSheetQuery.Valor("Mes05DB");
-                line.mes06DB = balanceSheetQuery.Valor("Mes06DB");
-                line.mes07DB = balanceSheetQuery.Valor("Mes07DB");
-                line.mes08DB = balanceSheetQuery.Valor("Mes08DB");
-                line.mes09DB = balanceSheetQuery.Valor("Mes09DB");
-                line.mes10DB = balanceSheetQuery.Valor("Mes10DB");
-                line.mes11DB = balanceSheetQuery.Valor("Mes11DB");
-                line.mes12DB = balanceSheetQuery.Valor("Mes12DB");
-                line.mes13DB = balanceSheetQuery.Valor("Mes13DB");
-                line.mes14DB = balanceSheetQuery.Valor("Mes14DB");
-                line.mes15DB = balanceSheetQuery.Valor("Mes15DB");
+                //CHECK IF IT IS A NEW YEAR TO CREATE A NEW BALANCE
+                if (line.ano != past_year && past_year != 0) //in the first case the years are different but we want to continue
+                {
+                    output.Add(past_year, year_balance);
+                    year_balance = new Dictionary<string, ClassLine>();
+                }
 
-                line.mes01OR = balanceSheetQuery.Valor("Mes01OR");
-                line.mes02OR = balanceSheetQuery.Valor("Mes02OR");
-                line.mes03OR = balanceSheetQuery.Valor("Mes03OR");
-                line.mes04OR = balanceSheetQuery.Valor("Mes04OR");
-                line.mes05OR = balanceSheetQuery.Valor("Mes05OR");
-                line.mes06OR = balanceSheetQuery.Valor("Mes06OR");
-                line.mes07OR = balanceSheetQuery.Valor("Mes07OR");
-                line.mes08OR = balanceSheetQuery.Valor("Mes08OR");
-                line.mes09OR = balanceSheetQuery.Valor("Mes09OR");
-                line.mes10OR = balanceSheetQuery.Valor("Mes10OR");
-                line.mes11OR = balanceSheetQuery.Valor("Mes11OR");
-                line.mes12OR = balanceSheetQuery.Valor("Mes12OR");
+                processLine(balanceSheetQuery, line);
+                if(line.tipoLancamento == "000")
+                    year_balance.Add(line.conta.ToString(), line);
 
-                line.tipoLancamento = balanceSheetQuery.Valor("TipoLancamento");
-                line.naturezaOR = balanceSheetQuery.Valor("NaturezaOR");
-                
-                output.Add(line.ano + line.conta.ToString(), line);
+                past_year = line.ano;
                 balanceSheetQuery.Seguinte();
             }
+
+            //if there are no more lines the cycle will end, so we have to add the data outside
+            output.Add(past_year, year_balance);
+
             return output;
+        }
+
+        public static void processLine(StdBELista balanceSheetQuery, ClassLine line)
+        {
+            line.conta = balanceSheetQuery.Valor("Conta");
+            line.moeda = balanceSheetQuery.Valor("Moeda");
+            
+            //line.values.Add(d);
+            line.values.Add((double) balanceSheetQuery.Valor("Mes00CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes01CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes02CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes03CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes04CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes05CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes06CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes07CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes08CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes09CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes10CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes11CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes12CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes13CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes14CR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes15CR"));
+
+            line.values.Add((double) balanceSheetQuery.Valor("Mes00DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes01DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes02DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes03DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes04DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes05DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes06DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes07DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes08DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes09DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes10DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes11DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes12DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes13DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes14DB"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes15DB"));
+
+            line.values.Add((double) balanceSheetQuery.Valor("Mes01OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes02OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes03OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes04OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes05OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes06OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes07OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes08OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes09OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes10OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes11OR"));
+            line.values.Add((double) balanceSheetQuery.Valor("Mes12OR"));
+
+            line.tipoLancamento = balanceSheetQuery.Valor("TipoLancamento");
+            line.naturezaOR = balanceSheetQuery.Valor("NaturezaOR");
         }
 
         // Pending payments:

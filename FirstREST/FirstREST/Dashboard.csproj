@@ -267,10 +267,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Primavera\Model\Absence.cs" />
+    <Compile Include="Models\PagesData\Metric.cs" />
+    <Compile Include="Models\PagesData\Year.cs" />
+    <Compile Include="Models\PagesData\BalanceSheet.cs" />
     <Compile Include="Models\Primavera\Model\Employee.cs" />
     <Compile Include="Models\Primavera\Model\GenderCounter.cs" />
     <Compile Include="Models\Primavera\Model\Money.cs" />
     <Compile Include="Models\Primavera\Model\OvertimeHours.cs" />
+    <Compile Include="Models\Primavera\Model\ClassLine.cs" />
     <Compile Include="Models\Primavera\Model\Pending.cs" />
     <Compile Include="Models\Primavera\Model\Product.cs" />
     <Compile Include="Models\Primavera\Model\Purchase.cs" />
