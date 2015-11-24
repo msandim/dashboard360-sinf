@@ -6,56 +6,33 @@ using System.Threading.Tasks;
 
 namespace Dashboard.Models
 {
+    using Models.Net;
     using Models.Primavera.Model;
 
     public class FinancialManager
     {
-        public static async Task<Double> GetPayables(DateTime initialDate, DateTime finalDate)
+        private static async Task<Double> GetPendings(String action, DateTime initialDate, DateTime finalDate)
         {
-            /*// Create a HTTP Client:
-            var client = new HttpClient();
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathAPIPrimavera, action, initialDate, finalDate);
+            var pendings = await NetHelper.MakeRequest<Pending>(path);
 
-            // Build request URI:
-            var uri = BuildRequestURI("Payable", initialDate, finalDate);
-
-            // Make a request:
-            var response = await client.GetAsync(uri);
-
-            // Get response:
-            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
-            var pendings = new List<Pending>();
-
-            // Get a query list of all net sale values:
-            var payablesQuery = from pending in pendings
+            // Get a query list of all pending values:
+            var pendingsQuery = from pending in pendings
                                 select pending.PendingValue.Value;
 
-            // Sum all values in the query list:
-            return payablesQuery.Sum();*/
-            return 0;
+            // Sum all the pendings:
+            return pendingsQuery.Sum();
+        }
+
+        public static async Task<Double> GetPayables(DateTime initialDate, DateTime finalDate)
+        {
+            return await GetPendings("payable", initialDate, finalDate);
         }
 
         public static async Task<Double> GetReceivables(DateTime initialDate, DateTime finalDate)
         {
-            /*// Create a HTTP Client:
-            var client = new HttpClient();
-
-            // Build request URI:
-            var uri = BuildRequestURI("Receivable", initialDate, finalDate);
-
-            // Make a request:
-            var response = await client.GetAsync(uri);
-
-            // Get response:
-            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
-            var pendings = new List<Pending>();
-
-            // Get a query list of all net sale values:
-            var receivablesQuery = from pending in pendings
-                                    select pending.PendingValue.Value;
-
-            // Sum all values in the query list:
-            return receivablesQuery.Sum();*/
-            return 0;
+            return await GetPendings("receivable", initialDate, finalDate);
         }
     }
 }

@@ -13,9 +13,6 @@ namespace DashboardTester.Models.PagesData
         {
             var balanceSheet = PriIntegration.GetBalanceSheet();
             //BalanceSheet sheet = new BalanceSheet();
-            int i = 0;
-
-            
         }
     }
 }

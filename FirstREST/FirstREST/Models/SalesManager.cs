@@ -1,75 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dashboard.Models
 {
-    using Models.Primavera.Model;
+    using Net;
+    using Primavera.Model;
 
     public class SalesManager
     {
-        private static async Task<Double> GetSaleValues(int year)
+        public class SalesByCategoryLine
         {
-            /*DateTime initialDate = new DateTime();
-            DateTime finalDate = new DateTime();
-            // Create a HTTP Client:
-            var client = new HttpClient();
+            public String FamilyId { get; set; }
+            public Double Total { get; set; }
 
-            // Build request URI:
-            var uri = BuildRequestURI("/Sale", initialDate, finalDate, "FA");
+            public SalesByCategoryLine(String familyId, Double total)
+            {
+                FamilyId = familyId;
+                Total = total;
+            }
+        }
 
-            // Make a request:
-            var response = await client.GetAsync(uri);
+        private static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
+        {
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathAPIPrimavera, "sale", initialDate, finalDate, "FA");
+            var sales = await NetHelper.MakeRequest<Sale>(path);
 
-            // Get response:
-            //var sales = await response.Content.ReadAsAsync<IEnumerable<Sale>>();
-            List<Sale> sales = new List<Sale>();
-
+            // Make a query, to select all monetary values of the Sales:
             var query = from item in sales
                         select item.Value.Value;
 
-            return query.Sum();*/
-            return 0;
+            // Calculate the sum:
+            return query.Sum();
         }
-
         private static async Task<Double> GetPendingValues(DateTime initialDate, DateTime finalDate)
         {
-            /*// Create a HTTP Client:
-            var client = new HttpClient();
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathAPIPrimavera, "receivable", initialDate, finalDate);
+            var pendings = await NetHelper.MakeRequest<Pending>(path);
 
-            // Build request URI:
-            var uri = BuildRequestURI("/Receivable", initialDate, finalDate);
-
-            // Make a request:
-            var response = await client.GetAsync(uri);
-
-            // Get response:
-            //var pendings = await response.Content.ReadAsAsync<IEnumerable<Pending>>();
-            var pendings = new List<Pending>();
-
-            var creditNote = from item in pendings
+            // Make a query, to select all monetary values of the Credit Notes:
+            var creditNotes = from item in pendings
                              where item.DocumentType == "NC"
                              select item.PendingValue.Value;
 
-            var debitNote = from item in pendings
+            // Make a query, to select all monetary values of the Debit Notes:
+            var debitNotes = from item in pendings
                             where item.DocumentType == "ND"
                             select item.PendingValue.Value;
 
-            return debitNote.Sum() - creditNote.Sum();*/
+            // Calculate the difference between the sum of the debit notes and the sum of the credit notes:
+            return debitNotes.Sum() - creditNotes.Sum();
+        }
+        public static async Task<Double> GetNetIncome(DateTime initialDate, DateTime finalDate)
+        {
+            // Get net sales:
+            var netSales = await GetNetSales(initialDate, finalDate);
 
-            return 0;
+            // Get the difference between debit and credit notes:
+            var pendingsSum = await GetPendingValues(initialDate, finalDate);
+
+            // Calculate the sum:
+            return netSales + pendingsSum;
         }
 
-        public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
+        public static async Task<IEnumerable<SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            int year = 0;
-            //var sales = await GetSaleValues(initialDate, finalDate);
-            var sales = await GetSaleValues(year);
-            var pendings = await GetPendingValues(initialDate, finalDate);
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathAPIPrimavera, "sale", initialDate, finalDate, "ECL"); // TODO check type of document
+            var sales = await NetHelper.MakeRequest<Sale>(path);
 
-            return sales + pendings;
+            // Perform query to order sales by descending order on value:
+            var topSalesQuery = from sale in sales
+                                group sale by sale.Product.FamilyId into family
+                                select new SalesByCategoryLine(family.Key, family.Select(s => s.Value.Value).Sum());
+
+            // Order by descending on total:
+            topSalesQuery = topSalesQuery.OrderByDescending(sale => sale.Total);
+
+            // Take the top limit:
+            return topSalesQuery.Take(limit);
         }
     }
 }

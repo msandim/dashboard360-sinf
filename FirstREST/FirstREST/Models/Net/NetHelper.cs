@@ -7,7 +7,7 @@ namespace Dashboard.Models.Net
 {
     public class NetHelper
     {
-        private static async Task<IEnumerable<T>> MakeRequest<T>(Path path)
+        public static async Task<IEnumerable<T>> MakeRequest<T>(Path path)
         {
             // Create a HTTP Client:
             var client = new HttpClient();

@@ -48,7 +48,7 @@ namespace Dashboard.Models.Net
             return date.ToString("yyyy-MM-dd");
         }
 
-        public static Path Build(Path basePath, String action, DateTime initialDate, DateTime finalDate, String documentType)
+        public static Path Build(Path basePath, String action, DateTime initialDate, DateTime finalDate, String documentType = null)
         {
             PathBuilder builder = new PathBuilder();
 

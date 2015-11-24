@@ -21,7 +21,7 @@ function load_sales_by_category() {
         data: {
             initialDate: formatDate(five_years_ago),
             finalDate: formatDate(today),
-            DocumentType: 'ECL'
+            limit: 5
         },
         success: function (data) {
             create_sales_by_category(data);
@@ -35,14 +35,12 @@ function load_sales_by_category() {
 function get_load_sales(initDate, finalDate) {
     var result = "failed";
     $.ajax({
-        url: 'http://localhost:49822/api/primavera/sale',
+        url: 'http://localhost:49822/api/sales/net_income',
         type: 'Get',
         async: false,
         data: {
             initialDate: formatDate(initDate),
-            finalDate: formatDate(finalDate),
-            DocumentType: 'ECL'
-
+            finalDate: formatDate(finalDate)
         },
         success: function (data) {
             result = data;
@@ -55,16 +53,11 @@ function get_load_sales(initDate, finalDate) {
 }
 
 function add_net_sales(data) {
-    var total = 0;
-
+    
     if (data == "failed")
         return -1;
 
-    for (var i = 0; i < data.length; i++)
-    {
-        total += data[i]["Value"]["Value"];
-    }
-    return total;
+    return data;
 }
 
 function create_net_sales() {
@@ -186,33 +179,17 @@ function create_net_sales_year(year) {
 function create_sales_by_category(data) {
     var ctx = $("#sales_by_category_chart").get(0).getContext("2d");
 
-    var values = [];
-    var label = "";
-    var value = "";
-    $.each(data, function () {
-        $.each(this, function (k, v) {
-            if (k == "Product")
-                label = v["FamilyId"];
-            else if (k == "Value")
-                value = v["Value"];
-        });
-
-        if (label in Object.keys(values)) 
-            values[label] += value;
-        else 
-            values[label] = value;
-    });
-
+    // Fill the pie data array:
     var pie_data = [];
-    var keys = Object.keys(values);
-    var i = 0;
-    for (var key in keys) {
-        pie_data[i] = {
-            value: values[keys[key]].toFixed(2),
-            color: "#"+((1<<24)*Math.random()|0).toString(16).slice(-6),
-            label: keys[key]
-        }
-        i++;
+    for (var index in data)
+    {
+        value = data[index];
+        pie_data[index] =
+            {
+                value: value.Total.toFixed(2),
+                color: "#" + ((1 << 24) * Math.random() | 0).toString(16).slice(-6),
+                label: value.FamilyId
+            };
     }
 
     var options = {
@@ -229,12 +206,11 @@ function load_top_customers() {
     var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1)
 
     $.ajax({
-        url: 'http://localhost:49822/api/primavera/sale',
+        url: 'http://localhost:49822/api/sales/top_costumers',
         type: 'Get',
         data: {
             initialDate: formatDate(five_years_ago),
-            finalDate: formatDate(today),
-            DocumentType: 'ECL'
+            finalDate: formatDate(today)
         },
         success: function (data) {
             create_top_customers(data);

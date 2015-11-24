@@ -23,11 +23,11 @@ namespace Dashboard.Controllers
             //Get receivables
             ViewBag.ReceivablesValue = await FinancialManager.GetReceivables(first, last);
 
-            //Get Net Purchases Gloval Value
+            //Get Net Purchases Global Value
             ViewBag.NetPurchasesValue = await PurchasesManager.GetNetPurchases(first, last);
 
-            //Get Net Sales Gloval Value
-            ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last);
+            //Get Net Sales Global Value
+            ViewBag.NetSalesValue = await SalesManager.GetNetIncome(first, last);
 
             //Get Labor Cost per Employee
             ViewBag.LaborCostValue = 0;
@@ -37,5 +37,3 @@ namespace Dashboard.Controllers
     }
 
 }
-
-
