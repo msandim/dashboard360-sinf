@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Dashboard.Controllers.Primavera
 {
-    using Dashboard.Models.Primavera;
-    using Dashboard.Models.Primavera.Model;
+    using Models.Primavera;
+    using Models.Primavera.Model;
 
     public class PrimaveraController : ApiController
     {

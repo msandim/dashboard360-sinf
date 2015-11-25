@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace Dashboard.Models.Net
 {
@@ -10,11 +9,10 @@ namespace Dashboard.Models.Net
         public DateTime InitialDate { get; set; }
         public DateTime FinalDate { get; set; }
         public String DocumentType { get; set; }
-        private Boolean firstParameter;
         
         public Path Build()
         {
-            Path path = BasePath != null ? BasePath : PathConstants.BasePath;
+            Path path = BasePath ?? PathConstants.BasePath;
 
             if (Action != null)
                 path.BasePath += "/" + Action;
@@ -50,13 +48,14 @@ namespace Dashboard.Models.Net
 
         public static Path Build(Path basePath, String action, DateTime initialDate, DateTime finalDate, String documentType = null)
         {
-            PathBuilder builder = new PathBuilder();
-
-            builder.BasePath = basePath;
-            builder.Action = action;
-            builder.InitialDate = initialDate;
-            builder.FinalDate = finalDate;
-            builder.DocumentType = documentType;
+            PathBuilder builder = new PathBuilder
+            {
+                BasePath = basePath,
+                Action = action,
+                InitialDate = initialDate,
+                FinalDate = finalDate,
+                DocumentType = documentType
+            };
 
             return builder.Build();
         }

@@ -127,7 +127,7 @@ function create_net_sales_year(year) {
     var may_value = add_net_sales(get_load_sales(new Date(year, 4, 1), new Date(year, 5, 1)));
     var june_value = add_net_sales(get_load_sales(new Date(year, 5, 1), new Date(year, 6, 1)));
     var july_value = add_net_sales(get_load_sales(new Date(year, 6, 1), new Date(year, 7, 1)));
-    var august_value = july_value + add_net_sales(new Date(year, 7, 1), new Date(year, 8, 1));
+    var august_value = july_value + add_net_sales(get_load_sales(new Date(year, 7, 1), new Date(year, 8, 1)));
     var september_value = add_net_sales(get_load_sales(new Date(year, 8, 1), new Date(year, 9, 1)));
     var october_value = add_net_sales(get_load_sales(new Date(year, 9, 1), new Date(year, 10, 1)));
     var november_value = add_net_sales(get_load_sales(new Date(year, 10, 1), new Date(year, 11, 1)));
@@ -210,7 +210,8 @@ function load_top_customers() {
         type: 'Get',
         data: {
             initialDate: formatDate(five_years_ago),
-            finalDate: formatDate(today)
+            finalDate: formatDate(today),
+            limit: 10
         },
         success: function (data) {
             create_top_customers(data);
@@ -232,48 +233,9 @@ function create_top_customers(data) {
     //Table body
     table.append('<tbody>');
 
-    //Rows
-    var clients = [];
-    var value = 0;
-    var clientId = "";
-    var clientName = "";
-    var found = false;
-    $.each(data, function () {
-        $.each(this, function (k, v) {
-            if (k == "ClientId")
-                clientId = v;
-            else if (k == "ClientName")
-                clientName = v;
-            else if (k == "Value")
-                value = v["Value"];
-        });
-
-
-        found = false;
-        for (var i = 0; i < clients.length; i++) {
-            //Client in array
-            if (clients[i].clientId == clientId) {
-                clients[i].value += value;
-                found = true;
-                break;
-            }
-        }
-        
-        //Client not in array
-        if (!found)
-            clients.push({ clientId: clientId, clientName: clientName, value: value });
-    });
-
-    //Sort
-    clients.sort(function (a, b) {
-        return parseFloat(b.value) - parseFloat(a.value);
-    });
-
-
     //Add top 10 rows
-    for (var i = 0; i < 10 && i < clients.length; i++) {
-        table.append('<tr role="row" class="odd"><td>' + clients[i].clientId + '</td><td>' + clients[i].clientName + '</td><td>' + clients[i].value.toFixed(2) + '</td></tr>');
-    }
+    for (var i = 0; i < data.length; i++)
+        table.append('<tr role="row" class="odd"><td>' + data[i].ClientId + '</td><td>' + data[i].ClientName + '</td><td>' + data[i].Total.toFixed(2) + '</td></tr>');
 
     //Table end body
     table.append('</tbody>');

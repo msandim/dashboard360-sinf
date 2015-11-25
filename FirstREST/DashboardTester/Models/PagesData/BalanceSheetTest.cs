@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dashboard.Models.PagesData;
-using Dashboard.Models.Primavera;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DashboardTester.Models.PagesData
 {
@@ -11,7 +8,7 @@ namespace DashboardTester.Models.PagesData
         [TestMethod]
         public void TestMethod1()
         {
-            var balanceSheet = PriIntegration.GetBalanceSheet();
+            //var balanceSheet = PriIntegration.GetBalanceSheet();
             //BalanceSheet sheet = new BalanceSheet();
         }
     }

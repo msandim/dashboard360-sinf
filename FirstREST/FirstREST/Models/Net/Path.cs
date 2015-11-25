@@ -1,54 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace Dashboard.Models.Net
 {
     public class Path
     {
-        private String basePath;
+        private String _basePath;
         public String BasePath
         {
             get
             {
-                return this.basePath;
+                return _basePath;
             }
             set
             {
-                this.basePath = value;
-                this.dirty = true;
+                _basePath = value;
+                _dirty = true;
             }
         }
 
-        private Dictionary<String, String> parameters;
-        private String cachedString;
-        private Boolean dirty;
+        private Dictionary<String, String> _parameters;
+        private String _cachedString;
+        private Boolean _dirty;
 
         public Path(String basePath)
         {
             BasePath = basePath;
-            this.parameters = new Dictionary<string, string>();
-            this.dirty = true;
+            _parameters = new Dictionary<string, string>();
+            _dirty = true;
         }
 
         public void AddParameter(String key, String value)
         {
-            this.parameters.Add(key, value);
-            this.dirty = true;
+            _parameters.Add(key, value);
+            _dirty = true;
         }
 
         public override String ToString()
         {
-            if(this.dirty)
+            if(_dirty)
             {
-                this.dirty = false;
+                _dirty = false;
 
                 StringBuilder builder = new StringBuilder(256);
                 builder.Append(BasePath);
 
                 int index = 0;
-                foreach(var item in this.parameters)
+                foreach(var item in _parameters)
                 {
                     builder.Append(index == 0 ? '?' : '&');
                     builder.Append(item.Key);
@@ -58,10 +57,10 @@ namespace Dashboard.Models.Net
                     index++;
                 }
 
-                this.cachedString = builder.ToString();
+                _cachedString = builder.ToString();
             }
 
-            return this.cachedString;
+            return _cachedString;
         }
     }
 }

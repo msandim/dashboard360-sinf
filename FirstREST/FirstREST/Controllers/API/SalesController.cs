@@ -6,7 +6,6 @@ using System.Web.Http;
 namespace Dashboard.Controllers.API
 {
     using Models;
-    using Models.Primavera.Model;
 
     public class SalesController : ApiController
     {
@@ -17,9 +16,9 @@ namespace Dashboard.Controllers.API
         }
 
         [ActionName("top_costumers")]
-        public async Task<Double> GetTopCostumers(DateTime initialDate, DateTime finalDate)
+        public async Task<IEnumerable<SalesManager.TopCostumersLine>> GetTopCostumers(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            return 0.0;
+            return await SalesManager.GetTopCostumers(initialDate, finalDate, limit);
         }
 
         [ActionName("sales_by_category")]
