@@ -26,13 +26,14 @@ TopCostumersTable.displayTable = function (tableId, data)
 {
     var table = new Table();
     table.initialize();
+    alert("LOL");
 
-    table.addColumnLabel("ClientId");
-    table.addColumnLabel("ClientName");
+    table.addColumnLabel("Client ID");
+    table.addColumnLabel("Client Name");
     table.addColumnLabel("Value");
 
     for (var i = 0; i < data.length; i++)
-        table.addRow(data[i].ClientId, data[i].ClientName, data[i].Total.toFixed(2));
+        table.addRow(data[i].ClientId, data[i].ClientName, data[i].Total.toFixed(2).toString() + " €");
 
     table.display(tableId);
 };

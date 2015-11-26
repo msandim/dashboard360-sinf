@@ -159,10 +159,11 @@ function load_date_selection() {
     $('#daterange-btn').daterangepicker(
     {
         ranges: {
+            'Last 3 Years': [moment().subtract(3, 'year').startOf('year'), moment()],
             'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
         },
-        startDate: moment().subtract(1, 'year').startOf('year'),
-        endDate: moment().subtract(1, 'year').endOf('year')
+        startDate: moment().subtract(3, 'year').startOf('year'),
+        endDate: moment()
     },
     function (start, end) {
         alert(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
