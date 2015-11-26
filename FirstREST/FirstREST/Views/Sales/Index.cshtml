@@ -7,6 +7,23 @@
 
     <!-- Main content -->
     <section class="content">
+
+        <div class="row" style="padding-bottom: 12px">
+            <div class="col-md-12">
+                <div class="form-group pull-right">
+                    <label>Date range button:</label>
+
+                    <div class="input-group">
+                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                            <i class="fa fa-calendar"></i> Date range picker
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Info boxes -->
         <div class="row">
 
@@ -81,11 +98,34 @@
     </section>
 </div>
 
-<script src="~/Content/themes/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+@section ViewJavascript
+{
+
+<!-- Date range picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="~/Content/themes/plugins/daterangepicker/daterangepicker.js"></script>
+<!--
+<script>
+    $('#daterange-btn').daterangepicker(
+        {
+            ranges: {
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment()
+        },
+        function (start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+    );
+</script>
+    -->
+
 <script src="~/Content/Core/Utils/DateUtils.js"></script>
 <script src="~/Content/Core/Elements/PieChart.js"></script>
 <script src="~/Content/Core/Elements/Table.js"></script>
 <script src="~/Content/Core/Views/SalesByCategoryChart.js"></script>
 <script src="~/Content/Core/Views/TopCostumersTable.js"></script>
 <script src="~/Content/sales.js"></script>
+}
 
