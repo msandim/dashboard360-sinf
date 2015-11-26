@@ -26,7 +26,7 @@ namespace Dashboard.Controllers
             ViewBag.NetPurchasesValue = await PurchasesManager.GetNetPurchases(first, last);
 
             //Get Net Sales Global Value
-            ViewBag.NetSalesValue = await SalesManager.GetNetIncome(first, last);
+            ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last);
 
             //Get Labor Cost per Employee
             ViewBag.LaborCostValue = 0;

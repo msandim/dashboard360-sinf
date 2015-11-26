@@ -145,7 +145,7 @@ namespace Dashboard.Models.Primavera
         }
 
         // Purchases & Sales:
-        public static List<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
+        public static List<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate)
         {
             // Create an empty list of purchases:
             List<Purchase> purchases = new List<Purchase>();
@@ -157,13 +157,14 @@ namespace Dashboard.Models.Primavera
                 "SELECT CabecCompras.Id AS CabecComprasId, CabecCompras.Nome AS CabecComprasNome, CabecCompras.Entidade AS CabecComprasEntidade, CabecCompras.Moeda AS CabecComprasMoeda, CabecCompras.DataDoc AS CabecComprasDataDoc, CabecCompras.TipoDoc AS CabecComprasTipoDoc, CabecCompras.DataVencimento AS CabecComprasDataVencimento, CabecCompras.DataDescarga AS CabecComprasDataDescarga, " +
                 "LinhasCompras.Id AS LinhasComprasId, LinhasCompras.PrecoLiquido AS LinhasComprasPrecoLiquido, " +
                 "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
-                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao " +
+                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao, " +
+                "Iva.Taxa AS IvaTaxa " +
                 "FROM CabecCompras " +
                 "INNER JOIN LinhasCompras ON LinhasCompras.IdCabecCompras=CabecCompras.Id " +
                 "INNER JOIN Artigo ON Artigo.Artigo=LinhasCompras.Artigo " +
                 "INNER JOIN Familias ON Artigo.Familia=Familias.Familia " +
+                "INNER JOIN Iva ON LinhasCompras.CodIva = Iva.Iva " +
                 "WHERE CabecCompras.DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND CabecCompras.DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
-                "AND CabecCompras.TipoDoc='" + documentType + "' " +
                 "ORDER BY CabecCompras.DataDoc"
                 );
 
@@ -179,7 +180,7 @@ namespace Dashboard.Models.Primavera
                 purchase.ReceptionDate = ParseDate(purchasesQuery, "CabecComprasDataDescarga");
                 purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
                 purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
-                purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
+                purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido") * (1.0 + (purchasesQuery.Valor("IvaTaxa") / 100.0)), purchasesQuery.Valor("CabecComprasMoeda"));
 
                 Product product = new Product();
                 product.Brand = purchasesQuery.Valor("ArtigoMarca");
@@ -198,7 +199,7 @@ namespace Dashboard.Models.Primavera
 
             return purchases;
         }
-        public static List<Sale> GetSales(DateTime initialDate, DateTime finalDate, String documentType)
+        public static List<Sale> GetSales(DateTime initialDate, DateTime finalDate)
         {
             // Create an empty list of sales
             List<Sale> sales = new List<Sale>();
@@ -212,13 +213,14 @@ namespace Dashboard.Models.Primavera
                 "SELECT CabecDoc.Id AS CabecDocId, CabecDoc.Nome AS CabecDocNome, CabecDoc.Entidade AS CabecDocEntidade, CabecDoc.Moeda AS CabecDocMoeda, CabecDoc.TipoDoc AS CabecDocTipoDoc, CabecDoc.Data AS CabecDocData, CabecDoc.DataVencimento AS CabecDocDataVencimento, CabecDoc.DataCarga AS CabecDocDataCarga, CabecDoc.DataDescarga AS CabecDocsDataDescarga, " +
                 "LinhasDoc.Id AS LinhasDocId, LinhasDoc.PrecoLiquido AS LinhasDocPrecoLiquido, " +
                 "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
-                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao " +
+                "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao, " +
+                "Iva.Taxa AS IvaTaxa " +
                 "FROM CabecDoc " +
                 "INNER JOIN LinhasDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id " +
                 "INNER JOIN Artigo ON Artigo.Artigo = LinhasDoc.Artigo " +
                 "INNER JOIN Familias ON Artigo.Familia = Familias.Familia " +
+                "INNER JOIN Iva ON LinhasDoc.CodIva = Iva.Iva " +
                 "WHERE CabecDoc.Data >= '" + initialDate.ToString("yyyyMMdd") + "' AND CabecDoc.Data <= '" + finalDate.ToString("yyyyMMdd") + "' " +
-                "AND CabecDoc.TipoDoc='" + documentType + "' " +
                 "ORDER BY CabecDoc.Data"
                 );
 
@@ -233,7 +235,7 @@ namespace Dashboard.Models.Primavera
                 sale.ReceptionDate = ParseDate(salesQuery, "CabecDocsDataDescarga");
                 sale.ClientId = salesQuery.Valor("CabecDocEntidade");
                 sale.ClientName = salesQuery.Valor("CabecDocNome");
-                sale.Value = new Model.Money(salesQuery.Valor("LinhasDocPrecoLiquido"), salesQuery.Valor("CabecDocMoeda"));
+                sale.Value = new Money(salesQuery.Valor("LinhasDocPrecoLiquido") * (1.0 + (salesQuery.Valor("IvaTaxa") / 100.0)), salesQuery.Valor("CabecDocMoeda"));
 
                 Product product = new Product();
                 product.Brand = salesQuery.Valor("ArtigoMarca");

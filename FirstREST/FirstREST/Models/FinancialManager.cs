@@ -25,7 +25,7 @@ namespace Dashboard.Models
 
         public static async Task<Double> GetPayables(DateTime initialDate, DateTime finalDate)
         {
-            return await GetPendings("payable", initialDate, finalDate);
+            return - await GetPendings("payable", initialDate, finalDate);
         }
 
         public static async Task<Double> GetReceivables(DateTime initialDate, DateTime finalDate)

@@ -40,9 +40,9 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("purchase")]
-        public IEnumerable<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
+        public IEnumerable<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetPurchases(initialDate, finalDate, documentType);
+            return PriIntegration.GetPurchases(initialDate, finalDate);
         }
 
         [ActionName("receivable")]
@@ -52,9 +52,9 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("sale")]
-        public IEnumerable<Sale> GetSales(DateTime initialDate, DateTime finalDate, String documentType)
+        public IEnumerable<Sale> GetSales(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetSales(initialDate, finalDate, documentType);
+            return PriIntegration.GetSales(initialDate, finalDate);
         }
 
         [ActionName("balance_sheet")]

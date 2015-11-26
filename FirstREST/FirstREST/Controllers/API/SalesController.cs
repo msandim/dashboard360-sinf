@@ -12,7 +12,7 @@ namespace Dashboard.Controllers.API
         [ActionName("net_income")]
         public async Task<Double> GetNetIncome(DateTime initialDate, DateTime finalDate)
         {
-            return await SalesManager.GetNetIncome(initialDate, finalDate);
+            return await SalesManager.GetNetSales(initialDate, finalDate);
         }
 
         [ActionName("top_costumers")]
