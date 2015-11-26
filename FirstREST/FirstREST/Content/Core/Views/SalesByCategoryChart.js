@@ -32,7 +32,7 @@ SalesByCategoryChart.displayChart = function (canvasId, data)
     {
         var element = data[i];
 
-        pieChart.addSection(element.FamilyId, element.Total.toFixed(2));
+        pieChart.addSection(element.FamilyDescription, element.Total.toFixed(2));
     }
 
     // Display:

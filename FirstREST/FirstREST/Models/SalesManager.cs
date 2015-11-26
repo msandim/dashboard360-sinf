@@ -13,11 +13,13 @@ namespace Dashboard.Models
         public class SalesByCategoryLine
         {
             public String FamilyId { get; set; }
+            public String FamilyDescription { get; set; }
             public Double Total { get; set; }
 
-            public SalesByCategoryLine(String familyId, Double total)
+            public SalesByCategoryLine(String familyId, String familyDescription, Double total)
             {
                 FamilyId = familyId;
+                FamilyDescription = familyDescription;
                 Total = total;
             }
         }
@@ -44,9 +46,9 @@ namespace Dashboard.Models
             var enumerable = documents as IList<Sale> ?? documents.ToList();
 
             // Query documents:
-            var query =   from document in enumerable
-                          where document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC"
-                          select document.Value.Value;
+            var query = from document in enumerable
+                        where document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC"
+                        select document.Value.Value;
 
             // Calculate the net sales:
             return query.Sum();
@@ -67,12 +69,14 @@ namespace Dashboard.Models
 
             // Query:
             var topSalesQuery = from document in documents
-                        where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                        group document by document.Product.FamilyId into family
-                        select new SalesByCategoryLine(
-                            family.Key, 
-                            family.Select(s => s.Value.Value).Sum()
-                            );
+                                where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
+                                group document by document.Product.FamilyId
+                into family
+                                select new SalesByCategoryLine(
+                                    family.Key,
+                                    family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
+                                            family.Select(s => s.Value.Value).Sum()
+                                            );
 
             // Order by descending on total:
             topSalesQuery = topSalesQuery.OrderByDescending(sale => sale.Total);
@@ -89,13 +93,13 @@ namespace Dashboard.Models
 
             // Perform query to order sales by descending order on value:
             var topClientsQuery = from document in documents
-                                    where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                                    group document by document.ClientId into client
-                                    select new TopCostumersLine(
-                                        client.Key,
-                                        client.Select(s => s.ClientName).FirstOrDefault(),
-                                        client.Select(s => s.Value.Value).Sum()
-                                    );
+                                  where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
+                                  group document by document.ClientId into client
+                                  select new TopCostumersLine(
+                                      client.Key,
+                                      client.Select(s => s.ClientName).FirstOrDefault(),
+                                      client.Select(s => s.Value.Value).Sum()
+                                  );
 
             // Order by descending on total:
             topClientsQuery = topClientsQuery.OrderByDescending(client => client.Total);

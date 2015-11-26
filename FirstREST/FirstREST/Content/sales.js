@@ -162,4 +162,7 @@ function ready() {
     load_sales_by_category();
     create_net_sales();
     load_top_customers();
+
+    alert("olha ja fiz load2");
+    console.log("ola eu tou na consola");
 }
