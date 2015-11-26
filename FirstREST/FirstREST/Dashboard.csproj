@@ -320,6 +320,7 @@
     <Content Include="Content\themes\bootstrap\js\bootstrap.js" />
     <Content Include="Content\themes\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\themes\bootstrap\js\npm.js" />
+    <Content Include="Content\themes\css\loadingBar.css" />
     <Content Include="Content\themes\dist\css\AdminLTE.css" />
     <Content Include="Content\themes\dist\css\AdminLTE.min.css" />
     <Content Include="Content\themes\dist\css\skins\skin-black-light.css" />

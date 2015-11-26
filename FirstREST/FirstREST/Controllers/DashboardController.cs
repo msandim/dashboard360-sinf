@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
+using System.Globalization;
+
 namespace Dashboard.Controllers
 {
     using Models;
@@ -17,7 +19,7 @@ namespace Dashboard.Controllers
             var last = month.AddDays(-1);
 
             // Store the month we're seeing:
-            ViewBag.currentMonth = today.Month;
+            ViewBag.currentDate = month.AddMonths(-1).ToString("MMMM", new CultureInfo("en-US")) + " " + today.Year;
 
             //Get payables
             ViewBag.PayablesValue = await FinancialManager.GetPayables(first, last);

@@ -23,6 +23,8 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="~/Content/themes/dist/css/skins/_all-skins.min.css">
 
+    <link rel="stylesheet" href="~/Content/themes/css/loadingBar.css" />
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -83,7 +85,6 @@
                     <li><a href="#"><i class="fa fa-link"></i> <span>Supply Chain</span></a></li>
                     <li><a href="/sales"><i class="fa fa-link"></i> <span>Sales</span></a></li>
                     <li><a href="#"><i class="fa fa-link"></i> <span>Human Resources</span></a></li>
-                    <li><a href="#"><i class="fa fa-link"></i> <span>Finances and Accouting</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -103,6 +104,9 @@
             <strong>Copyright &copy; 2015 <a href="#">FEUP-SINF-2015</a>.</strong> All rights reserved.
         </footer>
 
+        <!-- Loading screen -->
+        <div class="modal"></div>
+
         <!-- jQuery 2.1.4 -->
         <script src="~/Content/themes/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -118,6 +122,15 @@
         <!-- ChartJS 1.0.1 -->
         <script src="~/Content/themes/plugins/chartjs/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+
+        <!-- <script>
+            $body = $("body");
+
+            $(document).on({
+                ajaxStart: function () { $body.addClass("loading"); },
+                ajaxStop: function () { $body.removeClass("loading"); }
+            });
+        </script> -->
 
         @RenderSection("ViewJavascript", required: false)
     </div>
