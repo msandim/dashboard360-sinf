@@ -26,6 +26,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -304,6 +305,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\Core\Elements\Table.js" />
+    <Content Include="Content\Core\Utils\DateUtils.js" />
+    <Content Include="Content\Core\Elements\PieChart.js" />
+    <Content Include="Content\Core\Views\SalesByCategoryChart.js" />
+    <Content Include="Content\Core\Views\TopCostumersTable.js" />
     <Content Include="Content\dashboard.js" />
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />

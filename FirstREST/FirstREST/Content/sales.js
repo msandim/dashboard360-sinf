@@ -1,35 +1,15 @@
-﻿function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
-function load_sales_by_category() {
+﻿function load_sales_by_category() {
     var today = new Date();
-    var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1)
+    var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1);
 
-    $.ajax({
+    SalesByCategoryChart.display("#sales_by_category_chart", five_years_ago, today, 5);
+}
+function load_top_customers()
+{
+    var today = new Date();
+    var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1);
 
-        url: 'http://localhost:49822/api/sales/sales_by_category',
-        type: 'Get',
-        data: {
-            initialDate: formatDate(five_years_ago),
-            finalDate: formatDate(today),
-            limit: 5
-        },
-        success: function (data) {
-            create_sales_by_category(data);
-        },
-        failure: function () {
-            alert('Failed to get sales values');
-        }
-    });
+    TopCostumersTable.display("#top_customers", five_years_ago, today, 10);
 }
 
 function get_load_sales(initDate, finalDate) {
@@ -39,8 +19,8 @@ function get_load_sales(initDate, finalDate) {
         type: 'Get',
         async: false,
         data: {
-            initialDate: formatDate(initDate),
-            finalDate: formatDate(finalDate)
+            initialDate: DateUtils.formatDate(initDate),
+            finalDate: DateUtils.formatDate(finalDate)
         },
         success: function (data) {
             result = data;
@@ -174,71 +154,6 @@ function create_net_sales_year(year) {
     };
 
     var lineChart = new Chart(ctx).Line(data, options);
-}
-
-function create_sales_by_category(data) {
-    var ctx = $("#sales_by_category_chart").get(0).getContext("2d");
-
-    // Fill the pie data array:
-    var pie_data = [];
-    for (var index in data)
-    {
-        value = data[index];
-        pie_data[index] =
-            {
-                value: value.Total.toFixed(2),
-                color: "#" + ((1 << 24) * Math.random() | 0).toString(16).slice(-6),
-                label: value.FamilyId
-            };
-    }
-
-    var options = {
-        animation: false,
-        responsive: true,
-        maintainAspectRatio: true
-    };
-
-    var piechart = new Chart(ctx).Pie(pie_data, options);
-}
-
-function load_top_customers() {
-    var today = new Date();
-    var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1)
-
-    $.ajax({
-        url: 'http://localhost:49822/api/sales/top_costumers',
-        type: 'Get',
-        data: {
-            initialDate: formatDate(five_years_ago),
-            finalDate: formatDate(today),
-            limit: 10
-        },
-        success: function (data) {
-            create_top_customers(data);
-        },
-        failure: function () {
-            alert('Failed to get sales values');
-        }
-    });
-}
-
-function create_top_customers(data) {
-    var table = $("#top_customers");
-
-    //Table header
-    table.append('<thead><tr role="row">').
-                        append('<th>ClientId</th><th>ClientName</th><th>Value</th>').
-                        append('</tr></thead>');
-
-    //Table body
-    table.append('<tbody>');
-
-    //Add top 10 rows
-    for (var i = 0; i < data.length; i++)
-        table.append('<tr role="row" class="odd"><td>' + data[i].ClientId + '</td><td>' + data[i].ClientName + '</td><td>' + data[i].Total.toFixed(2) + '</td></tr>');
-
-    //Table end body
-    table.append('</tbody>');
 }
 
 $(document).ready(ready);
