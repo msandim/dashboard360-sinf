@@ -268,6 +268,7 @@
     <Compile Include="Controllers\API\SalesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\Primavera\PrimaveraController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1180,6 +1181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\HR\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
