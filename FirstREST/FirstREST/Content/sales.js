@@ -4,8 +4,7 @@
 
     SalesByCategoryChart.display("#sales_by_category_chart", five_years_ago, today, 5);
 }
-function load_top_customers()
-{
+function load_top_customers() {
     var today = new Date();
     var five_years_ago = new Date(new Date().getFullYear() - 5, 0, 1);
 
@@ -33,7 +32,7 @@ function get_load_sales(initDate, finalDate) {
 }
 
 function add_net_sales(data) {
-    
+
     if (data == "failed")
         return -1;
 
@@ -86,7 +85,7 @@ function create_net_sales() {
     };
 
     var lineChart = new Chart(ctx).Line(data, options);
-   
+
     $("#net_sales_chart").get(0).onclick = function (event) {
         var activePoints = lineChart.getPointsAtEvent(event);
         var year = activePoints[0].label;
@@ -99,7 +98,7 @@ function create_net_sales_year(year) {
     var ctx = $("#net_sales_chart").get(0).getContext("2d");
 
     var january = new Date(year, 0, 1);
-  
+
     var january_value = add_net_sales(get_load_sales(new Date(year, 0, 1), new Date(year, 1, 0)));
     var february_value = add_net_sales(get_load_sales(new Date(year, 1, 1), new Date(year, 2, 0)));
     var march_value = add_net_sales(get_load_sales(new Date(year, 2, 1), new Date(year, 3, 1)));
@@ -138,7 +137,7 @@ function create_net_sales_year(year) {
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [january_value.toFixed(2), february_value.toFixed(2), 
+                data: [january_value.toFixed(2), february_value.toFixed(2),
                     march_value.toFixed(2), april_value.toFixed(2), may_value.toFixed(2), june_value.toFixed(2),
                     july_value.toFixed(2), august_value.toFixed(2), september_value.toFixed(2), october_value.toFixed(2),
                     november_value.toFixed(2), december_value.toFixed(2)]
@@ -156,13 +155,32 @@ function create_net_sales_year(year) {
     var lineChart = new Chart(ctx).Line(data, options);
 }
 
+function load_date_selection() {
+    $('#daterange-btn').daterangepicker(
+    {
+        ranges: {
+            'Last 3 Years': [moment().subtract(3, 'year').startOf('year'), moment()],
+            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+        },
+        startDate: moment().subtract(3, 'year').startOf('year'),
+        endDate: moment()
+    },
+    function (start, end) {
+        alert(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+    }
+);
+}
+
 $(document).ready(ready);
 
 function ready() {
+
+    // Load the data selection option:
+    load_date_selection();
+
     load_sales_by_category();
     create_net_sales();
     load_top_customers();
 
-    alert("olha ja fiz load2");
     console.log("ola eu tou na consola");
 }
