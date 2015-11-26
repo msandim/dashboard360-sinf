@@ -7,6 +7,7 @@ namespace Dashboard.Models
 {
     using Net;
     using Primavera.Model;
+    using Utils;
 
     public class SalesManager
     {
@@ -36,6 +37,19 @@ namespace Dashboard.Models
                 Total = total;
             }
         }
+        public class NetIncomeByIntervalLine
+        {
+            public DateTime InitialDate { get; set; }
+            public DateTime FinalDate { get; set; }
+            public Double Total { get; set; }
+
+            public NetIncomeByIntervalLine(DateTime initialDate, DateTime finalDate, Double total)
+            {
+                InitialDate = initialDate;
+                FinalDate = finalDate;
+                Total = total;
+            }
+        }
 
         public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
         {
@@ -53,12 +67,22 @@ namespace Dashboard.Models
             // Calculate the net sales:
             return query.Sum();
         }
-        private static async Task<Double> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate)
+        public static async Task<IEnumerable<NetIncomeByIntervalLine>> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            //var netSales = await GetNetSales(initialDate, finalDate);
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
+            var documents = await NetHelper.MakeRequest<Sale>(path);
 
-
-            return 0.0;
+            // Query:
+            return from document in documents
+                   where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
+                   group document by
+                       new DateTime(document.DocumentDate.Year,
+                           timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
+                into interval
+                   select new NetIncomeByIntervalLine(
+                       interval.Key, timeInterval == TimeIntervalType.Month ? interval.Key.AddMonths(1) : interval.Key.AddYears(1), interval.Select(x => x.Value.Value).Sum()
+                       );
         }
 
         public static async Task<IEnumerable<SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
@@ -70,13 +94,12 @@ namespace Dashboard.Models
             // Query:
             var topSalesQuery = from document in documents
                                 where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                                group document by document.Product.FamilyId
-                into family
+                                group document by document.Product.FamilyId into family
                                 select new SalesByCategoryLine(
-                                    family.Key,
-                                    family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
-                                            family.Select(s => s.Value.Value).Sum()
-                                            );
+                                        family.Key,
+                                        family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
+                                        family.Select(s => s.Value.Value).Sum()
+                                    );
 
             // Order by descending on total:
             topSalesQuery = topSalesQuery.OrderByDescending(sale => sale.Total);
