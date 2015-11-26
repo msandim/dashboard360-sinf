@@ -16,6 +16,9 @@ namespace Dashboard.Controllers
             var first = month.AddMonths(-1);
             var last = month.AddDays(-1);
 
+            // Store the month we're seeing:
+            ViewBag.currentMonth = today.Month;
+
             //Get payables
             ViewBag.PayablesValue = await FinancialManager.GetPayables(first, last);
 
@@ -29,7 +32,7 @@ namespace Dashboard.Controllers
             ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last);
 
             //Get Labor Cost per Employee
-            ViewBag.LaborCostValue = 0;
+            ViewBag.LaborCostValue = await HRManager.GetHumanResourcesSpendings(first, last);
 
             return View();
         }

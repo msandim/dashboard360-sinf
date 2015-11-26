@@ -26,7 +26,6 @@ TopCostumersTable.displayTable = function (tableId, data)
 {
     var table = new Table();
     table.initialize();
-    alert("LOL");
 
     table.addColumnLabel("Client ID");
     table.addColumnLabel("Client Name");

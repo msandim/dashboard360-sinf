@@ -274,6 +274,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HRManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
     <Compile Include="Models\Net\Path.cs" />
     <Compile Include="Models\PagesData\BalanceSheet.cs" />
@@ -1178,10 +1179,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\HR\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\HR\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
