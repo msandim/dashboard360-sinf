@@ -159,13 +159,13 @@ function load_date_selection() {
     $('#daterange-btn').daterangepicker(
     {
         ranges: {
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
         },
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment()
+        startDate: moment().subtract(1, 'year').startOf('year'),
+        endDate: moment().subtract(1, 'year').endOf('year')
     },
     function (start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        alert(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
     }
 );
 }
@@ -174,6 +174,7 @@ $(document).ready(ready);
 
 function ready() {
 
+    // Load the data selection option:
     load_date_selection();
 
     load_sales_by_category();
