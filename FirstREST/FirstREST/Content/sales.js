@@ -1,17 +1,11 @@
 ﻿$(document).ready(ready);
 
-function loadDateSelection()
-{
-    $('#daterange-btn').daterangepicker(
+function drawDateSelection() {
+    var datePicker = new DatePicker();
+    datePicker.initialize(
+        "#daterange-btn",
+        function (start, end)
         {
-            ranges: {
-                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-                'Last 3 Years Until Now': [moment().subtract(3, 'year').startOf('year'), moment()],
-            },
-            startDate: moment().subtract(1, 'year').startOf('year'),
-            endDate: moment().subtract(1, 'year').endOf('year')
-        },
-        function (start, end) {
             drawCharts(start, end);
         }
     );
@@ -33,5 +27,5 @@ function ready()
     drawCharts(initialDate, finalDate);
 
     // Load date selection:
-    loadDateSelection();
+    drawDateSelection();
 }

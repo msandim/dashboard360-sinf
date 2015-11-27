@@ -2,7 +2,7 @@
 
 namespace Dashboard.Models.Primavera.Model
 {
-    public class Pending
+    public class Pending : IDocument
     {
         public String DocumentType { get; set; }
         public DateTime DocumentDate { get; set; }

@@ -27,7 +27,7 @@ namespace Dashboard.Models.Primavera
             }
             catch
             {
-                return new DateTime(0);
+                return DateTime.MinValue;
             }
         }
 

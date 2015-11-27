@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dashboard.Models
 {
@@ -9,18 +8,26 @@ namespace Dashboard.Models
 
     public class HRManager
     {
-        public static async Task<Double> GetHumanResourcesSpendings(DateTime initialDate, DateTime finalDate)
+        private static Cache<Employee> _cachedData;
+        private static Cache<Employee> CachedData
         {
-            // Build path and make request:
-            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "employee", initialDate, finalDate);
-            var documents = await NetHelper.MakeRequest<Employee>(path);
+            get { return _cachedData ?? (_cachedData = new Cache<Employee>(PathConstants.BasePathApiPrimavera, "employee")); }
+        }
+
+        public static Double GetHumanResourcesSpendings(DateTime initialDate, DateTime finalDate)
+        {
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
 
             // Query documents:
             var query = from document in documents
-                        select document.Salary.Value;
+                where document.HiredOn <= finalDate &&
+                      (document.FiredOn >= initialDate || document.FiredOn == DateTime.MinValue)
+                select document.Salary.Value;
 
             // Calculate spendings total:
             return query.Sum();
         }
     }
 }
+ 
