@@ -13,7 +13,6 @@ function loadDateSelection()
         },
         function (start, end) {
             drawCharts(start, end);
-            //alert(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
         }
     );
 }
