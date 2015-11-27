@@ -30,6 +30,7 @@ Table.prototype.addRow = function ()
 Table.prototype.display = function (tableId)
 {
     var table = $(tableId);
+    table.html('');
 
     // Header:
     var header = '<thead><tr role="row">';

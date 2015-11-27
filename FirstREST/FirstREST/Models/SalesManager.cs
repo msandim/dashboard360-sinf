@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
 
 namespace Dashboard.Models
 {
     using Net;
     using Primavera.Model;
+    using Utils;
 
     public class SalesManager
     {
@@ -36,6 +38,17 @@ namespace Dashboard.Models
                 Total = total;
             }
         }
+        public class NetIncomeByIntervalLine
+        {
+            public DateTime Date { get; set; }
+            public Double Total { get; set; }
+
+            public NetIncomeByIntervalLine(DateTime date, Double total)
+            {
+                Date = date;
+                Total = total;
+            }
+        }
 
         public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
         {
@@ -53,12 +66,67 @@ namespace Dashboard.Models
             // Calculate the net sales:
             return query.Sum();
         }
-        private static async Task<Double> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate)
+        public static async Task<IEnumerable<NetIncomeByIntervalLine>> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            //var netSales = await GetNetSales(initialDate, finalDate);
+            // Build path and make request:
+            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
+            var documents = await NetHelper.MakeRequest<Sale>(path);
 
+            // Query:
+            var query = from document in documents
+                        where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
+                        group document by
+                            new DateTime(document.DocumentDate.Year,
+                                timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
+                into interval
+                        select new NetIncomeByIntervalLine(
+                            interval.Key, interval.Select(x => x.Value.Value).Sum()
+                            );
 
-            return 0.0;
+            var dateTimes = new List<DateTime>();
+            if (timeInterval == TimeIntervalType.Year)
+            {
+                var temp = new DateTime(initialDate.Year, 1, 1);
+                for (int i = 0; i < finalDate.Year - initialDate.Year + 1; i++)
+                    dateTimes.Add(temp.AddYears(i));
+            }
+            else
+            {
+                var temp = new DateTime(initialDate.Year, initialDate.Month, 1);
+                int months = ((finalDate.Year - initialDate.Year)*12) + finalDate.Month - initialDate.Month + 1;
+                for (int i = 0; i < months; i++)
+                    dateTimes.Add(temp.AddMonths(i));
+            }
+
+            // Empty:
+            var empty = from date in dateTimes
+                select new NetIncomeByIntervalLine(date, 0.0);
+
+            var finalQuery = from e in empty
+                             join realData in query on e.Date equals realData.Date into g
+                             from realDataJoin in g.DefaultIfEmpty()
+                             select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
+
+            var lol = finalQuery.OrderBy(x => x.Date);
+
+            return finalQuery.OrderBy(x => x.Date);
+
+            /*
+            var array = query.ToList();
+            if (timeInterval == TimeIntervalType.Year)
+            {
+                for (int currentYear = initialDate.Year; currentYear <= finalDate.Year; currentYear++)
+                {
+                    if (array.FindAll(element => currentYear == element.Date.Year).Count == 0)
+                    {
+                        array.Insert(currentYear - initialDate.Year, new NetIncomeByIntervalLine(new DateTime(currentYear, 1, 1), 0.0));
+                    }
+                }
+            }
+            else
+            {
+                
+            }*/
         }
 
         public static async Task<IEnumerable<SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
@@ -70,13 +138,12 @@ namespace Dashboard.Models
             // Query:
             var topSalesQuery = from document in documents
                                 where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                                group document by document.Product.FamilyId
-                into family
+                                group document by document.Product.FamilyId into family
                                 select new SalesByCategoryLine(
-                                    family.Key,
-                                    family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
-                                            family.Select(s => s.Value.Value).Sum()
-                                            );
+                                        family.Key,
+                                        family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
+                                        family.Select(s => s.Value.Value).Sum()
+                                    );
 
             // Order by descending on total:
             topSalesQuery = topSalesQuery.OrderByDescending(sale => sale.Total);

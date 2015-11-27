@@ -21,20 +21,25 @@ SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit)
         }
     );
 };
-SalesByCategoryChart.displayChart = function (canvasId, data)
-{
-    // Create pie chart:
-    var pieChart = new PieChart();
-    pieChart.initialize(canvasId);
+SalesByCategoryChart.displayChart = function (canvasId, data) {
+
+    if (!SalesByCategoryChart.chart) {
+        SalesByCategoryChart.chart = new PieChart();
+    }
+    else {
+        SalesByCategoryChart.chart.shutdown();
+    }
+
+    SalesByCategoryChart.chart.initialize(canvasId);
 
     // Add sections:
     for (var i = 0; i < data.length; i++)
     {
         var element = data[i];
 
-        pieChart.addSection(element.FamilyDescription, element.Total.toFixed(2));
+        SalesByCategoryChart.chart.addSection(element.FamilyDescription, element.Total.toFixed(2));
     }
 
     // Display:
-    pieChart.display();
+    SalesByCategoryChart.chart.display();
 };

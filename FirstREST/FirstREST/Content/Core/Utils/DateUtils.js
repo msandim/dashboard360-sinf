@@ -2,15 +2,10 @@
 {
 }
 
-DateUtils.formatDate = function (date)
-{
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+DateUtils.formatDate = function (date) {
+    return date.format("YYYY-MM-DD");
+};
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
+DateUtils.formatLabel = function (dateText, intervalType) {
+    return moment(dateText).format(intervalType === 'month' ? 'MMMM YYYY' : 'YYYY');
 };

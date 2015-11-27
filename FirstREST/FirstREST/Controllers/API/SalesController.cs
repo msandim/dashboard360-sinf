@@ -6,6 +6,7 @@ using System.Web.Http;
 namespace Dashboard.Controllers.API
 {
     using Models;
+    using Models.Utils;
 
     public class SalesController : ApiController
     {
@@ -25,6 +26,12 @@ namespace Dashboard.Controllers.API
         public async Task<IEnumerable<SalesManager.SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
             return await SalesManager.GetSalesByCategory(initialDate, finalDate, limit);
+        }
+
+        [ActionName("net_income_by_interval")]
+        public async Task<IEnumerable<SalesManager.NetIncomeByIntervalLine>> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
+        {
+            return await SalesManager.GetNetIncomeByInterval(initialDate, finalDate, timeInterval);
         }
     }
 }
