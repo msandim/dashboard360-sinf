@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using System.Globalization;
+using Dashboard.Models.Utils;
 
 namespace Dashboard.Controllers
 {
@@ -22,19 +23,19 @@ namespace Dashboard.Controllers
             ViewBag.currentDate = month.AddMonths(-1).ToString("MMMM", new CultureInfo("en-US")) + " " + today.Year;
 
             //Get payables
-            ViewBag.PayablesValue = await FinancialManager.GetPayables(first, last);
+            ViewBag.PayablesValue = FormatUtils.FormatCurrency(await FinancialManager.GetPayables(first, last));
 
             //Get receivables
-            ViewBag.ReceivablesValue = await FinancialManager.GetReceivables(first, last);
+            ViewBag.ReceivablesValue = FormatUtils.FormatCurrency(await FinancialManager.GetReceivables(first, last));
 
             //Get Net Purchases Global Value
-            ViewBag.NetPurchasesValue = await PurchasesManager.GetNetPurchases(first, last);
+            ViewBag.NetPurchasesValue = FormatUtils.FormatCurrency(await PurchasesManager.GetNetPurchases(first, last));
 
             //Get Net Sales Global Value
-            ViewBag.NetSalesValue = await SalesManager.GetNetSales(first, last);
+            ViewBag.NetSalesValue = FormatUtils.FormatCurrency(await SalesManager.GetNetSales(first, last));
 
             //Get Labor Cost per Employee
-            ViewBag.LaborCostValue = await HRManager.GetHumanResourcesSpendings(first, last);
+            ViewBag.LaborCostValue = FormatUtils.FormatCurrency(await HRManager.GetHumanResourcesSpendings(first, last));
 
             return View();
         }

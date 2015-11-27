@@ -298,6 +298,7 @@
     <Compile Include="Models\FinancialManager.cs" />
     <Compile Include="Models\PurchasesManager.cs" />
     <Compile Include="Models\SalesManager.cs" />
+    <Compile Include="Models\Utils\FormatUtils.cs" />
     <Compile Include="Models\Utils\TimeIntervalType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -310,8 +311,10 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\Core\Elements\LineChart.js" />
     <Content Include="Content\Core\Elements\Table.js" />
+    <Content Include="Content\Core\Utils\ColorGenerator.js" />
     <Content Include="Content\Core\Utils\DateUtils.js" />
     <Content Include="Content\Core\Elements\PieChart.js" />
+    <Content Include="Content\Core\Utils\CurrencyUtils.js" />
     <Content Include="Content\Core\Views\NetSalesChart.js" />
     <Content Include="Content\Core\Views\SalesByCategoryChart.js" />
     <Content Include="Content\Core\Views\TopCostumersTable.js" />
