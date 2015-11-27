@@ -311,6 +311,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\Core\Elements\LineChart.js" />
     <Content Include="Content\Core\Elements\Table.js" />
+    <Content Include="Content\Core\Utils\ColorGenerator.js" />
     <Content Include="Content\Core\Utils\DateUtils.js" />
     <Content Include="Content\Core\Elements\PieChart.js" />
     <Content Include="Content\Core\Views\NetSalesChart.js" />

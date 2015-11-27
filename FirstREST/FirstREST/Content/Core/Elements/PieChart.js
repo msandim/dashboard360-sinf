@@ -11,6 +11,10 @@ PieChart.prototype.initialize = function (canvasId, animation, responsive, maint
     // Create array to hold pie data:
     this.pieData = [];
 
+    this.numColors = 5;
+    this.colors = ColorGenerator.generateColors(this.numColors);
+    this.colorIndex = 0;
+
     // Create the options object:
     this.options = {
         animation: !animation ? false : animation,
@@ -27,8 +31,10 @@ PieChart.prototype.shutdown = function ()
 PieChart.prototype.addSection = function (label, value, color)
 {
     // If color is not defined, assign a random one:
-    if (!color)
-        color = "#" + ((1 << 24) * Math.random() | 0).toString(16).slice(-6);
+    if (!color) {
+        color = this.colors[this.colorIndex];
+        this.colorIndex = (this.colorIndex + 1) % this.numColors;
+    }   
 
     // Add new section:
     this.pieData.push(
