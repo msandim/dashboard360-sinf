@@ -12,9 +12,14 @@ NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval
             finalDate: DateUtils.formatDate(finalDate),
             timeInterval: timeInterval
         },
+        beforeSend: function()
+        {
+            $(canvasId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+        },
         success: function (data)
         {
             NetSalesChart.displayChart(canvasId, data, timeInterval);
+            $(canvasId).closest("div .box").children("div .overlay").remove();
         },
         failure: function ()
         {

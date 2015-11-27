@@ -12,9 +12,14 @@ TopCostumersTable.display = function (tableId, initialDate, finalDate, limit)
             finalDate: DateUtils.formatDate(finalDate),
             limit: limit
         },
+        beforeSend: function ()
+        {
+            $(tableId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+        },
         success: function (data)
         {
             TopCostumersTable.displayTable(tableId, data);
+            $(tableId).closest("div .box").children("div .overlay").remove();
         },
         failure: function ()
         {

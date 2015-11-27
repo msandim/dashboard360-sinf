@@ -12,8 +12,13 @@ SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit)
                 finalDate: DateUtils.formatDate(finalDate),
                 limit: limit
             },
+            beforeSend: function ()
+            {
+                $(canvasId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+            },
             success: function (data) {
                 SalesByCategoryChart.displayChart(canvasId, data);
+                $(canvasId).closest("div .box").children("div .overlay").remove();
             },
             failure: function() {
                 alert('Failed to get sales values');
