@@ -107,7 +107,7 @@ namespace Dashboard.Models
             var finalQuery = from e in empty
                              join realData in query on e.Date equals realData.Date into g
                              from realDataJoin in g.DefaultIfEmpty()
-                             select new NetIncomeByIntervalLine(e.Date, realDataJoin?.Total ?? 0.0);
+                             select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
 
             return finalQuery.OrderBy(x => x.Date);
         }

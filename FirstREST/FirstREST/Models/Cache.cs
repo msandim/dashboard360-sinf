@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Dashboard.Models.Net;
 
 namespace Dashboard.Models
@@ -8,11 +7,11 @@ namespace Dashboard.Models
     public class Cache<T>
     {
         private Boolean _firstRun = true;
-        private Path BasePath { get; }
-        private String Action { get; }
+        private Path BasePath { get; set; }
+        private String Action { get; set; }
         private DateTime InitialDate { get; set; }
         private DateTime FinalDate { get; set; }
-        public LinkedList<T> CachedData { get; }
+        public LinkedList<T> CachedData { get; set; }
 
         public Cache(Path basePath, String action)
         {
