@@ -2,7 +2,7 @@
 
 namespace Dashboard.Models.Primavera.Model
 {
-    public class Sale
+    public class Sale : IDocument
     {        
         public String ID { get; set; }
         public DateTime DocumentDate { get; set; }

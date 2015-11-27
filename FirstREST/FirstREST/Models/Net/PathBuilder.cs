@@ -12,7 +12,7 @@ namespace Dashboard.Models.Net
         
         public Path Build()
         {
-            Path path = BasePath ?? PathConstants.BasePath;
+            Path path = BasePath != null ? new Path(BasePath.ToString()) : PathConstants.BasePath;
 
             if (Action != null)
                 path.BasePath += "/" + Action;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Ajax.Utilities;
 
 namespace Dashboard.Models
 {
@@ -50,27 +48,35 @@ namespace Dashboard.Models
             }
         }
 
-        public static async Task<Double> GetNetSales(DateTime initialDate, DateTime finalDate)
-        {
-            // Build path and make request:
-            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
-            var documents = await NetHelper.MakeRequest<Sale>(path);
+        private static Cache<Sale> CachedData { get; set; }
 
-            var enumerable = documents as IList<Sale> ?? documents.ToList();
+        private static IEnumerable<Sale> MakeRequest(DateTime initialDate, DateTime finalDate)
+        {
+            if(CachedData == null)  
+                CachedData = new Cache<Sale>(PathConstants.BasePathApiPrimavera, "sale"); 
+
+            return CachedData.FetchData(initialDate, finalDate);
+
+            // Build path and make request:
+            /*var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
+            return await NetHelper.MakeRequest<Sale>(path);*/
+        }
+
+        public static Double GetNetSales(DateTime initialDate, DateTime finalDate)
+        {
+            var documents = MakeRequest(initialDate, finalDate);
 
             // Query documents:
-            var query = from document in enumerable
+            var query = from document in documents
                         where document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC"
                         select document.Value.Value;
 
             // Calculate the net sales:
             return query.Sum();
         }
-        public static async Task<IEnumerable<NetIncomeByIntervalLine>> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
+        public static IEnumerable<NetIncomeByIntervalLine> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            // Build path and make request:
-            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
-            var documents = await NetHelper.MakeRequest<Sale>(path);
+            var documents = MakeRequest(initialDate, finalDate);
 
             // Query:
             var query = from document in documents
@@ -105,35 +111,14 @@ namespace Dashboard.Models
             var finalQuery = from e in empty
                              join realData in query on e.Date equals realData.Date into g
                              from realDataJoin in g.DefaultIfEmpty()
-                             select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
-
-            var lol = finalQuery.OrderBy(x => x.Date);
+                             select new NetIncomeByIntervalLine(e.Date, realDataJoin?.Total ?? 0.0);
 
             return finalQuery.OrderBy(x => x.Date);
-
-            /*
-            var array = query.ToList();
-            if (timeInterval == TimeIntervalType.Year)
-            {
-                for (int currentYear = initialDate.Year; currentYear <= finalDate.Year; currentYear++)
-                {
-                    if (array.FindAll(element => currentYear == element.Date.Year).Count == 0)
-                    {
-                        array.Insert(currentYear - initialDate.Year, new NetIncomeByIntervalLine(new DateTime(currentYear, 1, 1), 0.0));
-                    }
-                }
-            }
-            else
-            {
-                
-            }*/
         }
 
-        public static async Task<IEnumerable<SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
+        public static IEnumerable<SalesByCategoryLine> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            // Build path and make request:
-            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
-            var documents = await NetHelper.MakeRequest<Sale>(path);
+            var documents = MakeRequest(initialDate, finalDate);
 
             // Query:
             var topSalesQuery = from document in documents
@@ -152,11 +137,9 @@ namespace Dashboard.Models
             return topSalesQuery.Take(limit);
         }
 
-        public static async Task<IEnumerable<TopCostumersLine>> GetTopCostumers(DateTime initialDate, DateTime finalDate, Int32 limit)
+        public static IEnumerable<TopCostumersLine> GetTopCostumers(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            // Build path and make request:
-            var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
-            var documents = await NetHelper.MakeRequest<Sale>(path);
+            var documents = MakeRequest(initialDate, finalDate);
 
             // Perform query to order sales by descending order on value:
             var topClientsQuery = from document in documents
