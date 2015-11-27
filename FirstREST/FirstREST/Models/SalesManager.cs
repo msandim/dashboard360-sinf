@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
 
 namespace Dashboard.Models
 {
@@ -39,14 +40,12 @@ namespace Dashboard.Models
         }
         public class NetIncomeByIntervalLine
         {
-            public DateTime InitialDate { get; set; }
-            public DateTime FinalDate { get; set; }
+            public DateTime Date { get; set; }
             public Double Total { get; set; }
 
-            public NetIncomeByIntervalLine(DateTime initialDate, DateTime finalDate, Double total)
+            public NetIncomeByIntervalLine(DateTime date, Double total)
             {
-                InitialDate = initialDate;
-                FinalDate = finalDate;
+                Date = date;
                 Total = total;
             }
         }
@@ -74,15 +73,56 @@ namespace Dashboard.Models
             var documents = await NetHelper.MakeRequest<Sale>(path);
 
             // Query:
-            return from document in documents
-                   where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                   group document by
-                       new DateTime(document.DocumentDate.Year,
-                           timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
+            var query = from document in documents
+                        where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
+                        group document by
+                            new DateTime(document.DocumentDate.Year,
+                                timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
                 into interval
-                   select new NetIncomeByIntervalLine(
-                       interval.Key, timeInterval == TimeIntervalType.Month ? interval.Key.AddMonths(1) : interval.Key.AddYears(1), interval.Select(x => x.Value.Value).Sum()
-                       );
+                        select new NetIncomeByIntervalLine(
+                            interval.Key, interval.Select(x => x.Value.Value).Sum()
+                            );
+
+            var dateTimes = new List<DateTime>();
+            if (timeInterval == TimeIntervalType.Year)
+            {
+                for(int i = 0; i < finalDate.Year - initialDate.Year + 1; i++)
+                    dateTimes.Add(initialDate.AddYears(i));
+            }
+            else
+            {
+                int months = ((finalDate.Year - initialDate.Year)*12) + finalDate.Month - initialDate.Month + 1;
+                for (int i = 0; i < months; i++)
+                    dateTimes.Add(initialDate.AddMonths(i));
+            }
+
+            // Empty:
+            var empty = from date in dateTimes
+                select new NetIncomeByIntervalLine(date, 0.0);
+
+            var finalQuery = from e in empty
+                             join realData in query on e.Date equals realData.Date into g
+                             from realDataJoin in g.DefaultIfEmpty()
+                             select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
+
+            return finalQuery.OrderBy(x => x.Date);
+
+            /*
+            var array = query.ToList();
+            if (timeInterval == TimeIntervalType.Year)
+            {
+                for (int currentYear = initialDate.Year; currentYear <= finalDate.Year; currentYear++)
+                {
+                    if (array.FindAll(element => currentYear == element.Date.Year).Count == 0)
+                    {
+                        array.Insert(currentYear - initialDate.Year, new NetIncomeByIntervalLine(new DateTime(currentYear, 1, 1), 0.0));
+                    }
+                }
+            }
+            else
+            {
+                
+            }*/
         }
 
         public static async Task<IEnumerable<SalesByCategoryLine>> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)

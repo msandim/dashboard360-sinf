@@ -6,6 +6,7 @@ LineChart.prototype.initialize = function (animation, responsive, maintainAspect
 {
     this.labels = [];
     this.values = [];
+    this.chart = null;
 
     // Create the options object:
     this.options = {
@@ -14,6 +15,10 @@ LineChart.prototype.initialize = function (animation, responsive, maintainAspect
         maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio
     };
 };
+LineChart.prototype.shutdown = function() {
+    if (this.chart != null)
+        this.chart.destroy();
+}
 
 LineChart.prototype.addValue = function (label, value)
 {
@@ -44,7 +49,7 @@ LineChart.prototype.display = function (canvasId)
                 ]
         };
 
-    new Chart(context).Line(data, this.options);
+    this.chart = new Chart(context).Line(data, this.options);
 };
 
 LineChart.prototype.setAnimation = function (value)

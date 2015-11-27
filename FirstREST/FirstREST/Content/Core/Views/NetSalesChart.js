@@ -14,7 +14,7 @@ NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval
         },
         success: function (data)
         {
-            NetSalesChart.displayChart(canvasId, data);
+            NetSalesChart.displayChart(canvasId, data, timeInterval);
         },
         failure: function ()
         {
@@ -22,16 +22,21 @@ NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval
         }
     });
 };
-NetSalesChart.displayChart = function (canvasId, data)
-{
-    var chart = new LineChart();
-    chart.initialize();
+NetSalesChart.displayChart = function (canvasId, data, timeInterval) {
+
+    if (!NetSalesChart.chart) {
+        NetSalesChart.chart = new LineChart();
+    } else {
+        NetSalesChart.chart.shutdown();
+    }
+
+    NetSalesChart.chart.initialize();
 
     for (var i = 0; i < data.length; i++)
     {
         var element = data[i];
-        chart.addValue(DateUtils.formatDate(element.InitialDate), element.Total);
+        NetSalesChart.chart.addValue(DateUtils.formatLabel(element.Date, timeInterval), element.Total);
     }
-
-    chart.display(canvasId);
+     
+    NetSalesChart.chart.display(canvasId);
 };

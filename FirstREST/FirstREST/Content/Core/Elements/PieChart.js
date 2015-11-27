@@ -2,8 +2,9 @@
 {    
 }
 
-PieChart.prototype.initialize = function (canvasId, animation, responsive, maintainAspectRatio)
-{
+PieChart.prototype.initialize = function (canvasId, animation, responsive, maintainAspectRatio) {
+    this.chart = null;
+
     // Get context:
     this.context = $(canvasId).get(0).getContext("2d");
 
@@ -17,6 +18,11 @@ PieChart.prototype.initialize = function (canvasId, animation, responsive, maint
         maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio
     };
 };
+PieChart.prototype.shutdown = function ()
+{
+    if (this.chart != null)
+        this.chart.destroy();
+}
 
 PieChart.prototype.addSection = function (label, value, color)
 {
@@ -36,7 +42,7 @@ PieChart.prototype.addSection = function (label, value, color)
 
 PieChart.prototype.display = function ()
 {
-    new Chart(this.context).Pie(this.pieData, this.options);
+    this.chart = new Chart(this.context).Pie(this.pieData, this.options);
 };
 
 PieChart.prototype.setAnimation = function (value)
