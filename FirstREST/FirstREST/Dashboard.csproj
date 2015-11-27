@@ -312,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\Core\Elements\DatePicker.js" />
     <Content Include="Content\Core\Elements\LineChart.js" />
     <Content Include="Content\Core\Elements\Table.js" />
     <Content Include="Content\Core\Utils\ColorGenerator.js" />

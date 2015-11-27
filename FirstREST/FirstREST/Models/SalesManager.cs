@@ -48,46 +48,42 @@ namespace Dashboard.Models
             }
         }
 
-        private static Cache<Sale> CachedData { get; set; }
-
-        private static IEnumerable<Sale> MakeRequest(DateTime initialDate, DateTime finalDate)
+        private static Cache<Sale> _cachedData;
+        private static Cache<Sale> CachedData
         {
-            if(CachedData == null)  
-                CachedData = new Cache<Sale>(PathConstants.BasePathApiPrimavera, "sale"); 
-
-            return CachedData.FetchData(initialDate, finalDate);
-
-            // Build path and make request:
-            /*var path = PathBuilder.Build(PathConstants.BasePathApiPrimavera, "sale", initialDate, finalDate);
-            return await NetHelper.MakeRequest<Sale>(path);*/
+            get { return _cachedData ?? (_cachedData = new Cache<Sale>(PathConstants.BasePathApiPrimavera, "sale")); }
         }
 
         public static Double GetNetSales(DateTime initialDate, DateTime finalDate)
         {
-            var documents = MakeRequest(initialDate, finalDate);
-
+            CachedData.UpdateData(initialDate, finalDate); 
+            var documents = CachedData.CachedData;
+             
             // Query documents:
             var query = from document in documents
-                        where document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC"
-                        select document.Value.Value;
+                where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                      (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                select document.Value.Value;
 
             // Calculate the net sales:
-            return query.Sum();
+            return query.Sum(); 
         }
         public static IEnumerable<NetIncomeByIntervalLine> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            var documents = MakeRequest(initialDate, finalDate);
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
 
             // Query:
             var query = from document in documents
-                        where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                        group document by
-                            new DateTime(document.DocumentDate.Year,
-                                timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
+                where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                      (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                group document by
+                    new DateTime(document.DocumentDate.Year,
+                        timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
                 into interval
-                        select new NetIncomeByIntervalLine(
-                            interval.Key, interval.Select(x => x.Value.Value).Sum()
-                            );
+                select new NetIncomeByIntervalLine(
+                    interval.Key, interval.Select(x => x.Value.Value).Sum()
+                    );
 
             var dateTimes = new List<DateTime>();
             if (timeInterval == TimeIntervalType.Year)
@@ -99,14 +95,14 @@ namespace Dashboard.Models
             else
             {
                 var temp = new DateTime(initialDate.Year, initialDate.Month, 1);
-                int months = ((finalDate.Year - initialDate.Year)*12) + finalDate.Month - initialDate.Month + 1;
+                int months = ((finalDate.Year - initialDate.Year) * 12) + finalDate.Month - initialDate.Month + 1;
                 for (int i = 0; i < months; i++)
                     dateTimes.Add(temp.AddMonths(i));
             }
 
             // Empty:
             var empty = from date in dateTimes
-                select new NetIncomeByIntervalLine(date, 0.0);
+                        select new NetIncomeByIntervalLine(date, 0.0);
 
             var finalQuery = from e in empty
                              join realData in query on e.Date equals realData.Date into g
@@ -118,17 +114,20 @@ namespace Dashboard.Models
 
         public static IEnumerable<SalesByCategoryLine> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            var documents = MakeRequest(initialDate, finalDate);
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
 
             // Query:
             var topSalesQuery = from document in documents
-                                where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                                group document by document.Product.FamilyId into family
-                                select new SalesByCategoryLine(
-                                        family.Key,
-                                        family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
-                                        family.Select(s => s.Value.Value).Sum()
-                                    );
+                where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                      (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                group document by document.Product.FamilyId
+                into family
+                select new SalesByCategoryLine(
+                    family.Key,
+                    family.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
+                    family.Select(s => s.Value.Value).Sum()
+                    );
 
             // Order by descending on total:
             topSalesQuery = topSalesQuery.OrderByDescending(sale => sale.Total);
@@ -139,17 +138,20 @@ namespace Dashboard.Models
 
         public static IEnumerable<TopCostumersLine> GetTopCostumers(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            var documents = MakeRequest(initialDate, finalDate);
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
 
             // Perform query to order sales by descending order on value:
             var topClientsQuery = from document in documents
-                                  where document.DocumentType == "FA" || document.DocumentType == "NC" || document.DocumentType == "ND"
-                                  group document by document.ClientId into client
-                                  select new TopCostumersLine(
-                                      client.Key,
-                                      client.Select(s => s.ClientName).FirstOrDefault(),
-                                      client.Select(s => s.Value.Value).Sum()
-                                  );
+                where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                      (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                group document by document.ClientId
+                into client
+                select new TopCostumersLine(
+                    client.Key,
+                    client.Select(s => s.ClientName).FirstOrDefault(),
+                    client.Select(s => s.Value.Value).Sum()
+                    );
 
             // Order by descending on total:
             topClientsQuery = topClientsQuery.OrderByDescending(client => client.Total);
