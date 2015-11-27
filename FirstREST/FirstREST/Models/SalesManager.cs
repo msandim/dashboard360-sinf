@@ -86,14 +86,16 @@ namespace Dashboard.Models
             var dateTimes = new List<DateTime>();
             if (timeInterval == TimeIntervalType.Year)
             {
-                for(int i = 0; i < finalDate.Year - initialDate.Year + 1; i++)
-                    dateTimes.Add(initialDate.AddYears(i));
+                var temp = new DateTime(initialDate.Year, 1, 1);
+                for (int i = 0; i < finalDate.Year - initialDate.Year + 1; i++)
+                    dateTimes.Add(temp.AddYears(i));
             }
             else
             {
+                var temp = new DateTime(initialDate.Year, initialDate.Month, 1);
                 int months = ((finalDate.Year - initialDate.Year)*12) + finalDate.Month - initialDate.Month + 1;
                 for (int i = 0; i < months; i++)
-                    dateTimes.Add(initialDate.AddMonths(i));
+                    dateTimes.Add(temp.AddMonths(i));
             }
 
             // Empty:
@@ -104,6 +106,8 @@ namespace Dashboard.Models
                              join realData in query on e.Date equals realData.Date into g
                              from realDataJoin in g.DefaultIfEmpty()
                              select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
+
+            var lol = finalQuery.OrderBy(x => x.Date);
 
             return finalQuery.OrderBy(x => x.Date);
 
