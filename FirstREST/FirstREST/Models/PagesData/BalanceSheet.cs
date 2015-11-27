@@ -134,9 +134,50 @@ namespace Dashboard.Models.PagesData
             metrics.Add("resultados funcoes", new Metric("resultados funcoes", "98", true));
         }
 
+        private Year calculateMetric(int year, ClassLine class_data, bool t_left_side)
+        {
+            Year year_data = new Year();
+            year_data.year = year;
+
+            for (int i = 0; i < 12; i++)
+            {
+                Double month = class_data.values[i + 1] - class_data.values[i + 17]; //CR - DB 
+                year_data.addMonth(month);
+            }
+            return year_data;
+        }
+
         private void prepareIndirectMetrics()
         {
-            calculateIndirectMetric("inventario", new List<string>(new String[] { "cash", "accounts_receivable" }));
+            //-- 1 -- Meios financeiros liquidos
+            calculateIndirectMetric("meios financeiros liquidos", new List<string>(get1MeiosFinanceirosLiquidosSubmetrics()));
+
+            //-- 2 -- Contas a receber e a pagar
+            calculateIndirectMetric("contas a receber e a pagar", new List<string>(get2ContasReceberPagarSubmetrics()));
+
+            //-- 3 -- Inventários e activos biologicos  //*******************************************************************************        
+            calculateIndirectMetric("inventario", new List<string>(get3InventorySubmetrics()));
+
+            //-- 4 -- Investimentos
+            calculateIndirectMetric("investimentos", new List<string>(get4InvestimentosSubmetrics()));
+
+            //-- 5 -- capital proprio e resultados                    
+            calculateIndirectMetric("capital proprio", new List<string>(get5EquitySubmetrics()));
+
+            //-- 6 -- gastos
+            calculateIndirectMetric("gastos", new List<string>(get6GastosSubmetrics()));
+            
+            //-- 7 -- vendas
+            calculateIndirectMetric("vendas", new List<string>(get7VendasSubmetrics()));
+
+            //-- 8 -- resultados
+            calculateIndirectMetric("resultados", new List<string>(get8ResultadosSubmetrics()));
+
+            //-- 9 -- mais coisas fofas
+            calculateIndirectMetric("coisas", new List<string>(get9CoisasSubmetrics()));
+
+            //--------------------------------------------------------------------------------
+
             //metrics.Add("inventory", new Metric("inventory", "31", true));
             //metrics.Add("total_current_assets", new Metric("total_current_assets", "?", true));
             //metrics.Add("total_non_current_assets", new Metric("total_non_current_assets", "?", true));
@@ -163,17 +204,160 @@ namespace Dashboard.Models.PagesData
             metrics.Add(metric_name, result_metric);
         }
 
-        private Year calculateMetric(int year, ClassLine class_data, bool t_left_side)
+        private IEnumerable<string> get1MeiosFinanceirosLiquidosSubmetrics()
         {
-            Year year_data = new Year();
-            year_data.year = year;
+            String[] res = new String[] 
+            { 
+                "cash", 
+                "depositos ordem", 
+                "depositos prazo", 
+                "outros depositos", 
+                "titulos negociaveis", 
+                "outras aplicacoes",
+                "ajustes de aplicacoes"
+            };
 
-            for (int i = 0; i < 12; i++)
-            {
-                Double month = class_data.values[i + 1] - class_data.values[i + 17]; //CR - DB 
-                year_data.addMonth(month);
-            }
-            return year_data;
+            return res;
+        }
+
+        private IEnumerable<string> get2ContasReceberPagarSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "accounts_receivable", 
+                "accounts_payable",
+                "emprestimos obtidos",
+                "estados e outros entes",
+                "acionistas",
+                "outros devedores e credores",
+                "acrescimos e diferimentos",
+                "ajuste dividas a receber",
+                "provisoes"
+            };
+
+            return res;
+        }
+
+        private string[] get3InventorySubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "purchases", 
+                "mercadorias", 
+                "produtos acabados", 
+                "subprodutos", 
+                "produtos e trabalhos", 
+                "materias primas",
+                "adiantamento",
+                "regularizacao", 
+                "ajustamentos"
+            };
+
+            return res;
+        }
+
+        private IEnumerable<string> get4InvestimentosSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "investimentos",
+                "imobilizacoes1",
+                "imobilizacoes2",
+                "imobilizacoes3",
+                "imobilizacoes4",
+                "imobilizacoes5",
+                "amortizacoes",
+                "ajust finan"
+            };
+
+            return res;
+        }
+
+        private IEnumerable<string> get5EquitySubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "capital",
+                "acoes quotas proprias",
+                "prestacoes",
+                "premio emissao acoes",
+                "ajustes partes cap",
+                "reservas reav",
+                "reservas",
+                "resultados transitados"
+            };
+
+            return res;
+        }
+
+        private IEnumerable<string> get6GastosSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "custo merc. vend",
+                "forn serv externos",
+                "impostos",
+                "custos pessoal",
+                "outros custos",
+                "amortizacoes e ajust externo",
+                "provisoes exercicio",
+                "custos perdas financeiras",
+                "custos perdas extra" 
+            };
+
+            return res;
+        }
+
+        private IEnumerable<string> get7VendasSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "sales", 
+                "prestacoes serv",
+                "proveitos suplementares",
+                "subsidios explo",
+                "trabalhos propria",
+                "outros proveitos e ganhos",
+                "reversoes",
+                "proveitos e ganhos",
+                "proveitos e ganhos extra"
+            };
+
+            return res;
+        }
+
+        private IEnumerable<string> get8ResultadosSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "resultados operacionais", 
+                "resultados financeiros",
+                "resultados correntes",
+                "resultados extra",
+                "resultados antes imposto",
+                "imposto sem rendimento do exercicio",
+                "resultado liquido do exercicio",
+                "dividendos antecipados"
+            };
+
+            return res;
+        }
+        
+        private IEnumerable<string> get9CoisasSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "contas reflectidas", 
+                "periodizacao custos",
+                "existencias",
+                "centro custo",
+                "custo producao",
+                "desvios",
+                "dif incorporacao",
+                "resultados funcoes"
+            };
+
+            return res;
         }
     }
 }
