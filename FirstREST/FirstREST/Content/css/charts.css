@@ -1,0 +1,19 @@
+﻿li:nth-child(1) .fa-circle-o {
+    color: #CC2829;
+}
+
+li:nth-child(2) .fa-circle-o {
+    color: #ABCC29;
+}
+
+li:nth-child(3) .fa-circle-o {
+    color: #28CC6A;
+}
+
+li:nth-child(4) .fa-circle-o {
+    color: #286ACC;
+}
+
+li:nth-child(5) .fa-circle-o {
+    color: #CCAB29;
+}
