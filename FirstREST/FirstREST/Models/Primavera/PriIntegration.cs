@@ -180,7 +180,8 @@ namespace Dashboard.Models.Primavera
                 purchase.ReceptionDate = ParseDate(purchasesQuery, "CabecComprasDataDescarga");
                 purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
                 purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
-                purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido") * (1.0 + (purchasesQuery.Valor("IvaTaxa") / 100.0)), purchasesQuery.Valor("CabecComprasMoeda"));
+                purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
+                purchase.Iva = purchasesQuery.Valor("IvaTaxa") / 100.0;
 
                 Product product = new Product();
                 product.Brand = purchasesQuery.Valor("ArtigoMarca");
@@ -235,7 +236,8 @@ namespace Dashboard.Models.Primavera
                 sale.ReceptionDate = ParseDate(salesQuery, "CabecDocsDataDescarga");
                 sale.ClientId = salesQuery.Valor("CabecDocEntidade");
                 sale.ClientName = salesQuery.Valor("CabecDocNome");
-                sale.Value = new Money(salesQuery.Valor("LinhasDocPrecoLiquido") * (1.0 + (salesQuery.Valor("IvaTaxa") / 100.0)), salesQuery.Valor("CabecDocMoeda"));
+                sale.Value = new Money(salesQuery.Valor("LinhasDocPrecoLiquido"), salesQuery.Valor("CabecDocMoeda"));
+                sale.Iva = salesQuery.Valor("IvaTaxa") / 100.0;
 
                 Product product = new Product();
                 product.Brand = salesQuery.Valor("ArtigoMarca");

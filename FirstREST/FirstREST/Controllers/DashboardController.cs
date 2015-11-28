@@ -33,6 +33,12 @@ namespace Dashboard.Controllers
             //Get Net Sales Global Value
             ViewBag.NetSalesValue = FormatUtils.FormatCurrency(SalesManager.GetNetSales(first, last));
 
+            //Get Gross Purchases Global Value
+            ViewBag.GrossPurchasesValue = FormatUtils.FormatCurrency(PurchasesManager.GetGrossPurchases(first, last));
+
+            //Get Gross Sales Global Value
+            ViewBag.GrossSalesValue = FormatUtils.FormatCurrency(SalesManager.GetGrossSales(first, last));
+
             //Get Labor Cost per Employee
             ViewBag.LaborCostValue = FormatUtils.FormatCurrency(HRManager.GetHumanResourcesSpendings(first, last));
 
