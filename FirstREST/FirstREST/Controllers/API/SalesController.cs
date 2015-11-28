@@ -9,8 +9,8 @@ namespace Dashboard.Controllers.API
 
     public class SalesController : ApiController
     {
-        [ActionName("net_income")]
-        public Double GetNetIncome(DateTime initialDate, DateTime finalDate)
+        [ActionName("net_sales")]
+        public Double GetNetSales(DateTime initialDate, DateTime finalDate)
         {
             return SalesManager.GetNetSales(initialDate, finalDate);
         }
@@ -27,10 +27,10 @@ namespace Dashboard.Controllers.API
             return SalesManager.GetSalesByCategory(initialDate, finalDate, limit);
         }
 
-        [ActionName("net_income_by_interval")]
-        public IEnumerable<SalesManager.NetIncomeByIntervalLine> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
+        [ActionName("net_sales_by_interval")]
+        public IEnumerable<SalesManager.NetSalesByIntervalLine> GetNetSalesByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            return SalesManager.GetNetIncomeByInterval(initialDate, finalDate, timeInterval);
+            return SalesManager.GetNetSalesByInterval(initialDate, finalDate, timeInterval);
         }
     }
 }

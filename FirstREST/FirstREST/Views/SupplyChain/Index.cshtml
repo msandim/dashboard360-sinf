@@ -2,12 +2,13 @@
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Sales Dashboard</h1>
+        <h1>Supply Chain Dashboard</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
 
+        <!-- Date range selector -->
         <div class="row" style="padding-bottom: 12px">
             <div class="col-md-12">
                 <div class="form-group pull-right">
@@ -27,12 +28,11 @@
         <!-- Info boxes -->
         <div class="row">
 
+            <!-- Net sales Line chart -->
             <div class="col-md-12">
-
-                <!-- Net sales Line chart -->
                 <div class="box box-solid box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Net Sales Global Values (€)</h3>
+                        <h3 class="box-title">Net Purchases Global Values (€)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -42,7 +42,7 @@
 
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="net_sales_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <canvas id="net_purchases_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
                         </div>
                     </div>
                     <!-- /.info-box-content -->
@@ -50,11 +50,11 @@
             </div>
         </div>
         <div class="row">
+            <!-- Purchases by category Donut gchart -->
             <div class="col-md-6">
-                <!-- Sales by category Donut gchart -->
                 <div class="box box-warning box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Sales by Category (€)</h3>
+                        <h3 class="box-title">Purchases by Category (€)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -62,18 +62,16 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <canvas id="sales_by_category_chart" style="height: 286px; width: 572px;" width="572" height="286"></canvas>
+                        <canvas id="purchases_by_category_chart" style="height: 286px; width: 572px;" width="572" height="286"></canvas>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.info-box -->
 
             </div>
-            <!-- /.info-box -->
 
+            <!-- Top 10 customers -->   
             <div class="col-md-6">
-
-                <!-- Top 10 customers -->
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Top 10 Costumers</h3>
@@ -86,9 +84,13 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                            <div class="row">
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6"></div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="top_customers" class="table table-bordered table-hover dataTable" role="grid"></table>
+                                    <table id="top_suppliers" class="table table-bordered table-hover dataTable" role="grid"></table>
                                 </div>
                             </div>
                         </div>
@@ -131,9 +133,9 @@
     <script src="~/Content/Core/Elements/LineChart.js"></script>
     <script src="~/Content/Core/Elements/PieChart.js"></script>
     <script src="~/Content/Core/Elements/Table.js"></script>
-    <script src="~/Content/Core/Views/NetSalesChart.js"></script>
-    <script src="~/Content/Core/Views/SalesByCategoryChart.js"></script>
-    <script src="~/Content/Core/Views/TopCostumersTable.js"></script>
-    <script src="~/Content/sales.js"></script>
+    <script src="~/Content/Core/Views/SupplyChain/NetPurchasesChart.js"></script>
+    <script src="~/Content/Core/Views/SupplyChain/PurchasesByCategoryChart.js"></script>
+    <script src="~/Content/Core/Views/SupplyChain/TopSuppliersTable.js"></script>
+    <script src="~/Content/purchases.js"></script>
 }
 

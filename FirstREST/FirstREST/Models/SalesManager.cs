@@ -36,12 +36,12 @@ namespace Dashboard.Models
                 Total = total;
             }
         }
-        public class NetIncomeByIntervalLine
+        public class NetSalesByIntervalLine
         {
             public DateTime Date { get; set; }
             public Double Total { get; set; }
 
-            public NetIncomeByIntervalLine(DateTime date, Double total)
+            public NetSalesByIntervalLine(DateTime date, Double total)
             {
                 Date = date;
                 Total = total;
@@ -82,7 +82,7 @@ namespace Dashboard.Models
             return query.Sum();
         }
 
-        public static IEnumerable<NetIncomeByIntervalLine> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
+        public static IEnumerable<NetSalesByIntervalLine> GetNetSalesByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
             CachedData.UpdateData(initialDate, finalDate);
             var documents = CachedData.CachedData;
@@ -95,7 +95,7 @@ namespace Dashboard.Models
                     new DateTime(document.DocumentDate.Year,
                         timeInterval == TimeIntervalType.Month ? document.DocumentDate.Month : 1, 1)
                 into interval
-                select new NetIncomeByIntervalLine(
+                select new NetSalesByIntervalLine(
                     interval.Key, interval.Select(x => x.Value.Value).Sum()
                     );
 
@@ -116,12 +116,12 @@ namespace Dashboard.Models
 
             // Empty:
             var empty = from date in dateTimes
-                        select new NetIncomeByIntervalLine(date, 0.0);
+                        select new NetSalesByIntervalLine(date, 0.0);
 
             var finalQuery = from e in empty
                              join realData in query on e.Date equals realData.Date into g
                              from realDataJoin in g.DefaultIfEmpty()
-                             select new NetIncomeByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
+                             select new NetSalesByIntervalLine(e.Date, realDataJoin == null ? 0.0 : realDataJoin.Total);
 
             return finalQuery.OrderBy(x => x.Date);
         }

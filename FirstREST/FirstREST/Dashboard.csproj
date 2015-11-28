@@ -266,6 +266,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\API\PurchasesController.cs" />
     <Compile Include="Controllers\API\SalesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
@@ -321,11 +322,15 @@
     <Content Include="Content\Core\Utils\DateUtils.js" />
     <Content Include="Content\Core\Elements\PieChart.js" />
     <Content Include="Content\Core\Utils\CurrencyUtils.js" />
-    <Content Include="Content\Core\Views\NetSalesChart.js" />
-    <Content Include="Content\Core\Views\SalesByCategoryChart.js" />
-    <Content Include="Content\Core\Views\TopCostumersTable.js" />
+    <Content Include="Content\Core\Views\Sales\NetSalesChart.js" />
+    <Content Include="Content\Core\Views\Sales\SalesByCategoryChart.js" />
+    <Content Include="Content\Core\Views\Sales\TopCostumersTable.js" />
+    <Content Include="Content\Core\Views\SupplyChain\NetPurchasesChart.js" />
+    <Content Include="Content\Core\Views\SupplyChain\PurchasesByCategoryChart.js" />
+    <Content Include="Content\Core\Views\SupplyChain\TopSuppliersTable.js" />
     <Content Include="Content\css\charts.css" />
     <Content Include="Content\dashboard.js" />
+    <Content Include="Content\purchases.js" />
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.min.css" />

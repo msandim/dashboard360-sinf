@@ -203,8 +203,8 @@ namespace Dashboard.Models.Primavera
                 purchase.DocumentType = purchasesQuery.Valor("CabecComprasTipoDoc");
                 purchase.DueDate = ParseDate(purchasesQuery, "CabecComprasDataVencimento");
                 purchase.ReceptionDate = ParseDate(purchasesQuery, "CabecComprasDataDescarga");
-                purchase.EntityId = purchasesQuery.Valor("CabecComprasEntidade");
-                purchase.EntityName = purchasesQuery.Valor("CabecComprasNome");
+                purchase.SupplierId = purchasesQuery.Valor("CabecComprasEntidade");
+                purchase.SupplierName = purchasesQuery.Valor("CabecComprasNome");
                 purchase.Value = new Money(purchasesQuery.Valor("LinhasComprasPrecoLiquido"), purchasesQuery.Valor("CabecComprasMoeda"));
                 purchase.Iva = purchasesQuery.Valor("IvaTaxa") / 100.0;
 

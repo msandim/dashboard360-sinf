@@ -5,7 +5,7 @@
 NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval)
 {
     $.ajax({
-        url: 'http://localhost:49822/api/sales/net_income_by_interval',
+        url: 'http://localhost:49822/api/sales/net_sales_by_interval',
         type: 'Get',
         data: {
             initialDate: DateUtils.formatDate(initialDate),
