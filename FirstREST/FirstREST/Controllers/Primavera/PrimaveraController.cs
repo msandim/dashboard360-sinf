@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Dashboard.Controllers.Primavera
 {
-    using Dashboard.Models.Primavera;
-    using Dashboard.Models.Primavera.Model;
+    using Models.Primavera;
+    using Models.Primavera.Model;
 
     public class PrimaveraController : ApiController
     {
@@ -43,9 +40,9 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("purchase")]
-        public IEnumerable<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate, String documentType)
+        public IEnumerable<Purchase> GetPurchases(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetPurchases(initialDate, finalDate, documentType);
+            return PriIntegration.GetPurchases(initialDate, finalDate);
         }
 
         [ActionName("receivable")]
@@ -55,9 +52,9 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("sale")]
-        public IEnumerable<Sale> GetSales(DateTime initialDate, DateTime finalDate, String documentType)
+        public IEnumerable<Sale> GetSales(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetSales(initialDate, finalDate, documentType);
+            return PriIntegration.GetSales(initialDate, finalDate);
         }
 
         [ActionName("balance_sheet")]
