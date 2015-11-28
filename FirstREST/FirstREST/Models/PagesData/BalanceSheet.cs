@@ -52,8 +52,8 @@ namespace Dashboard.Models.PagesData
             //-- 2 -- Contas a receber e a pagar
             metrics.Add("accounts_receivable", new Metric("accounts_receivable", "21", true)); //************************
             metrics.Add("accounts_payable", new Metric("accounts_payable", "22", true)); //************************
-            metrics.Add("emprestimos obtidos", new Metric("emprestimos obtidos", "23", true));
-            metrics.Add("estados e outros entes", new Metric("estados e outros entes", "24", true));
+            metrics.Add("emprestimos obtidos", new Metric("emprestimos obtidos", "23", true)); //***********************
+            metrics.Add("estados e outros entes", new Metric("estados e outros entes", "24", true)); //********************
             metrics.Add("acionistas", new Metric("acionistas", "25", true));
             metrics.Add("outros devedores e credores", new Metric("outros devedores e credores", "26", true));
             metrics.Add("acrescimos e diferimentos", new Metric("acrescimos e diferimentos", "27", true));
@@ -62,7 +62,7 @@ namespace Dashboard.Models.PagesData
 
             //-- 3 -- Inventários e activos biologicos                     
             metrics.Add("purchases", new Metric("purchases", "31", true)); //***************************
-            metrics.Add("mercadorias", new Metric("mercadorias", "32", true));
+            metrics.Add("mercadorias", new Metric("mercadorias", "32", true)); //*******************************
             metrics.Add("produtos acabados", new Metric("produtos acabados", "33", true));
             metrics.Add("subprodutos", new Metric("subprodutos", "34", true));
             metrics.Add("produtos e trabalhos", new Metric("produtos e trabalhos", "35", true));
@@ -81,7 +81,7 @@ namespace Dashboard.Models.PagesData
             metrics.Add("amortizacoes", new Metric("amortizacoes", "48", true));
             metrics.Add("ajust finan", new Metric("ajust finan", "49", true));
 
-            //-- 5 -- capital proprio e resultados                    //**********************************
+            //-- 5 -- capital proprio e resultados                   
             metrics.Add("capital", new Metric("capital", "51", true));
             metrics.Add("acoes quotas proprias", new Metric("acoes quotas proprias", "52", true));
             metrics.Add("prestacoes", new Metric("prestacoes", "53", true));
@@ -150,44 +150,51 @@ namespace Dashboard.Models.PagesData
         private void prepareIndirectMetrics()
         {
             //-- 1 -- Meios financeiros liquidos
-            calculateIndirectMetric("meios financeiros liquidos", new List<string>(get1MeiosFinanceirosLiquidosSubmetrics()));
+            calculateIndirectMetric("1 meios financeiros liquidos", new List<string>(get1MeiosFinanceirosLiquidosSubmetrics()));
 
             //-- 2 -- Contas a receber e a pagar
-            calculateIndirectMetric("contas a receber e a pagar", new List<string>(get2ContasReceberPagarSubmetrics()));
+            calculateIndirectMetric("2 contas a receber e a pagar", new List<string>(get2ContasReceberPagarSubmetrics()));
 
             //-- 3 -- Inventários e activos biologicos  //*******************************************************************************        
-            calculateIndirectMetric("inventario", new List<string>(get3InventorySubmetrics()));
+            calculateIndirectMetric("3 inventario", new List<string>(get3InventorySubmetrics()));
 
-            //-- 4 -- Investimentos
-            calculateIndirectMetric("investimentos", new List<string>(get4InvestimentosSubmetrics()));
+            //-- 4 -- Investimentos 
+            calculateIndirectMetric("4 investimentos", new List<string>(get4InvestimentosSubmetrics()));
 
-            //-- 5 -- capital proprio e resultados                    
-            calculateIndirectMetric("capital proprio", new List<string>(get5EquitySubmetrics()));
+            //-- 5 -- capital proprio e resultados //*************************************************************************************                   
+            calculateIndirectMetric("5 capital proprio", new List<string>(get5EquitySubmetrics()));
 
-            //-- 6 -- gastos
-            calculateIndirectMetric("gastos", new List<string>(get6GastosSubmetrics()));
-            
-            //-- 7 -- vendas
-            calculateIndirectMetric("vendas", new List<string>(get7VendasSubmetrics()));
+            //-- 6 -- gastos //********************************************************************************************************** 
+            calculateIndirectMetric("6 gastos", new List<string>(get6GastosSubmetrics()));
+
+            //-- 7 -- vendas //********************************************************************************************************** 
+            calculateIndirectMetric("7 vendas", new List<string>(get7VendasSubmetrics()));
 
             //-- 8 -- resultados
-            calculateIndirectMetric("resultados", new List<string>(get8ResultadosSubmetrics()));
+            calculateIndirectMetric("8 resultados", new List<string>(get8ResultadosSubmetrics()));
 
             //-- 9 -- mais coisas fofas
-            calculateIndirectMetric("coisas", new List<string>(get9CoisasSubmetrics()));
+            calculateIndirectMetric("9 coisas", new List<string>(get9CoisasSubmetrics()));
 
-            //--------------------------------------------------------------------------------
+            //----------------------------------ASSETS--------------------------------------
 
-            //metrics.Add("inventory", new Metric("inventory", "31", true));
-            //metrics.Add("total_current_assets", new Metric("total_current_assets", "?", true));
-            //metrics.Add("total_non_current_assets", new Metric("total_non_current_assets", "?", true));
-            //metrics.Add("total_assets", new Metric("total_assets", "?", true));
+            //-- TOTAL CURRENT ASSETS
+            calculateIndirectMetric("total_current_assets", new List<string>(getTotalCurrentAssetsSubmetrics())); 
 
-            //metrics.Add("current_liabilities", new Metric("current_liabilities", "?", false));
-            //metrics.Add("long_term_debt", new Metric("long_term_debt", "?", false));
-            //metrics.Add("total_liabilities", new Metric("total_liabilities", "?", false));
-            //metrics.Add("net_worth", new Metric("net_worth", "?", false));
-            //metrics.Add("total_liabilities_and_net_worth", new Metric("total_liabilities_and_net_worth", "?", false));
+            //-- TOTAL NON CURRENT ASSETS
+            calculateIndirectMetric("total_non_current_assets", new List<string>(getTotalNonCurrentAssetsSubmetrics()));
+
+            //-- TOTAL ASSETS
+            calculateIndirectMetric("total_assets", new List<string>(getTotalAssetsSubmetrics()));
+
+            //-- TOTAL CURRENT LIABILITIES
+            calculateIndirectMetric("total_current_liabilities", new List<string>(getTotalCurrentLiabilitiesSubmetrics()));
+
+            //-- TOTAL LONG TERM DEBT
+            calculateIndirectMetric("total_long_term_debt", new List<string>(getTotalLongTermDebtSubmetrics()));
+
+            //-- TOTAL LIABILITIES
+            calculateIndirectMetric("total_liabilities", new List<string>(getTotalLiabilitiesSubmetrics()));
 
         }
 
@@ -195,7 +202,7 @@ namespace Dashboard.Models.PagesData
         {
             Metric result_metric = new Metric(metric_name, metric_name, true);
 
-            foreach(String submetric_name in submetrics_names)
+            foreach (String submetric_name in submetrics_names)
             {
                 Metric submetric = metrics[submetric_name];
                 result_metric = result_metric + submetric;
@@ -204,7 +211,74 @@ namespace Dashboard.Models.PagesData
             metrics.Add(metric_name, result_metric);
         }
 
-        private IEnumerable<string> get1MeiosFinanceirosLiquidosSubmetrics()
+        private string[] getTotalCurrentLiabilitiesSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "accounts_payable",
+                "estados e outros entes"
+                
+            };
+
+            return res;
+        }
+
+        private string[] getTotalLongTermDebtSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "emprestimos obtidos"
+            };
+
+            return res;          
+        }
+
+        private string[] getTotalLiabilitiesSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "total_current_liabilities",
+                "total_long_term_debt"
+            };
+
+            return res;
+        }
+
+        private string[] getTotalCurrentAssetsSubmetrics()
+        {
+             String[] res = new String[] 
+            { 
+                "1 meios financeiros liquidos",
+                "accounts_receivable",
+                "3 inventario"
+            };
+
+            return res;
+        }
+
+        private string[] getTotalNonCurrentAssetsSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "4 investimentos"
+            };
+
+            return res;
+        }
+
+        private string[] getTotalAssetsSubmetrics()
+        {
+            String[] res = new String[] 
+            { 
+                "total_current_assets",
+                "total_non_current_assets"
+
+            };
+
+            return res;
+        }
+
+        private string[] get1MeiosFinanceirosLiquidosSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -220,7 +294,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get2ContasReceberPagarSubmetrics()
+        private string[] get2ContasReceberPagarSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -256,7 +330,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get4InvestimentosSubmetrics()
+        private string[] get4InvestimentosSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -273,7 +347,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get5EquitySubmetrics()
+        private string[] get5EquitySubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -290,7 +364,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get6GastosSubmetrics()
+        private string[] get6GastosSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -308,7 +382,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get7VendasSubmetrics()
+        private string[] get7VendasSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -326,7 +400,7 @@ namespace Dashboard.Models.PagesData
             return res;
         }
 
-        private IEnumerable<string> get8ResultadosSubmetrics()
+        private string[] get8ResultadosSubmetrics()
         {
             String[] res = new String[] 
             { 
@@ -342,8 +416,8 @@ namespace Dashboard.Models.PagesData
 
             return res;
         }
-        
-        private IEnumerable<string> get9CoisasSubmetrics()
+
+        private string[] get9CoisasSubmetrics()
         {
             String[] res = new String[] 
             { 
