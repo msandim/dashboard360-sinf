@@ -2,7 +2,7 @@
 {
 }
 
-SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit) {
+SalesByCategoryChart.display = function(canvasId, legendsId, initialDate, finalDate, limit) {
     $.ajax(
         {
             url: 'http://localhost:49822/api/sales/sales_by_category',
@@ -17,7 +17,7 @@ SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit)
                 $(canvasId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
             },
             success: function (data) {
-                SalesByCategoryChart.displayChart(canvasId, data);
+                SalesByCategoryChart.displayChart(canvasId, legendsId, data);
                 $(canvasId).closest("div .box").children("div .overlay").remove();
             },
             failure: function() {
@@ -26,7 +26,7 @@ SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit)
         }
     );
 };
-SalesByCategoryChart.displayChart = function (canvasId, data) {
+SalesByCategoryChart.displayChart = function (canvasId, legendsId, data) {
 
     if (!SalesByCategoryChart.chart) {
         SalesByCategoryChart.chart = new PieChart();
@@ -35,7 +35,7 @@ SalesByCategoryChart.displayChart = function (canvasId, data) {
         SalesByCategoryChart.chart.shutdown();
     }
 
-    SalesByCategoryChart.chart.initialize(canvasId);
+    SalesByCategoryChart.chart.initialize(canvasId, legendsId);
 
     // Add sections:
     for (var i = 0; i < data.length; i++)
@@ -47,7 +47,4 @@ SalesByCategoryChart.displayChart = function (canvasId, data) {
 
     // Display:
     SalesByCategoryChart.chart.display();
-
-    // Display Lagends:
-    SalesByCategoryChart.chart.displayLegends("#sales_by_category_legend");
 };

@@ -1,8 +1,8 @@
-﻿function TopCostumersTable()
+﻿function TopSuppliersTable()
 {
 }
 
-TopCostumersTable.display = function (tableId, initialDate, finalDate, limit)
+TopSuppliersTable.display = function (tableId, initialDate, finalDate, limit)
 {
     $.ajax({
         url: 'http://localhost:49822/api/purchases/top_suppliers',
@@ -18,16 +18,16 @@ TopCostumersTable.display = function (tableId, initialDate, finalDate, limit)
         },
         success: function (data)
         {
-            TopCostumersTable.displayTable(tableId, data);
+            TopSuppliersTable.displayTable(tableId, data);
             $(tableId).closest("div .box").children("div .overlay").remove();
         },
         failure: function ()
         {
-            alert('Failed to get sales values');
+            alert('Failed to get suppliers values');
         }
     });
 };
-TopCostumersTable.displayTable = function (tableId, data)
+TopSuppliersTable.displayTable = function (tableId, data)
 {
     var table = new Table();
     table.initialize();

@@ -2,8 +2,10 @@
 {    
 }
 
-PieChart.prototype.initialize = function (canvasId, animation, responsive, maintainAspectRatio) {
+PieChart.prototype.initialize = function (canvasId, legendsId, animation, responsive, maintainAspectRatio) {
     this.chart = null;
+    this.canvasId = canvasId;
+    this.legendsId = legendsId;
 
     // Get context:
     this.context = $(canvasId).get(0).getContext("2d");
@@ -12,7 +14,7 @@ PieChart.prototype.initialize = function (canvasId, animation, responsive, maint
     this.pieData = [];
 
     // Create array to hold pie legends data:
-    this.lengends = [];
+    this.legends = [];
 
     this.numColors = 5;
     this.colors = ColorGenerator.generateColors(this.numColors);
@@ -25,10 +27,11 @@ PieChart.prototype.initialize = function (canvasId, animation, responsive, maint
         maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio
     };
 };
-PieChart.prototype.shutdown = function ()
-{
-    if (this.chart != null)
+PieChart.prototype.shutdown = function() {
+    if (this.chart != null) {
         this.chart.destroy();
+        $(this.legendsId).html(''); // Destroy legends
+    }
 }
 
 PieChart.prototype.addSection = function (label, value, color)
@@ -49,19 +52,20 @@ PieChart.prototype.addSection = function (label, value, color)
     );
 
     //Add legend:
-    this.lengends.push(label);
+    this.legends.push(label);
 };
 
-PieChart.prototype.displayLegends = function (ulId) {
+PieChart.prototype.displayLegends = function () {
     
-    for(var label in this.lengends) {
-        $(ulId).append("<li><i class=\"fa fa-circle-o\"></i> " + this.lengends[label] + "</li>");
+    for(var label in this.legends) {
+        $(this.legendsId).append("<li><i class=\"fa fa-circle-o\"></i> " + this.legends[label] + "</li>");
     }
 };
 
 PieChart.prototype.display = function ()
 {
     this.chart = new Chart(this.context).Pie(this.pieData, this.options);
+    this.displayLegends();
 };
 
 PieChart.prototype.setAnimation = function (value)

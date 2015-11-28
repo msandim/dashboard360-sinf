@@ -1,8 +1,9 @@
-﻿function SalesByCategoryChart()
+﻿function PurchasesByCategoryChart()
 {
 }
 
-SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit) {
+PurchasesByCategoryChart.display = function (canvasId, legendsId, initialDate, finalDate, limit)
+{
     $.ajax(
         {
             url: 'http://localhost:49822/api/purchases/purchases_by_category',
@@ -17,37 +18,36 @@ SalesByCategoryChart.display = function(canvasId, initialDate, finalDate, limit)
                 $(canvasId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
             },
             success: function (data) {
-                SalesByCategoryChart.displayChart(canvasId, data);
+                PurchasesByCategoryChart.displayChart(canvasId, legendsId, data);
                 $(canvasId).closest("div .box").children("div .overlay").remove();
             },
             failure: function() {
-                alert('Failed to get sales values');
+                alert('Failed to get purchases values');
             }
         }
     );
 };
-SalesByCategoryChart.displayChart = function (canvasId, data) {
+PurchasesByCategoryChart.displayChart = function (canvasId, legendsId, data)
+{
 
-    if (!SalesByCategoryChart.chart) {
-        SalesByCategoryChart.chart = new PieChart();
+    if (!PurchasesByCategoryChart.chart)
+    {
+        PurchasesByCategoryChart.chart = new PieChart();
     }
     else {
-        SalesByCategoryChart.chart.shutdown();
+        PurchasesByCategoryChart.chart.shutdown();
     }
 
-    SalesByCategoryChart.chart.initialize(canvasId);
+    PurchasesByCategoryChart.chart.initialize(canvasId, legendsId);
 
     // Add sections:
     for (var i = 0; i < data.length; i++)
     {
         var element = data[i];
 
-        SalesByCategoryChart.chart.addSection(element.FamilyDescription, element.Total.toFixed(2));
+        PurchasesByCategoryChart.chart.addSection(element.FamilyDescription, element.Total.toFixed(2));
     }
 
     // Display:
-    SalesByCategoryChart.chart.display();
-
-    // Display Lagends:
-    SalesByCategoryChart.chart.displayLegends("#sales_by_category_legend");
+    PurchasesByCategoryChart.chart.display();
 };

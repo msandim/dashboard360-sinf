@@ -1,8 +1,8 @@
-﻿function NetSalesChart()
+﻿function NetPurchasesChart()
 {
 }
 
-NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval)
+NetPurchasesChart.display = function (canvasId, initialDate, finalDate, timeInterval)
 {
     $.ajax({
         url: 'http://localhost:49822/api/purchases/net_purchases_by_interval',
@@ -18,7 +18,7 @@ NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval
         },
         success: function (data)
         {
-            NetSalesChart.displayChart(canvasId, data, timeInterval);
+            NetPurchasesChart.displayChart(canvasId, data, timeInterval);
             $(canvasId).closest("div .box").children("div .overlay").remove();
         },
         failure: function ()
@@ -27,21 +27,23 @@ NetSalesChart.display = function (canvasId, initialDate, finalDate, timeInterval
         }
     });
 };
-NetSalesChart.displayChart = function (canvasId, data, timeInterval) {
+NetPurchasesChart.displayChart = function (canvasId, data, timeInterval)
+{
 
-    if (!NetSalesChart.chart) {
-        NetSalesChart.chart = new LineChart();
+    if (!NetPurchasesChart.chart)
+    {
+        NetPurchasesChart.chart = new LineChart();
     } else {
-        NetSalesChart.chart.shutdown();
+        NetPurchasesChart.chart.shutdown();
     }
 
-    NetSalesChart.chart.initialize();
+    NetPurchasesChart.chart.initialize();
 
     for (var i = 0; i < data.length; i++)
     {
         var element = data[i];
-        NetSalesChart.chart.addValue(DateUtils.formatLabel(element.Date, timeInterval), element.Total);
+        NetPurchasesChart.chart.addValue(DateUtils.formatLabel(element.Date, timeInterval), element.Total);
     }
      
-    NetSalesChart.chart.display(canvasId);
+    NetPurchasesChart.chart.display(canvasId);
 };

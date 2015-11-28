@@ -14,9 +14,9 @@ function drawDateSelection()
 
 function drawCharts(initialDate, finalDate)
 {
-    SalesByCategoryChart.display("#purchases_by_category_chart", initialDate, finalDate, 5);
-    TopCostumersTable.display("#top_suppliers", initialDate, finalDate, 10);
-    NetSalesChart.display("#net_purchases_chart", initialDate, finalDate, "month");
+    PurchasesByCategoryChart.display("#purchases_by_category_chart", "#purchases_by_category_legend", initialDate, finalDate, 5);
+    TopSuppliersTable.display("#top_suppliers", initialDate, finalDate, 10);
+    NetPurchasesChart.display("#net_purchases_chart", initialDate, finalDate, "month");
 }
 
 function ready()
