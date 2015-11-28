@@ -68,6 +68,20 @@ namespace Dashboard.Models
             // Calculate the net sales:
             return query.Sum(); 
         }
+        public static Double GetGrossSales(DateTime initialDate, DateTime finalDate)
+        {
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
+
+            // Query documents:
+            var query = from document in documents
+                        where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                              (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                        select document.Value.Value * (1.0 + document.Iva);
+
+            return query.Sum();
+        }
+
         public static IEnumerable<NetIncomeByIntervalLine> GetNetIncomeByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
             CachedData.UpdateData(initialDate, finalDate);

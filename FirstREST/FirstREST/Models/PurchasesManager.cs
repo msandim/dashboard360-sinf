@@ -29,5 +29,20 @@ namespace Dashboard.Models
             // Calculate the net sales:
             return -query.Sum();
         }
+        public static Double GetGrossPurchases(DateTime initialDate, DateTime finalDate)
+        {
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
+
+            // Query documents:
+            var query = from document in documents
+                        where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                              (document.DocumentType == "VFA" || document.DocumentType == "VND" ||
+                               document.DocumentType == "VNC")
+                        select document.Value.Value * (1.0 + document.Iva);
+
+            // Calculate the net sales:
+            return -query.Sum();
+        }
     }
 }

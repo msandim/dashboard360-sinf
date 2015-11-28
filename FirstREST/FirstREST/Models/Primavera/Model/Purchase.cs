@@ -13,5 +13,6 @@ namespace Dashboard.Models.Primavera.Model
         public String EntityName { get; set; }
         public Product Product { get; set; }
         public Money Value { get; set; }
+        public Double Iva { get; set; }
     }
 }

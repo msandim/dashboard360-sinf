@@ -10,6 +10,8 @@
     <section class="content">
         <!-- Info boxes -->
         <div class="row">
+
+            <!-- Payables -->
             <div class="col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-red"><i class="ion ion-social-euro"></i></span>
@@ -22,6 +24,7 @@
                 <!-- /.info-box -->
             </div>
 
+            <!-- Receivables -->
             <div class="col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-green"><i class="ion ion-social-euro"></i></span>
@@ -33,6 +36,40 @@
                 </div>
                 <!-- /.info-box -->
             </div>
+
+            <!-- Gross Purchases -->
+            <div class="col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="ion ion-ios-cart-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Gross Purchases Global Values</span>
+                        <span class="info-box-number">@ViewBag.GrossPurchasesValue €</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <!-- Gross Sales -->
+            <div class="col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Gross Sales Global Values</span>
+                        <span class="info-box-number">@ViewBag.GrossSalesValue €</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <!-- ** Line Separator ** -->
+            <div class="col-sm-12 col-xs-12">
+                <div class="box box-solid" style="height:5px;">
+                </div>
+            </div>
+
+            <!-- Net Purchases -->
             <div class="col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-yellow"><i class="ion ion-ios-cart-outline"></i></span>
@@ -45,6 +82,7 @@
                 <!-- /.info-box -->
             </div>
 
+            <!-- Net Sales -->
             <div class="col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
@@ -57,6 +95,13 @@
                 <!-- /.info-box -->
             </div>
 
+            <!-- ** Line Separator ** -->
+            <div class="col-sm-12 col-xs-12">
+                <div class="box box-solid" style="height:5px;">
+                </div>
+            </div>
+
+            <!-- Human Resources -->
             <div class="col-sm-12 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-purple"><i class="ion ion-ios-people-outline"></i></span>
