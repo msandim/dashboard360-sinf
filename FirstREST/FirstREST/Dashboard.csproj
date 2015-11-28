@@ -266,6 +266,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\API\HumanResourcesController.cs" />
     <Compile Include="Controllers\API\PurchasesController.cs" />
     <Compile Include="Controllers\API\SalesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -279,7 +280,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cache.cs" />
-    <Compile Include="Models\HRManager.cs" />
+    <Compile Include="Models\HumanResourcesManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
     <Compile Include="Models\Net\Path.cs" />
     <Compile Include="Models\PagesData\BalanceSheet.cs" />
@@ -316,12 +317,14 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\Core\Elements\DatePicker.js" />
+    <Content Include="Content\Core\Elements\DoubleLineChart.js" />
     <Content Include="Content\Core\Elements\LineChart.js" />
     <Content Include="Content\Core\Elements\Table.js" />
     <Content Include="Content\Core\Utils\ColorGenerator.js" />
     <Content Include="Content\Core\Utils\DateUtils.js" />
     <Content Include="Content\Core\Elements\PieChart.js" />
     <Content Include="Content\Core\Utils\CurrencyUtils.js" />
+    <Content Include="Content\Core\Views\HumanResources\EmployeesCountChart.js" />
     <Content Include="Content\Core\Views\Sales\NetSalesChart.js" />
     <Content Include="Content\Core\Views\Sales\SalesByCategoryChart.js" />
     <Content Include="Content\Core\Views\Sales\TopCostumersTable.js" />

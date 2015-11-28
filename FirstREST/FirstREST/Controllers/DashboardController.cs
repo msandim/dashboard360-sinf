@@ -40,7 +40,7 @@ namespace Dashboard.Controllers
             ViewBag.GrossSalesValue = FormatUtils.FormatCurrency(SalesManager.GetGrossSales(first, last));
 
             //Get Labor Cost per Employee
-            ViewBag.LaborCostValue = FormatUtils.FormatCurrency(HRManager.GetHumanResourcesSpendings(first, last));
+            ViewBag.LaborCostValue = FormatUtils.FormatCurrency(HumanResourcesManager.GetHumanResourcesSpendings(first, last));
 
             return View();
         }

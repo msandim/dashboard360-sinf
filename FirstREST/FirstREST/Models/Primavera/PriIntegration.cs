@@ -392,7 +392,7 @@ namespace Dashboard.Models.Primavera
         public static GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
             if (!InitializeCompany())
-                return new GenderCounter(-1,-1);
+                return new GenderCounter(-1,-1, DateTime.MinValue, DateTime.MinValue);
 
             StdBELista list = PriEngine.Engine.Consulta(
                 "SELECT Sexo " +
@@ -414,7 +414,7 @@ namespace Dashboard.Models.Primavera
                 list.Seguinte();
             }
 
-            return new GenderCounter(males, females);
+            return new GenderCounter(males, females, initialDate, finalDate);
         } // Returns <male,female> format
 
         // Function to initialize the default company:
