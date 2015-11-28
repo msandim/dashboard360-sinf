@@ -324,6 +324,7 @@
     <Content Include="Content\Core\Views\NetSalesChart.js" />
     <Content Include="Content\Core\Views\SalesByCategoryChart.js" />
     <Content Include="Content\Core\Views\TopCostumersTable.js" />
+    <Content Include="Content\css\charts.css" />
     <Content Include="Content\dashboard.js" />
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />

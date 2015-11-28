@@ -47,4 +47,7 @@ SalesByCategoryChart.displayChart = function (canvasId, data) {
 
     // Display:
     SalesByCategoryChart.chart.display();
+
+    // Display Lagends:
+    SalesByCategoryChart.chart.displayLegends("#sales_by_category_legend");
 };

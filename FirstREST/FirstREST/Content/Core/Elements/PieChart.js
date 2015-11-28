@@ -11,6 +11,9 @@ PieChart.prototype.initialize = function (canvasId, animation, responsive, maint
     // Create array to hold pie data:
     this.pieData = [];
 
+    // Create array to hold pie legends data:
+    this.lengends = [];
+
     this.numColors = 5;
     this.colors = ColorGenerator.generateColors(this.numColors);
     this.colorIndex = 0;
@@ -44,6 +47,16 @@ PieChart.prototype.addSection = function (label, value, color)
             color: color
         }
     );
+
+    //Add legend:
+    this.lengends.push(label);
+};
+
+PieChart.prototype.displayLegends = function (ulId) {
+    
+    for(var label in this.lengends) {
+        $(ulId).append("<li><i class=\"fa fa-circle-o\"></i> " + this.lengends[label] + "</li>");
+    }
 };
 
 PieChart.prototype.display = function ()
