@@ -14,7 +14,7 @@ function drawCharts(initialDate, finalDate) {
     EmployeesCountChart.display("#employees_count_chart", initialDate, finalDate, "month");
     TopAbsencesChart.display("#top_absences", initialDate, finalDate, 10);
     TopOvertimeHoursChart.display("#top_overtime_hours", initialDate, finalDate, 10);
-    //GenderRatioChart.display("#gender_ratio_chart", "gender_ratio_legend", initialDate, finalDate);
+    GenderRatioChart.display("#gender_ratio_chart", "#gender_ratio_legend", initialDate, finalDate);
 
     /*
     PurchasesByCategoryChart.display("#purchases_by_category_chart", "#purchases_by_category_legend", initialDate, finalDate, 5);

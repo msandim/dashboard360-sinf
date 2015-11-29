@@ -301,7 +301,7 @@ namespace Dashboard.Models.Primavera
                 // Set values
                 employee.ID = list.Valor("IdGDOC");
                 employee.Name = list.Valor("Nome");
-                employee.Gender = list.Valor("Sexo") == "0" ? Employee.GenderType.Male : Employee.GenderType.Female;
+                employee.Gender = list.Valor("Sexo") == "0" ? Employee.GenderType.Female : Employee.GenderType.Male;
                 employee.Salary = new Money(list.Valor("Vencimento"), "Unspecified"); // No currency value
                 employee.HiredOn = ParseDate(list, "DataAdmissao");
                 employee.FiredOn = ParseDate(list, "DataDemissao");
@@ -404,9 +404,9 @@ namespace Dashboard.Models.Primavera
             while (!list.NoFim())
             {
                 if (list.Valor("Sexo") == "1")
-                    males++;
-                else
                     females++;
+                else
+                    males++;
 
                 list.Seguinte();
             }

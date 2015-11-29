@@ -35,11 +35,8 @@ GenderRatioChart.displayChart = function (canvasId, legendsId, data) {
     GenderRatioChart.chart.initialize(canvasId, legendsId);
 
     // Add sections:
-    for (var i = 0; i < data.length; i++) {
-        var element = data[i];
-
-        GenderRatioChart.chart.addSection(element.FamilyDescription, element.Total.toFixed(2));
-    }
+    GenderRatioChart.chart.addSection("Male", data.Male);
+    GenderRatioChart.chart.addSection("Female", data.Female);
 
     // Display:
     GenderRatioChart.chart.display();
