@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Dashboard.Models.Utils;
@@ -49,22 +48,34 @@ namespace Dashboard.Models
             }
         }
 
-        private static Cache<Employee> _cachedData;
-        private static Cache<Employee> CachedData
+        private static Cache<Employee> _employeeCache;
+        private static Cache<Employee> EmployeeCache
         {
-            get { return _cachedData ?? (_cachedData = new Cache<Employee>(PathConstants.BasePathApiPrimavera, "employee")); }
+            get { return _employeeCache ?? (_employeeCache = new Cache<Employee>(PathConstants.BasePathApiPrimavera, "employee")); }
         }
 
-        private static Cache<GenderCounter> _genderCounterCache;
-        private static Cache<GenderCounter> GenderCounterCachedData
+        private static Cache<GenderCounter> _genderCountCache;
+        private static Cache<GenderCounter> GenderCountCache
         {
-            get { return _genderCounterCache ?? (_genderCounterCache = new Cache<GenderCounter>(PathConstants.BasePathApiPrimavera, "gender_count")); }
+            get { return _genderCountCache ?? (_genderCountCache = new Cache<GenderCounter>(PathConstants.BasePathApiPrimavera, "gender_count")); }
+        }
+
+        private static Cache<Absence> _absenceCache;
+        private static Cache<Absence> AbsenceCache
+        {
+            get { return _absenceCache ?? (_absenceCache = new Cache<Absence>(PathConstants.BasePathApiPrimavera, "absence")); }
+        }
+
+        private static Cache<OvertimeHours> _overtimeHoursCache;
+        private static Cache<OvertimeHours> OvertimeHoursCache
+        {
+            get { return _overtimeHoursCache ?? (_overtimeHoursCache = new Cache<OvertimeHours>(PathConstants.BasePathApiPrimavera, "overtime_hour")); }
         }
 
         public static Double GetHumanResourcesSpendings(DateTime initialDate, DateTime finalDate)
         {
-            CachedData.UpdateData(initialDate, finalDate);
-            var documents = CachedData.CachedData;
+            EmployeeCache.UpdateData(initialDate, finalDate);
+            var documents = EmployeeCache.CachedData;
 
             // Query documents:
             var query = from document in documents
@@ -78,8 +89,8 @@ namespace Dashboard.Models
 
         public static IEnumerable<EmployeeCountByIntervalLine> GetEmployeeCountByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
         {
-            CachedData.UpdateData(initialDate, finalDate);
-            var employees = CachedData.CachedData;
+            EmployeeCache.UpdateData(initialDate, finalDate);
+            var employees = EmployeeCache.CachedData;
 
             // Query:
             var employeesQuery = from employee in employees
@@ -114,21 +125,67 @@ namespace Dashboard.Models
 
                 foreach (var employee in employeesQuery)
                 {
-                    if (employee.HiredOn <= finalDate && (employee.FiredOn >= beginDate || employee.FiredOn == DateTime.MinValue))
+                    if (employee.HiredOn <= endDate && (employee.FiredOn >= beginDate || employee.FiredOn == DateTime.MinValue))
                         e.Count++;
                 }
 
                 output.AddLast(e);
             }
-
+             
             return output.OrderBy(x => x.Date); 
         }
 
         public static GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
-            GenderCounterCachedData.UpdateData(initialDate, finalDate);
+            GenderCountCache.UpdateData(initialDate, finalDate);
 
-            return GenderCounterCachedData.CachedData.FirstOrDefault(x => x.InitialDate == initialDate && x.FinalDate == finalDate);
+            return GenderCountCache.CachedData.FirstOrDefault(x => x.InitialDate == initialDate && x.FinalDate == finalDate);
+        }
+
+        public static IEnumerable<EmployeeAbsenceCount> GetEmployeeAbsenceCount(DateTime initialDate, DateTime finalDate, Int32 limit)
+        {
+            AbsenceCache.UpdateData(initialDate, finalDate);
+            var absences = AbsenceCache.CachedData;
+
+            // Query:
+            var absencesQuery = from absence in absences
+                where initialDate <= absence.Date && absence.Date <= finalDate
+                group absence by absence.EmployeeId
+                into employee
+                select new EmployeeAbsenceCount(
+                    employee.Key,
+                    employee.Select(s => s.EmployeeName).FirstOrDefault(),
+                    employee.Count()
+                    );
+
+            // Order by descending on Count:
+            absencesQuery = absencesQuery.OrderByDescending(employee => employee.Count);
+
+            // Take the top limit:
+            return absencesQuery.Take(limit);
+        }
+
+        public static IEnumerable<OvertimeHourCount> GetOvertimeHourCount(DateTime initialDate, DateTime finalDate, Int32 limit)
+        {
+            OvertimeHoursCache.UpdateData(initialDate, finalDate);
+            var overtimeHours = OvertimeHoursCache.CachedData; 
+
+            // Query:
+            var overtimeHoursQuery = from overtimeHour in overtimeHours 
+                                where initialDate <= overtimeHour.Date && overtimeHour.Date <= finalDate
+                                group overtimeHour by overtimeHour.EmployeeId
+                into employee
+                                select new OvertimeHourCount(
+                                    employee.Key,
+                                    employee.Select(s => s.EmployeeName).FirstOrDefault(),
+                                    employee.Count()
+                                    );
+
+            // Order by descending on Count:
+            overtimeHoursQuery = overtimeHoursQuery.OrderByDescending(employee => employee.Count);
+
+            // Take the top limit:
+            return overtimeHoursQuery.Take(limit);
         }
     }
 }

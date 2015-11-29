@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace Dashboard.Controllers.Primavera
@@ -16,9 +17,9 @@ namespace Dashboard.Controllers.Primavera
         }
 
         [ActionName("gender_count")]
-        public GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
+        public IEnumerable<GenderCounter> GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetGenderCount(initialDate, finalDate);
+            return Enumerable.Repeat(PriIntegration.GetGenderCount(initialDate, finalDate), 1);
         }
 
         [ActionName("employee")]
@@ -30,7 +31,7 @@ namespace Dashboard.Controllers.Primavera
         [ActionName("overtime_hour")]
         public IEnumerable<OvertimeHours> GetOvertimeHours(DateTime initialDate, DateTime finalDate)
         {
-            return PriIntegration.GetOvertimeHours(initialDate, finalDate);
+            return PriIntegration.GetOvertimeHours(initialDate, finalDate); 
         }
 
         [ActionName("payable")]

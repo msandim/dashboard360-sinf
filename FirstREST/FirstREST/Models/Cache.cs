@@ -57,7 +57,7 @@ namespace Dashboard.Models
                         FinalDate = finalDate;
                     }
                 }
-            }
+            } 
         }
 
         private void MakeRequest(Path basePath, String action, DateTime initialDate, DateTime finalDate)

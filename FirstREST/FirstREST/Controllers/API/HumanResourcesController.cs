@@ -18,25 +18,19 @@ namespace Dashboard.Controllers.API
         [ActionName("gender_count")]
         public GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
-            return HumanResourcesManager.GetGenderCount(initialDate, finalDate);
+            return HumanResourcesManager.GetGenderCount(initialDate, finalDate); 
         }
 
         [ActionName("absence_count")]
-        public IEnumerable<HumanResourcesManager.EmployeeAbsenceCount> GetAbsenceCount()
+        public IEnumerable<HumanResourcesManager.EmployeeAbsenceCount> GetAbsenceCount(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            var list = new LinkedList<HumanResourcesManager.EmployeeAbsenceCount>();
-            list.AddLast(new HumanResourcesManager.EmployeeAbsenceCount("id", "name_absence", 5));
-
-            return list;
+            return HumanResourcesManager.GetEmployeeAbsenceCount(initialDate, finalDate, limit);
         }
 
         [ActionName("overtime_hours_count")]
-        public IEnumerable<HumanResourcesManager.OvertimeHourCount> GetOvertimeHoursCount()
+        public IEnumerable<HumanResourcesManager.OvertimeHourCount> GetOvertimeHoursCount(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
-            var list = new LinkedList<HumanResourcesManager.OvertimeHourCount>();
-            list.AddLast(new HumanResourcesManager.OvertimeHourCount("id", "name_over", 6));
-
-            return list;
+            return HumanResourcesManager.GetOvertimeHourCount(initialDate, finalDate, limit);
         }
     }
 }

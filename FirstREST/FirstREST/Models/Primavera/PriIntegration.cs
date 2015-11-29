@@ -1,16 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Interop.ErpBS800;
-using Interop.StdPlatBS800;
 using Interop.StdBE800;
-using Interop.GcpBE800;
-using ADODB;
-using Interop.IGcpBS800;
-using Interop.IRhpBS800;
-//using Interop.StdBESql800;
-//using Interop.StdBSSql800;
 
 namespace Dashboard.Models.Primavera
 {
@@ -21,14 +11,21 @@ namespace Dashboard.Models.Primavera
     {
         private static DateTime ParseDate(StdBELista list, String key)
         {
-            try
+            var value = list.Valor(key);
+
+            Type type = value.GetType();
+            if (type != typeof (DateTime))
             {
-                return list.Valor(key);
+                if(type != typeof(String))
+                    return DateTime.MinValue;
+
+                DateTime output;
+                if(!DateTime.TryParse(value, out output))
+                    return DateTime.MinValue;
+                return output;
             }
-            catch
-            {
-                return DateTime.MinValue;
-            }
+                
+            return value;
         }
 
         public static Dictionary<int, Dictionary<string, ClassLine>> GetBalanceSheet()
@@ -58,7 +55,7 @@ namespace Dashboard.Models.Primavera
                 }
 
                 processLine(balanceSheetQuery, line);
-                if(line.tipoLancamento == "000")
+                if (line.tipoLancamento == "000")
                     year_balance.Add(line.conta.ToString(), line);
 
                 past_year = line.ano;
@@ -75,54 +72,54 @@ namespace Dashboard.Models.Primavera
         {
             line.conta = balanceSheetQuery.Valor("Conta");
             line.moeda = balanceSheetQuery.Valor("Moeda");
-            
+
             //line.values.Add(d);
-            line.values.Add((double) balanceSheetQuery.Valor("Mes00CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes01CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes02CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes03CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes04CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes05CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes06CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes07CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes08CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes09CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes10CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes11CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes12CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes13CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes14CR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes15CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes00CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes01CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes02CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes03CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes04CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes05CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes06CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes07CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes08CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes09CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes10CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes11CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes12CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes13CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes14CR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes15CR"));
 
-            line.values.Add((double) balanceSheetQuery.Valor("Mes00DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes01DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes02DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes03DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes04DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes05DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes06DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes07DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes08DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes09DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes10DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes11DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes12DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes13DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes14DB"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes15DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes00DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes01DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes02DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes03DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes04DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes05DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes06DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes07DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes08DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes09DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes10DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes11DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes12DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes13DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes14DB"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes15DB"));
 
-            line.values.Add((double) balanceSheetQuery.Valor("Mes01OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes02OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes03OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes04OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes05OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes06OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes07OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes08OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes09OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes10OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes11OR"));
-            line.values.Add((double) balanceSheetQuery.Valor("Mes12OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes01OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes02OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes03OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes04OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes05OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes06OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes07OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes08OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes09OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes10OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes11OR"));
+            line.values.Add((double)balanceSheetQuery.Valor("Mes12OR"));
 
             line.tipoLancamento = balanceSheetQuery.Valor("TipoLancamento");
             line.naturezaOR = balanceSheetQuery.Valor("NaturezaOR");
@@ -151,7 +148,7 @@ namespace Dashboard.Models.Primavera
                 " AND DataDoc >= '" + initialDate.ToString("yyyyMMdd") + "' AND DataDoc <= '" + finalDate.ToString("yyyyMMdd") + "' " +
                 "ORDER BY DataDoc"
                 );
-            while(!pendingDocumentsQuery.NoFim())
+            while (!pendingDocumentsQuery.NoFim())
             {
                 Pending pendingDocument = new Pending();
                 pendingDocument.PendingValue = new Money(pendingDocumentsQuery.Valor("ValorPendente"), pendingDocumentsQuery.Valor("Moeda"));
@@ -280,7 +277,7 @@ namespace Dashboard.Models.Primavera
 
             return sales;
         }
-        
+
         // Human Resources related:
         public static List<Employee> GetEmployees(DateTime initialDate, DateTime finalDate)
         {
@@ -363,7 +360,7 @@ namespace Dashboard.Models.Primavera
             StdBELista list = PriEngine.Engine.Consulta(
                 "SELECT CadastroHExtras.Funcionario, CadastroHExtras.Data, CadastroHExtras.Tempo, Funcionarios.Nome AS FuncionariosNome " +
                 "FROM CadastroHExtras " +
-                "INNER JOIN Funcionarios " + 
+                "INNER JOIN Funcionarios " +
                 "ON CadastroHExtras.Funcionario = Funcionarios.Codigo " +
                 "WHERE CadastroHExtras.Data >= '" + initialDate.ToString("yyyyMMdd") + "' AND CadastroHExtras.Data <= '" + finalDate.ToString("yyyyMMdd") + "' " +
                 "ORDER BY CadastroHExtras.Data "
@@ -392,7 +389,7 @@ namespace Dashboard.Models.Primavera
         public static GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
         {
             if (!InitializeCompany())
-                return new GenderCounter(-1,-1, DateTime.MinValue, DateTime.MinValue);
+                return new GenderCounter(-1, -1, DateTime.MinValue, DateTime.MinValue);
 
             StdBELista list = PriEngine.Engine.Consulta(
                 "SELECT Sexo " +
