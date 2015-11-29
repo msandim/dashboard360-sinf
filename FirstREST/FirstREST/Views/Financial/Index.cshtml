@@ -52,6 +52,35 @@
                     <!-- /.info-box-content -->
                 </div>
             </div>
+
+            <div class="col-md-12">
+
+                <!-- Top 10 customers -->
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Balance Sheet</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                                <div class="col-sm-12">
+                                    <table id="balance_sheet_table" class="table table-bordered table-hover dataTable" role="grid">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
         </div>
 
     </section>
@@ -66,6 +95,7 @@
     <script src="~/Content/Core/Elements/Table.js"></script>
     <script src="~/Content/Core/Views/Financial/CashChart.js"></script>
     <script src="~/Content/Core/Views/Financial/AccountsChart.js"></script>
+    <script src="~/Content/Core/Views/Financial/BalanceSheetTable.js"></script>
     <script src="~/Content/financial.js"></script>
 }
 
