@@ -9,7 +9,7 @@ namespace Dashboard.Models.PagesData
         public String moeda { get; set; }
         public Dictionary<String, Metric> metrics;
 
-        public BalanceSheet(Dictionary<int, Dictionary<string, ClassLine>> balance_sheet)       
+        public BalanceSheet(IEnumerable<KeyValuePair<int, Dictionary<string, ClassLine>>> balance_sheet)       
         {
             //prepare a list with the metrics
             metrics = new Dictionary<string, Metric>();
