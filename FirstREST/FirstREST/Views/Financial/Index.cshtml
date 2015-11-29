@@ -30,6 +30,28 @@
                     <!-- /.info-box-content -->
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <!-- Accounts Line chart -->
+                <div class="box box-solid box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Accounts Receivable vs Accounts Payable(€)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="accounts_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <ul id="accounts_legend" class="chart-legend clearfix"></ul>
+                        </div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
         </div>
 
     </section>
@@ -43,6 +65,7 @@
     <script src="~/Content/Core/Elements/PieChart.js"></script>
     <script src="~/Content/Core/Elements/Table.js"></script>
     <script src="~/Content/Core/Views/Financial/CashChart.js"></script>
+    <script src="~/Content/Core/Views/Financial/AccountsChart.js"></script>
     <script src="~/Content/financial.js"></script>
 }
 

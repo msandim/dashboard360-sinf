@@ -17,3 +17,11 @@ li:nth-child(4) .fa-circle-o {
 li:nth-child(5) .fa-circle-o {
     color: #CCAB29;
 }
+
+li:nth-child(1) .fa-square-o {
+    color: #286ACC;
+}
+
+li:nth-child(2) .fa-square-o {
+    color: #CC2829;
+}
