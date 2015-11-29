@@ -2,7 +2,7 @@
 
 namespace Dashboard.Models
 {
-    public class HRController : Controller
+    public class HumanResourcesController : Controller
     {
         public ActionResult Index()
         {
