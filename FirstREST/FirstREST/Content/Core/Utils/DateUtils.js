@@ -13,3 +13,7 @@ DateUtils.formatLabel = function (dateText, intervalType) {
 DateUtils.formatLabelMonth = function (year, month) {
     return moment(new Date(year, month, 1)).format("MMMM YYYY");
 };
+
+DateUtils.formatLabelMonth = function (month) {
+    return moment(new Date(2015, month, 1)).format("MMMM");
+};

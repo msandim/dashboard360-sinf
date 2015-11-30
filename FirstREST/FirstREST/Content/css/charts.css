@@ -25,3 +25,16 @@ li:nth-child(1) .fa-square-o {
 li:nth-child(2) .fa-square-o {
     color: #CC2829;
 }
+
+.small_label {
+    font-size: 1em;
+}
+
+.medium_label {
+    font-size: 1.1em;
+}
+
+.big_label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
