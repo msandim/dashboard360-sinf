@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Dashboard.Models
+namespace Dashboard.Controllers
 {
     public class HumanResourcesController : Controller
     {

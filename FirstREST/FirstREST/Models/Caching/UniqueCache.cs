@@ -46,7 +46,7 @@ namespace Dashboard.Models.Caching
         }
         private void UpdateNewData(DateTime initialDate, DateTime finalDate)
         {
-            if (initialDate >= InitialDate && finalDate <= FinalDate)
+            if (initialDate == InitialDate && finalDate == FinalDate)
                 return;
 
             CachedData.Clear();

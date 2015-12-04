@@ -140,7 +140,7 @@ namespace Dashboard.Models
         {
             GenderCountCache.UpdateData(initialDate, finalDate);
 
-            return GenderCountCache.CachedData.FirstOrDefault(x => x.InitialDate == initialDate && x.FinalDate == finalDate);
+            return GenderCountCache.CachedData.FirstOrDefault();
         }
 
         public static IEnumerable<EmployeeAbsenceCount> GetEmployeeAbsenceCount(DateTime initialDate, DateTime finalDate, Int32 limit)
