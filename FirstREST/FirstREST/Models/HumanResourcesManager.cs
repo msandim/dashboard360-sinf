@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dashboard.Models.Caching;
 using Dashboard.Models.Utils;
 
 namespace Dashboard.Models
@@ -48,16 +49,16 @@ namespace Dashboard.Models
             }
         }
 
-        private static Cache<Employee> _employeeCache;
-        private static Cache<Employee> EmployeeCache
+        private static UniqueCache<Employee> _employeeCache;
+        private static UniqueCache<Employee> EmployeeCache
         {
-            get { return _employeeCache ?? (_employeeCache = new Cache<Employee>(PathConstants.BasePathApiPrimavera, "employee")); }
+            get { return _employeeCache ?? (_employeeCache = new UniqueCache<Employee>(PathConstants.BasePathApiPrimavera, "employee")); }
         }
 
-        private static Cache<GenderCounter> _genderCountCache;
-        private static Cache<GenderCounter> GenderCountCache
+        private static UniqueCache<GenderCounter> _genderCountCache;
+        private static UniqueCache<GenderCounter> GenderCountCache
         {
-            get { return _genderCountCache ?? (_genderCountCache = new Cache<GenderCounter>(PathConstants.BasePathApiPrimavera, "gender_count")); }
+            get { return _genderCountCache ?? (_genderCountCache = new UniqueCache<GenderCounter>(PathConstants.BasePathApiPrimavera, "gender_count")); }
         }
 
         private static Cache<Absence> _absenceCache;
