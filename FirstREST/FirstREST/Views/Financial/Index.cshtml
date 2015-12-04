@@ -2,37 +2,19 @@
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Sales Dashboard</h1>
+        <h1>Financial Dashboard</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
 
-        <div class="row" style="padding-bottom: 12px">
-            <div class="col-md-12">
-                <div class="form-group pull-right">
-                    <label>Date range button:</label>
-
-                    <div class="input-group">
-                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-                            <i class="fa fa-calendar"></i> Date range picker
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Info boxes -->
         <div class="row">
-
             <div class="col-md-12">
-
-                <!-- Net sales Line chart -->
+                <!-- Cash Line chart -->
                 <div class="box box-solid box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Net Sales Global Values (€)</h3>
+                        <h3 class="box-title">Cash(€)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -42,41 +24,41 @@
 
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="net_sales_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <canvas id="cash_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
                         </div>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <!-- Sales by category Donut gchart -->
-                <div class="box box-warning box-solid">
+
+            <div class="col-md-12">
+                <!-- Accounts Line chart -->
+                <div class="box box-solid box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Sales by Category (€)</h3>
+                        <h3 class="box-title">Accounts Receivable vs Accounts Payable(€)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
+
                     <div class="box-body">
-                        <canvas id="sales_by_category_chart" style="height: 286px; width: 572px;" width="572" height="286"></canvas>
+                        <div class="chart">
+                            <canvas id="accounts_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <ul id="accounts_legend" class="chart-legend clearfix"></ul>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
+                    <!-- /.info-box-content -->
                 </div>
-                <!-- /.info-box -->
-
             </div>
-            <!-- /.info-box -->
 
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                 <!-- Top 10 customers -->
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Top 10 Costumers</h3>
+                        <h3 class="box-title">Balance Sheet</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -88,7 +70,8 @@
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                             <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
                                 <div class="col-sm-12">
-                                    <table id="top_customers" class="table table-bordered table-hover dataTable" role="grid"></table>
+                                    <table id="balance_sheet_table" class="table table-bordered table-hover dataTable" role="grid">
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -97,43 +80,22 @@
                     <!-- /.box -->
                 </div>
 
-
-
             </div>
         </div>
+
     </section>
 </div>
 @section ViewJavascript
 {
-    <!-- Date range picker -->
-    <script src="~/Content/themes/plugins/daterangepicker/daterangepicker.js"></script>
-    <!--
-    <script>
-        $('#daterange-btn').daterangepicker(
-            {
-                ranges: {
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment()
-            },
-            function (start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            }
-        );
-    </script>
-        -->
-
     <script src="~/Content/Core/Utils/ColorGenerator.js"></script>
     <script src="~/Content/Core/Utils/CurrencyUtils.js"></script>
     <script src="~/Content/Core/Utils/DateUtils.js"></script>
-    <script src="~/Content/Core/Elements/DatePicker.js"></script>
     <script src="~/Content/Core/Elements/LineChart.js"></script>
     <script src="~/Content/Core/Elements/PieChart.js"></script>
     <script src="~/Content/Core/Elements/Table.js"></script>
-    <script src="~/Content/Core/Views/NetSalesChart.js"></script>
-    <script src="~/Content/Core/Views/SalesByCategoryChart.js"></script>
-    <script src="~/Content/Core/Views/TopCostumersTable.js"></script>
-    <script src="~/Content/sales.js"></script>
+    <script src="~/Content/Core/Views/Financial/CashChart.js"></script>
+    <script src="~/Content/Core/Views/Financial/AccountsChart.js"></script>
+    <script src="~/Content/Core/Views/Financial/BalanceSheetTable.js"></script>
+    <script src="~/Content/financial.js"></script>
 }
 

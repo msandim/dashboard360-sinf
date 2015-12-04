@@ -5,7 +5,8 @@
 LineChart.prototype.initialize = function (animation, responsive, maintainAspectRatio)
 {
     this.labels = [];
-    this.values = [];
+    this.datasets = [];
+    this.datasets2 = [];
     this.chart = null;
 
     // Create the options object:
@@ -20,10 +21,16 @@ LineChart.prototype.shutdown = function() {
         this.chart.destroy();
 }
 
-LineChart.prototype.addValue = function (label, value)
+LineChart.prototype.addValue = function (label, value, dataset)
 {
-    this.labels.push(label);
-    this.values.push(value);
+    var index = dataset ? dataset : 0;
+
+    if (index == 0) {
+        this.labels.push(label);
+        this.datasets.push(value);
+    } else {
+        this.datasets2.push(value);
+    }
 };
 
 LineChart.prototype.display = function (canvasId)
@@ -34,19 +41,7 @@ LineChart.prototype.display = function (canvasId)
     var data =
         {
             labels: this.labels,
-            datasets:
-                [
-                    {
-                        label: "My Second dataset",
-                        fillColor: "rgba(151,187,205,0.2)",
-                        strokeColor: "rgba(151,187,205,1)",
-                        pointColor: "rgba(151,187,205,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(151, 187, 205, 1)",
-                        data: this.values
-                    }
-                ]
+            datasets: this.getDatasets()
         };
 
     this.chart = new Chart(context).Line(data, this.options);
@@ -63,4 +58,32 @@ LineChart.prototype.setResponsive = function (value)
 LineChart.prototype.setMaintainAspectRatio = function (value)
 {
     this.options.maintainAspectRatio = value;
+};
+
+LineChart.prototype.getDatasets = function () {
+    var datasets = [
+        {
+            label: "My First Dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151, 187, 205, 1)",
+            data: this.datasets
+        }
+    ]
+    if (this.datasets2.length > 0) {
+        datasets.push({
+            label: "My Second Dataset",
+            fillColor: "rgba(220,0,0,0.1)",
+            strokeColor: "rgba(220,0,0,1)",
+            pointColor: "rgba(220,0,0,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,0,0,1)",
+            data: this.datasets2
+        });
+    }
+    return datasets;
 };
