@@ -1,0 +1,145 @@
+﻿<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Human Resources Dashboard</h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row" style="padding-bottom: 12px">
+            <div class="col-md-12">
+                <div class="form-group pull-right">
+                    <label>Date range button:</label>
+
+                    <div class="input-group">
+                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                            <i class="fa fa-calendar"></i> Date range picker
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Info boxes -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- Employees counter chart -->
+                <div class="box box-solid box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Number of Employees</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="employees_count_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Top Absences Chart -->
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Top 10 Employees with more Absences</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                                <div class="col-sm-12">
+                                    <table id="top_absences" class="table table-bordered table-hover dataTable" role="grid"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Top OvertimeHours Chart -->
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Top 10 Employees with more Overtime Hours</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                                <div class="col-sm-12">
+                                    <table id="top_overtime_hours" class="table table-bordered table-hover dataTable" role="grid"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Gender Ratio Chart -->
+                <div class="box box-warning box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Employee Gender Ratio</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="gender_ratio_chart" style="height: 286px; width: 572px;" width="572" height="286"></canvas>
+                        <ul id="gender_ratio_legend" class="chart-legend clearfix"></ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section ViewJavascript
+{
+    <!-- Date range picker -->
+    <script src="~/Content/themes/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script src="~/Content/Core/Utils/ColorGenerator.js"></script>
+    <script src="~/Content/Core/Utils/CurrencyUtils.js"></script>
+    <script src="~/Content/Core/Utils/DateUtils.js"></script>
+    <script src="~/Content/Core/Elements/DatePicker.js"></script>
+    <script src="~/Content/Core/Elements/LineChart.js"></script>
+    <script src="~/Content/Core/Elements/PieChart.js"></script>
+    <script src="~/Content/Core/Elements/Table.js"></script>
+
+    <script src="~/Content/Core/Views/HumanResources/EmployeesCountChart.js"></script>
+    <script src="~/Content/Core/Views/HumanResources/GenderRatioChart.js"></script>
+    <script src="~/Content/Core/Views/HumanResources/TopAbsencesChart.js"></script>
+    <script src="~/Content/Core/Views/HumanResources/TopOvertimeHoursChart.js"></script>
+
+    <script src="~/Content/humanResources.js"></script>
+}
+

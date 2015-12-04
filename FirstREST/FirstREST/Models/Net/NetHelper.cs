@@ -21,7 +21,7 @@ namespace Dashboard.Models.Net
         public static IEnumerable<T> MakeRequest<T>(Path path)
         {
             var task = Task.Run(() => MakeRequestAsync<T>(path));
-            return task.Result;
+            return task.Result; 
         }
     }
 }

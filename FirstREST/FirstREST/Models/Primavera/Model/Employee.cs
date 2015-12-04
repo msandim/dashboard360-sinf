@@ -6,7 +6,7 @@ namespace Dashboard.Models.Primavera.Model
     {
         public enum GenderType 
         { 
-            Female, Male
+            Male, Female
         };
 
         public String ID { get; set; }

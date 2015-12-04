@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Dashboard.Models.Net;
 
-namespace Dashboard.Models
+namespace Dashboard.Models.Caching
 {
-    public class Cache<T>
+    public class UniqueCache<T>
     {
         private Boolean _firstRun = true;
         private Path BasePath { get; set; }
@@ -13,7 +13,7 @@ namespace Dashboard.Models
         private DateTime FinalDate { get; set; }
         public LinkedList<T> CachedData { get; set; }
 
-        public Cache(Path basePath, String action)
+        public UniqueCache(Path basePath, String action)
         {
             BasePath = basePath;
             Action = action;
@@ -29,35 +29,30 @@ namespace Dashboard.Models
                 if (_firstRun)
                 {
                     _firstRun = false;
-                    InitialDate = initialDate;
-                    FinalDate = finalDate;
-                    MakeRequest(BasePath, Action, initialDate, finalDate);
+                    Initialize(initialDate, finalDate);
                 }
                 else
                 {
-                    Boolean updateInitialDate = initialDate < InitialDate;
-                    Boolean updateFinalDate = finalDate > FinalDate;
-
-                    // If there is no need for update, then return the cached data:
-                    if (!updateInitialDate && !updateFinalDate)
-                        return;
-
-                    // If we need to update the initial date:
-                    if (updateInitialDate)
-                    {
-                        // Then we only have to make a request from [initialDate, InitialDate[:
-                        MakeRequest(BasePath, Action, initialDate, InitialDate.AddDays(-1));
-                        InitialDate = initialDate;
-                    }
-                    // If we need to update the final date:
-                    if (updateFinalDate)
-                    {
-                        // Then we only have to make a request from ]FinalDate, finalDate]:
-                        MakeRequest(BasePath, Action, FinalDate.AddDays(1), finalDate);
-                        FinalDate = finalDate;
-                    }
+                    UpdateNewData(initialDate, finalDate);
                 }
             }
+        }
+
+        private void Initialize(DateTime initialDate, DateTime finalDate)
+        {
+            InitialDate = initialDate;
+            FinalDate = finalDate;
+            MakeRequest(BasePath, Action, initialDate, finalDate);
+        }
+        private void UpdateNewData(DateTime initialDate, DateTime finalDate)
+        {
+            if (initialDate >= InitialDate && finalDate <= FinalDate)
+                return;
+
+            CachedData.Clear();
+            MakeRequest(BasePath, Action, initialDate, finalDate);
+            InitialDate = initialDate;
+            FinalDate = finalDate;
         }
 
         private void MakeRequest(Path basePath, String action, DateTime initialDate, DateTime finalDate)
