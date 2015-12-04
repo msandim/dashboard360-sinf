@@ -36,6 +36,10 @@ PieChart.prototype.shutdown = function() {
 
 PieChart.prototype.addSection = function (label, value, color)
 {
+    // Avoid adding non-positive values:
+    if (value <= 0)
+        return;
+
     // If color is not defined, assign a random one:
     if (!color) {
         color = this.colors[this.colorIndex];
