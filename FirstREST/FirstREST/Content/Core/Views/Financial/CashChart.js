@@ -24,7 +24,8 @@ CashChart.displayChart = function (canvasId, data) {
         var activePoints = CashChart.chart.chart.getPointsAtEvent(event);
         if (activePoints[0] != null) {
             var year = activePoints[0].label;
-            CashChart.onDrillDown(year);
+            //CashChart.onDrillDown(year);
+            drillDown(year);
         }
     }
 };
