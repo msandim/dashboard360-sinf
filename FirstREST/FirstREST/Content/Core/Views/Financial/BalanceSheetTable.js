@@ -44,11 +44,19 @@ BalanceSheetTable.loadTableMonths = function (index) {
     this.columnLabels = [];
     this.rows = [];
 
+    for (var i = 0; i < this.years.length; i++) {
+        if (this.years[i] == index) {
+            index = i
+            break;
+        }
+    }
+
     this.columnLabels.push("Metrics");
     for (var i = 0; i < 12; i++) {
         this.columnLabels.push(DateUtils.formatLabelMonth(i));
     }
 
+    console.log(index);
     BalanceSheetTable.loadRowsMonths(0, this.total_non_current_assets[index].months, "small_label");
     BalanceSheetTable.loadRowsMonths(1, this.total_current_assets[index].months, "small_label");
     BalanceSheetTable.loadRowsMonths(2, this.total_assets[index].months, "small_label");
@@ -95,7 +103,7 @@ BalanceSheetTable.loadRowsYears = function (line, metric, size) {
 BalanceSheetTable.onDrillDown = function (year) {
     this.state = 0;
     $(this.tableId).empty();
-    BalanceSheetTable.loadTableMonths(year - 1);
+    BalanceSheetTable.loadTableMonths(year);
     BalanceSheetTable.display(this.tableId);
 }
 
@@ -107,10 +115,16 @@ BalanceSheetTable.onDrillUp = function () {
 }
 
 function thClicked(index) {
-    if (BalanceSheetTable.state == 1)
-        BalanceSheetTable.onDrillDown(index);
-    else
-        BalanceSheetTable.onDrillUp();
+    if (BalanceSheetTable.state == 1) {
+        if (index > 1) {
+            //BalanceSheetTable.onDrillDown(index);
+            drillDown(this.years[index - 1]);
+        }
+    }
+    else {
+        //BalanceSheetTable.onDrillUp();
+        drillUp();
+    }
 }
 
 BalanceSheetTable.display = function (tableId) {

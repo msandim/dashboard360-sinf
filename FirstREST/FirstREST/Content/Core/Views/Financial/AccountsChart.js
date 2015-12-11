@@ -47,7 +47,7 @@ AccountsChart.onDrillDown = function (year) {
         if (element_receivable.year == year) {
             var element_payable = this.accounts_payable[i];
             for (var j = 0; j < element_receivable.months.length; j++) {
-                var label = DateUtils.formatLabelMonth(year, j);
+                var label = DateUtils.formatLabelYearMonth(year, j);
                 var month_receivable = element_receivable.months[j];
                 var month_payable = element_payable.months[j];
 
@@ -61,7 +61,8 @@ AccountsChart.onDrillDown = function (year) {
 
     //Drill Up
     $(this.canvasId).get(0).onclick = function (event) {
-        AccountsChart.onDrillUp();
+        //AccountsChart.onDrillUp();
+        drillUp();
     }
 
     AccountsChart.chart.display(this.canvasId);
@@ -88,7 +89,8 @@ AccountsChart.onDrillUp = function () {
         var activePoints = AccountsChart.chart.chart.getPointsAtEvent(event);
         if (activePoints[0] != null) {
             var year = activePoints[0].label;
-            AccountsChart.onDrillDown(year);
+            //AccountsChart.onDrillDown(year);
+            drillDown(year);
         }
     }
 
