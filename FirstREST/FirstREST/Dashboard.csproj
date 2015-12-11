@@ -399,6 +399,7 @@
     <Content Include="Content\themes\dist\js\demo.js" />
     <Content Include="Content\themes\dist\js\pages\dashboard.js" />
     <Content Include="Content\themes\dist\js\pages\dashboard2.js" />
+    <Content Include="Content\themes\ionicons\css\ionicons.min.css" />
     <Content Include="Content\themes\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\themes\plugins\bootstrap-slider\slider.css" />
     <Content Include="Content\themes\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />

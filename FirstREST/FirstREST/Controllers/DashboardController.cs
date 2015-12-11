@@ -12,7 +12,7 @@ namespace Dashboard.Controllers
     {
         public ActionResult Index()
         {
-            //Get last month's first and last day
+            // Get last month's first and last day
             var today = DateTime.Today;
             var month = new DateTime(today.Year, today.Month, 1);
             var first = month.AddMonths(-1);
