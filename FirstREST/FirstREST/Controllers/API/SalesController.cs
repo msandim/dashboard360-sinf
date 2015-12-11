@@ -21,6 +21,12 @@ namespace Dashboard.Controllers.API
             return SalesManager.GetTopCostumers(initialDate, finalDate, limit);
         }
 
+        [ActionName("top_products")]
+        public IEnumerable<SalesManager.TopProductsLine> GetTopProducts(DateTime initialDate, DateTime finalDate, Int32 limit)
+        {
+            return SalesManager.GetTopProducts(initialDate, finalDate, limit);
+        }
+
         [ActionName("sales_by_category")]
         public IEnumerable<SalesManager.SalesByCategoryLine> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {

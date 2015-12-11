@@ -37,6 +37,21 @@ namespace Dashboard.Models
                 Total = total;
             }
         }
+        public class TopProductsLine
+        {
+            public String ProductId { get; set; }
+            public String ProductName { get; set; }
+            public String ProductFamily { get; set; }
+            public Double Total { get; set; }
+
+            public TopProductsLine(string productId, string productName, string productFamily, double total)
+            {
+                ProductId = productId;
+                ProductName = productName;
+                ProductFamily = productFamily;
+                Total = total;
+            }
+        }
         public class NetSalesByIntervalLine
         {
             public DateTime Date { get; set; }
@@ -173,6 +188,32 @@ namespace Dashboard.Models
 
             // Take the top limit:
             return topClientsQuery.Take(limit);
+        }
+
+        public static IEnumerable<TopProductsLine> GetTopProducts(DateTime initialDate, DateTime finalDate, Int32 limit)
+        {
+            CachedData.UpdateData(initialDate, finalDate);
+            var documents = CachedData.CachedData;
+
+            // Perform query to order sales by descending order on value:
+            // Perform query to order sales by descending order on value:
+            var topProductsQuery = from document in documents
+                                  where initialDate <= document.DocumentDate && document.DocumentDate <= finalDate &&
+                                        (document.DocumentType == "FA" || document.DocumentType == "ND" || document.DocumentType == "NC")
+                                  group document by document.Product.Id
+                                      into product
+                                       select new TopProductsLine(
+                                          product.Key,
+                                          product.Select(s => s.Product.Description).FirstOrDefault(),
+                                          product.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
+                                          product.Select(s => s.Value.Value).Sum()
+                                          );
+
+            // Order by descending on total:
+            topProductsQuery = topProductsQuery.OrderByDescending(product => product.Total);
+
+            // Take the top limit:
+            return topProductsQuery.Take(limit);
         }
     }
 }
