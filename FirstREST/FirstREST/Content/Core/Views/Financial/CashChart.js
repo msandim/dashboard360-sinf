@@ -37,7 +37,7 @@ CashChart.onDrillDown = function (year) {
         var element = this.data[i];
         if (element.year == year) {
             for (var j = 0; j < element.months.length; j++) {
-                var label = DateUtils.formatLabelMonth(year, j);
+                var label = DateUtils.formatLabelYearMonth(year, j);
                 var month = element.months[j];
 
                 CashChart.chart.addValue(label, month);
@@ -48,7 +48,8 @@ CashChart.onDrillDown = function (year) {
     
     //Drill Up
     $(this.canvasId).get(0).onclick = function (event) {
-        CashChart.onDrillUp();
+        //CashChart.onDrillUp();
+        drillUp();
     }
 
     CashChart.chart.display(this.canvasId);
@@ -67,7 +68,8 @@ CashChart.onDrillUp = function () {
         var activePoints = CashChart.chart.chart.getPointsAtEvent(event);
         if (activePoints[0] != null) {
             var year = activePoints[0].label;
-            CashChart.onDrillDown(year);
+            //CashChart.onDrillDown(year);
+            drillDown(year);
         }
     }
 

@@ -49,3 +49,15 @@ function getBalanceSheet() {
 function ready() {
     getBalanceSheet();
 }
+
+function drillDown(year) {
+    CashChart.onDrillDown(year);
+    AccountsChart.onDrillDown(year);
+    BalanceSheetTable.onDrillDown(year);
+}
+
+function drillUp() {
+    CashChart.onDrillUp();
+    AccountsChart.onDrillUp();
+    BalanceSheetTable.onDrillUp();
+}
