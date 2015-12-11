@@ -266,7 +266,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\API\PurchasesController.cs" />
+    <Compile Include="Controllers\API\FinancialController.cs" />
     <Compile Include="Controllers\API\SalesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
@@ -280,6 +280,7 @@
     </Compile>
     <Compile Include="Models\Cache.cs" />
     <Compile Include="Models\HRManager.cs" />
+    <Compile Include="Models\MetricsManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
     <Compile Include="Models\Net\Path.cs" />
     <Compile Include="Models\PagesData\BalanceSheet.cs" />
@@ -322,15 +323,11 @@
     <Content Include="Content\Core\Utils\DateUtils.js" />
     <Content Include="Content\Core\Elements\PieChart.js" />
     <Content Include="Content\Core\Utils\CurrencyUtils.js" />
-    <Content Include="Content\Core\Views\Sales\NetSalesChart.js" />
-    <Content Include="Content\Core\Views\Sales\SalesByCategoryChart.js" />
-    <Content Include="Content\Core\Views\Sales\TopCostumersTable.js" />
-    <Content Include="Content\Core\Views\SupplyChain\NetPurchasesChart.js" />
-    <Content Include="Content\Core\Views\SupplyChain\PurchasesByCategoryChart.js" />
-    <Content Include="Content\Core\Views\SupplyChain\TopSuppliersTable.js" />
-    <Content Include="Content\css\charts.css" />
+    <Content Include="Content\Core\Views\Financial\AccountsChart.js" />
+    <Content Include="Content\Core\Views\Financial\BalanceSheetTable.js" />
+    <Content Include="Content\Core\Views\Financial\CashChart.js" />
     <Content Include="Content\dashboard.js" />
-    <Content Include="Content\purchases.js" />
+    <Content Include="Content\financial.js" />
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.min.css" />
