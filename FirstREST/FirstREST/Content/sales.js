@@ -15,6 +15,7 @@ function drawCharts(initialDate, finalDate)
 {
     SalesByCategoryChart.display("#sales_by_category_chart", "#sales_by_category_legend", initialDate, finalDate, 5);
     TopCostumersTable.display("#top_customers", initialDate, finalDate, 10);
+    TopProductsTable.display("#top_products", initialDate, finalDate, 10);
     NetSalesChart.display("#net_sales_chart", initialDate, finalDate, "month");
 }
 

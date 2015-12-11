@@ -331,8 +331,10 @@
     <Content Include="Content\Core\Views\Sales\NetSalesChart.js" />
     <Content Include="Content\Core\Views\Sales\SalesByCategoryChart.js" />
     <Content Include="Content\Core\Views\Sales\TopCostumersTable.js" />
+    <Content Include="Content\Core\Views\Sales\TopProductsTable.js" />
     <Content Include="Content\Core\Views\SupplyChain\NetPurchasesChart.js" />
     <Content Include="Content\Core\Views\SupplyChain\PurchasesByCategoryChart.js" />
+    <Content Include="Content\Core\Views\SupplyChain\TopProductsTable.js" />
     <Content Include="Content\Core\Views\SupplyChain\TopSuppliersTable.js" />
     <Content Include="Content\css\charts.css" />
     <Content Include="Content\dashboard.js" />

@@ -16,6 +16,7 @@ function drawCharts(initialDate, finalDate)
 {
     PurchasesByCategoryChart.display("#purchases_by_category_chart", "#purchases_by_category_legend", initialDate, finalDate, 5);
     TopSuppliersTable.display("#top_suppliers", initialDate, finalDate, 10);
+    TopProductsTable.display("#top_products", initialDate, finalDate, 10);
     NetPurchasesChart.display("#net_purchases_chart", initialDate, finalDate, "month");
 }
 

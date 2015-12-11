@@ -178,7 +178,7 @@ namespace Dashboard.Models.Primavera
             StdBELista purchasesQuery = PriEngine.Engine.Consulta(
                 "SELECT CabecCompras.Id AS CabecComprasId, CabecCompras.Nome AS CabecComprasNome, CabecCompras.Entidade AS CabecComprasEntidade, CabecCompras.Moeda AS CabecComprasMoeda, CabecCompras.DataDoc AS CabecComprasDataDoc, CabecCompras.TipoDoc AS CabecComprasTipoDoc, CabecCompras.DataVencimento AS CabecComprasDataVencimento, CabecCompras.DataDescarga AS CabecComprasDataDescarga, " +
                 "LinhasCompras.Id AS LinhasComprasId, LinhasCompras.PrecoLiquido AS LinhasComprasPrecoLiquido, " +
-                "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
+                "Artigo.Artigo AS ArtigoId, Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
                 "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao, " +
                 "Iva.Taxa AS IvaTaxa " +
                 "FROM CabecCompras " +
@@ -206,6 +206,7 @@ namespace Dashboard.Models.Primavera
                 purchase.Iva = purchasesQuery.Valor("IvaTaxa") / 100.0;
 
                 Product product = new Product();
+                product.Id = purchasesQuery.Valor("ArtigoId");
                 product.Brand = purchasesQuery.Valor("ArtigoMarca");
                 product.Model = purchasesQuery.Valor("ArtigoModelo");
                 product.Description = purchasesQuery.Valor("ArticoDescricao");
@@ -235,7 +236,7 @@ namespace Dashboard.Models.Primavera
             StdBELista salesQuery = PriEngine.Engine.Consulta(
                 "SELECT CabecDoc.Id AS CabecDocId, CabecDoc.Nome AS CabecDocNome, CabecDoc.Entidade AS CabecDocEntidade, CabecDoc.Moeda AS CabecDocMoeda, CabecDoc.TipoDoc AS CabecDocTipoDoc, CabecDoc.Data AS CabecDocData, CabecDoc.DataVencimento AS CabecDocDataVencimento, CabecDoc.DataCarga AS CabecDocDataCarga, CabecDoc.DataDescarga AS CabecDocsDataDescarga, " +
                 "LinhasDoc.Id AS LinhasDocId, LinhasDoc.PrecoLiquido AS LinhasDocPrecoLiquido, " +
-                "Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
+                "Artigo.Artigo AS ArtigoId, Artigo.Marca AS ArtigoMarca, Artigo.Modelo AS ArtigoModelo, Artigo.Descricao AS ArticoDescricao, Artigo.TipoArtigo AS ArtigoTipoArtigo, " +
                 "Familias.Familia AS FamiliaId, Familias.Descricao AS FamiliaDescricao, " +
                 "Iva.Taxa AS IvaTaxa " +
                 "FROM CabecDoc " +
@@ -262,6 +263,7 @@ namespace Dashboard.Models.Primavera
                 sale.Iva = salesQuery.Valor("IvaTaxa") / 100.0;
 
                 Product product = new Product();
+                product.Id = salesQuery.Valor("ArtigoId");
                 product.Brand = salesQuery.Valor("ArtigoMarca");
                 product.Model = salesQuery.Valor("ArtigoModelo");
                 product.Description = salesQuery.Valor("ArticoDescricao");

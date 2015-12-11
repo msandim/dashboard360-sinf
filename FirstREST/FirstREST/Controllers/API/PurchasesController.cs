@@ -21,6 +21,12 @@ namespace Dashboard.Controllers.API
             return PurchasesManager.GetTopSuppliers(initialDate, finalDate, limit);
         }
 
+        [ActionName("top_products")]
+        public IEnumerable<PurchasesManager.TopProductsLine> getTopProducts(DateTime initialDate, DateTime finalDate, Int32 limit)
+        {
+            return PurchasesManager.GetTopProducts(initialDate, finalDate, limit);
+        }
+
         [ActionName("purchases_by_category")]
         public IEnumerable<PurchasesManager.PurchasesByCategoryLine> GetSalesByCategory(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
