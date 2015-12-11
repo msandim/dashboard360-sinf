@@ -28,6 +28,7 @@ li:nth-child(2) .fa-square-o {
 
 .small_label {
     font-size: 1em;
+    text-align: right;
 }
 
 .medium_label {

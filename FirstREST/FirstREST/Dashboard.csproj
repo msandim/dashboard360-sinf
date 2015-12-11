@@ -283,8 +283,6 @@
     <Compile Include="Models\Caching\Cache.cs" />
     <Compile Include="Models\Caching\UniqueCache.cs" />
     <Compile Include="Models\HumanResourcesManager.cs" />
-    <Compile Include="Models\Cache.cs" />
-    <Compile Include="Models\HRManager.cs" />
     <Compile Include="Models\MetricsManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
     <Compile Include="Models\Net\Path.cs" />

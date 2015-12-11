@@ -28,7 +28,7 @@ TopOvertimeHoursChart.displayTable = function (tableId, data) {
 
     table.addColumnLabel("Employee ID");
     table.addColumnLabel("Employee Name");
-    table.addColumnLabel("Value");
+    table.addColumnLabel("Value", "small_label");
 
     for (var i = 0; i < data.length; i++)
         table.addRow(data[i].EmployeeId, data[i].EmployeeName, data[i].Count);

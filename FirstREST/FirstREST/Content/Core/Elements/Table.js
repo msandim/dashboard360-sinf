@@ -6,11 +6,13 @@ Table.prototype.initialize = function ()
 {
     this.columnLabels = [];
     this.rows = [];
+    this.columnLabelStyles = [];
 };
 
-Table.prototype.addColumnLabel = function (columnName)
+Table.prototype.addColumnLabel = function (columnName, labelClass)
 {
     this.columnLabels.push(columnName);
+    this.columnLabelStyles.push(labelClass);
 };
 
 Table.prototype.addRow = function ()
@@ -40,15 +42,18 @@ Table.prototype.display = function (tableId)
     table.append(header);
 
     // Body:
-    var body = '<tbody>';
+    var body = "<tbody>";
     for (var j = 0; j < this.rows.length; j++)
     {
         body += '<tr role="row" class="odd">';
         var row = this.rows[j];
-        for (var k = 0; k < row.length; k++)
-            body += '<td>' + row[k] + '</td>';
-        body += '</tr>';
+        for (var k = 0; k < row.length; k++) {
+            var styleClass = !this.columnLabelStyles[k] ? "" : ' class="' + this.columnLabelStyles[k] + '"';
+            body += "<td" + styleClass + ">" + row[k] + "</td>";
+        }
+            
+        body += "</tr>";
     }
-    body += '</tbody>';
+    body += "</tbody>";
     table.append(body);
 };

@@ -28,8 +28,8 @@ TopProductsTable.displayTable = function (tableId, data) {
 
     table.addColumnLabel("Product ID");
     table.addColumnLabel("Product Name");
-    table.addColumnLabel("Product Family")
-    table.addColumnLabel("Value");
+    table.addColumnLabel("Product Family");
+    table.addColumnLabel("Value", "small_label");
 
     for (var i = 0; i < data.length; i++)
         table.addRow(data[i].ProductId, data[i].ProductName, data[i].ProductFamily, CurrencyUtils.format(data[i].Total) + " €");

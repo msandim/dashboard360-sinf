@@ -34,7 +34,7 @@ TopCostumersTable.displayTable = function (tableId, data)
 
     table.addColumnLabel("Client ID");
     table.addColumnLabel("Client Name");
-    table.addColumnLabel("Value");
+    table.addColumnLabel("Value", "small_label");
 
     for (var i = 0; i < data.length; i++)
         table.addRow(data[i].ClientId, data[i].ClientName, CurrencyUtils.format(data[i].Total) + " €");
