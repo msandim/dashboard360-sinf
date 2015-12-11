@@ -267,8 +267,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\API\FinancialController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\API\HumanResourcesController.cs" />
     <Compile Include="Controllers\API\PurchasesController.cs" />
+=======
+>>>>>>> financial
     <Compile Include="Controllers\API\SalesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
@@ -280,9 +283,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Models\Caching\Cache.cs" />
     <Compile Include="Models\Caching\UniqueCache.cs" />
     <Compile Include="Models\HumanResourcesManager.cs" />
+=======
+    <Compile Include="Models\Cache.cs" />
+    <Compile Include="Models\HRManager.cs" />
+>>>>>>> financial
     <Compile Include="Models\MetricsManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
     <Compile Include="Models\Net\Path.cs" />
@@ -330,6 +338,7 @@
     <Content Include="Content\Core\Views\Financial\AccountsChart.js" />
     <Content Include="Content\Core\Views\Financial\BalanceSheetTable.js" />
     <Content Include="Content\Core\Views\Financial\CashChart.js" />
+<<<<<<< HEAD
     <Content Include="Content\Core\Views\HumanResources\EmployeesCountChart.js" />
     <Content Include="Content\Core\Views\HumanResources\GenderRatioChart.js" />
     <Content Include="Content\Core\Views\HumanResources\TopAbsencesChart.js" />
@@ -346,6 +355,10 @@
     <Content Include="Content\dashboard.js" />
     <Content Include="Content\humanResources.js" />
     <Content Include="Content\purchases.js" />
+=======
+    <Content Include="Content\dashboard.js" />
+    <Content Include="Content\financial.js" />
+>>>>>>> financial
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.min.css" />
