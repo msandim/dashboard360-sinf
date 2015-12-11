@@ -9,6 +9,13 @@ namespace Dashboard.Models.Net
         public DateTime InitialDate { get; set; }
         public DateTime FinalDate { get; set; }
         public String DocumentType { get; set; }
+
+        public PathBuilder()
+        {
+            InitialDate = DateTime.MinValue;
+            FinalDate = DateTime.MinValue;
+            DocumentType = null;
+        }
         
         public Path Build()
         {
@@ -17,13 +24,13 @@ namespace Dashboard.Models.Net
             if (Action != null)
                 path.BasePath += "/" + Action;
 
-            if (InitialDate == null && FinalDate == null && DocumentType == null)
+            if (InitialDate == DateTime.MinValue && FinalDate == DateTime.MinValue && DocumentType == null)
                 return path;
 
-            if (InitialDate != null)
+            if (InitialDate != DateTime.MinValue)
                 AddParameter(path, "initialDate", InitialDate);
 
-            if (FinalDate != null)
+            if (FinalDate != DateTime.MinValue)
                 AddParameter(path, "finalDate", FinalDate);
 
             if (DocumentType != null)
