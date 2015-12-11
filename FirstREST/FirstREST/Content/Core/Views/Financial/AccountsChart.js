@@ -29,11 +29,12 @@ AccountsChart.displayChart = function (canvasId, legendsId, accounts_receivable,
 
     AccountsChart.chart.display(canvasId);
 
-    $(canvasId).get(0).onclick = function (event) {
+    $(this.canvasId).get(0).onclick = function (event) {
         var activePoints = AccountsChart.chart.chart.getPointsAtEvent(event);
         if (activePoints[0] != null) {
             var year = activePoints[0].label;
-            AccountsChart.onDrillDown(year);
+            //AccountsChart.onDrillDown(year);
+            drillDown(year);
         }
     }
 };

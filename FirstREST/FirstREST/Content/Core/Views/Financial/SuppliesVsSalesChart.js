@@ -33,7 +33,8 @@ SuppliesVsSalesChart.displayChart = function (canvasId, legendsId, supplies, sal
         var activePoints = SuppliesVsSalesChart.chart.chart.getPointsAtEvent(event);
         if (activePoints[0] != null) {
             var year = activePoints[0].label;
-            SuppliesVsSalesChart.onDrillDown(year);
+            //SuppliesVsSalesChart.onDrillDown(year);
+            drillDown(year);
         }
     }
 };
