@@ -330,6 +330,7 @@
     <Content Include="Content\Core\Views\Financial\AccountsChart.js" />
     <Content Include="Content\Core\Views\Financial\BalanceSheetTable.js" />
     <Content Include="Content\Core\Views\Financial\CashChart.js" />
+    <Content Include="Content\Core\Views\Financial\SuppliesVsSalesChart.js" />
     <Content Include="Content\Core\Views\HumanResources\EmployeesCountChart.js" />
     <Content Include="Content\Core\Views\HumanResources\GenderRatioChart.js" />
     <Content Include="Content\Core\Views\HumanResources\TopAbsencesChart.js" />
