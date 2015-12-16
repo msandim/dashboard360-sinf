@@ -36,8 +36,16 @@ Table.prototype.display = function (tableId)
 
     // Header:
     var header = '<thead><tr role="row">';
-    for (var i = 0; i < this.columnLabels.length; i++)
-        header += '<th>' + this.columnLabels[i] + '</th>';
+
+    // If there are any values, add the column labels:
+    if (this.rows.length !== 0)
+        for (var i = 0; i < this.columnLabels.length; i++)
+            header += '<th>' + this.columnLabels[i] + '</th>';
+
+    // If there aren't any values, then just add a message:
+    else
+        header += "<th>No values to display</td>";
+    
     header += '</tr></thead>';
     table.append(header);
 
