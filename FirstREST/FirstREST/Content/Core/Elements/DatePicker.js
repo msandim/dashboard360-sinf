@@ -40,6 +40,7 @@ DatePicker.defaultDate1 = [moment().subtract(2, 'month').startOf('month'), momen
 DatePicker.defaultDate2 = [moment().startOf('year'), moment()];
 DatePicker.defaultDate3 = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
 DatePicker.defaultDate4 = [moment().subtract(3, 'year').startOf('year'), moment()];
+DatePicker.defaultDate5 = [moment(), moment()];
 
 DatePicker.defaultRange1 = {
     'Last 3 Months': DatePicker.defaultDate1,
