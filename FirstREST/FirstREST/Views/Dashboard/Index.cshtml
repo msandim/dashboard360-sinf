@@ -1,4 +1,10 @@
-﻿<div class="content-wrapper">
+﻿<style>
+    .ion {
+        color: #EEEEEE;
+    }
+</style>
+
+<div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -11,111 +17,144 @@
         <!-- Info boxes -->
         <div class="row">
 
+
             <!-- Payables -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="ion ion-social-euro"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Accounts Payable</span>
-                        <span class="info-box-number">@ViewBag.PayablesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3 id="payables_value">-</h3>
+
+                        <p>Accounts Payable</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-social-euro"></i>
+                    </div>
+                    <a href="/financial" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- Receivables -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="ion ion-social-euro"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Accounts Receivable</span>
-                        <span class="info-box-number">@ViewBag.ReceivablesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 id="receivables_value">-</h3>
+
+                        <p>Accounts Receivable</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-social-euro"></i>
+                    </div>
+                    <a href="/financial" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- Gross Purchases -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="ion ion-ios-cart-outline"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Gross Purchases Global Values</span>
-                        <span class="info-box-number">@ViewBag.GrossPurchasesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3 id="gross_purchases_value">-</h3>
+
+                        <p>Gross Purchases Global Values</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-ios-cart-outline"></i>
+                    </div>
+                    <a href="/supplyChain" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- Gross Sales -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Gross Sales Global Values</span>
-                        <span class="info-box-number">@ViewBag.GrossSalesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 id="gross_sales_value">-</h3>
+
+                        <p>Gross Sales Global Values</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-ios-cart-outline"></i>
+                    </div>
+                    <a href="/sales" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- ** Line Separator ** -->
             <div class="col-sm-12 col-xs-12">
-                <div class="box box-solid" style="height:5px;">
+                <div class="box box-solid" style="height: 5px;">
                 </div>
             </div>
 
             <!-- Net Purchases -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-cart-outline"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Net Purchases Global Values</span>
-                        <span class="info-box-number">@ViewBag.NetPurchasesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3 id="net_purchases_value">-</h3>
+
+                        <p>Net Purchases Global Values</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-ios-cart-outline"></i>
+                    </div>
+                    <a href="/supplyChain" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- Net Sales -->
-            <div class="col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Net Sales Global Values</span>
-                        <span class="info-box-number">@ViewBag.NetSalesValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3 id="net_sales_value">-</h3>
+
+                        <p>Net Sales Global Values</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-ios-cart-outline"></i>
+                    </div>
+                    <a href="/sales" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
             <!-- ** Line Separator ** -->
             <div class="col-sm-12 col-xs-12">
-                <div class="box box-solid" style="height:5px;">
+                <div class="box box-solid" style="height: 5px;">
                 </div>
             </div>
 
             <!-- Human Resources -->
-            <div class="col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-purple"><i class="ion ion-ios-people-outline"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Human Resources spendings</span>
-                        <span class="info-box-number">@ViewBag.LaborCostValue €</span>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3 id="human_resources_value">-</h3>
+
+                        <p>Human Resources spendings</p>
                     </div>
-                    <!-- /.info-box-content -->
+                    <div class="icon">
+                        <i class="ion ion-ios-people-outline"></i>
+                    </div>
+                    <a href="/humanResources" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <!-- /.info-box -->
             </div>
 
         </div>
-   </section>
+    </section>
 </div>
-<!-- <script src="~/Content/themes/plugins/jquery/jQuery-2.1.4.min.js"></script> -->
-<!-- <script src="~/Content/dashboard.js"></script> -->
+@section ViewJavascript
+{
+    <script src="~/Content/Core/Utils/CurrencyUtils.js"></script>
+    <script src="~/Content/Core/Utils/DateUtils.js"></script>
+    <script src="~/Content/dashboard.js"></script>
+}
