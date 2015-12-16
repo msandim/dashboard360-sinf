@@ -13,16 +13,14 @@ function setButtonValues(data)
 
 function addRefreshSpin(canvasIds)
 {
-    // TODO
     for (var i = 0; i < canvasIds.length; i++)
     {
-        $("#" + canvasIds[i]).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+        $("#" + canvasIds[i]).closest("div .small-box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
     }
 }
 
 function removeRefreshSpin(canvasIds)
 {
-    // TODO
     for (var i = 0; i < canvasIds.length; i++)
     {
         $("#" + canvasIds[i]).closest("div .small-box").children("div .overlay").remove();
@@ -43,7 +41,7 @@ function getButtonValuesAsync(initialDate, finalDate)
             data: {
                 initialDate: DateUtils.formatDate(initialDate),
                 finalDate: DateUtils.formatDate(finalDate)
-            },
+            }, 
             beforeSend: function ()
             {
                 addRefreshSpin(canvasIds);
@@ -60,11 +58,23 @@ function getButtonValuesAsync(initialDate, finalDate)
     );
 }
 
+function initializeDatePicker()
+{
+    var datePicker = new DatePicker();
+    datePicker.initialize(
+        "#daterange-btn",
+        function (start, end)
+        {
+            getButtonValuesAsync(start, end);
+        }
+    );
+}
+
 function ready()
 {
-
     var initialDate = moment().subtract(1, 'month').startOf('month');
     var finalDate = moment().subtract(1, 'month').endOf('month');
 
     getButtonValuesAsync(initialDate, finalDate);
+    initializeDatePicker();
 }

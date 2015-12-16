@@ -2617,6 +2617,7 @@
     <Content Include="Views\HumanResources\Index.cshtml" />
     <Content Include="Views\SupplyChain\Index.cshtml" />
     <Content Include="Views\Financial\Index.cshtml" />
+    <Content Include="App_Code\DatePicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,7 +13,8 @@ LineChart.prototype.initialize = function (animation, responsive, maintainAspect
     this.options = {
         animation: !animation ? false : animation,
         responsive: !responsive ? true : responsive,
-        maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio
+        maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio,
+        pointHitDetectionRadius: 0
     };
 };
 LineChart.prototype.shutdown = function() {
