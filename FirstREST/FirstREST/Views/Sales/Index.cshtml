@@ -14,9 +14,8 @@
         <!-- Info boxes -->
         <div class="row">
 
+            <!-- Net sales Line chart -->
             <div class="col-md-12">
-
-                <!-- Net sales Line chart -->
                 <div class="box box-solid box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Net Sales Global Values (€)</h3>
@@ -26,19 +25,20 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="box-body">
                         <div class="chart">
                             <canvas id="net_sales_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
                         </div>
                     </div>
-                    <!-- /.info-box-content -->
                 </div>
             </div>
+
         </div>
+        
         <div class="row">
+
+            <!-- Sales by category Donut gchart -->
             <div class="col-md-6">
-                <!-- Sales by category Donut gchart -->
                 <div class="box box-warning box-solid">
                     <div class="box-header with-border">
                         <h3 class="box-title">Sales by Category (€)</h3>
@@ -53,14 +53,11 @@
                         <ul id="sales_by_category_legend" class="chart-legend clearfix">
                         </ul>
                     </div>
-                    <!-- /.box-body -->
                 </div>
-
             </div>
-            <!-- /.info-box -->
 
+            <!-- Top 10 customers -->
             <div class="col-md-6">
-                <!-- Top 10 customers -->
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Top 10 Costumers</h3>
@@ -73,7 +70,11 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                            <div class="row">
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6"></div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <table id="top_customers" class="table table-bordered table-hover dataTable" role="grid"></table>
                                 </div>
@@ -84,11 +85,13 @@
                     <!-- /.box -->
                 </div>
             </div>
+
         </div>
+
         <div class="row">
+
             <!-- Top 10 products -->
             <div class="col-md-12">
-                <!-- Top 10 products -->
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Top 10 Products</h3>
@@ -98,20 +101,22 @@
                             </button>
                         </div>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                            <div class="row">
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6"></div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <table id="top_products" class="table table-bordered table-hover dataTable" role="grid"></table>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
             </div>
+
         </div>
     </section>
 </div>

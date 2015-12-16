@@ -58,7 +58,7 @@ function getButtonValuesAsync(initialDate, finalDate)
     );
 }
 
-function initializeDatePicker()
+function initializeDatePicker(initialDate, finalDate)
 {
     var datePicker = new DatePicker();
     datePicker.initialize(
@@ -66,15 +66,25 @@ function initializeDatePicker()
         function (start, end)
         {
             getButtonValuesAsync(start, end);
-        }
+            initializeNetChart(start, end);
+        },
+        initialDate,
+        finalDate,
+        DatePicker.defaultRange1
     );
 }
 
+function initializeNetChart(initialDate, finalDate)
+{
+    NetChart.displayChart("#net_chart", initialDate, finalDate, "month");
+};
+
 function ready()
 {
-    var initialDate = moment().subtract(1, 'month').startOf('month');
-    var finalDate = moment().subtract(1, 'month').endOf('month');
+    var initialDate = DatePicker.defaultDate1[0];
+    var finalDate = DatePicker.defaultDate1[1];
 
     getButtonValuesAsync(initialDate, finalDate);
-    initializeDatePicker();
+    initializeDatePicker(initialDate, finalDate);
+    initializeNetChart(initialDate, finalDate);
 }

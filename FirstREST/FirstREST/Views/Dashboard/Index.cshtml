@@ -176,6 +176,32 @@
                 </div>
             </div>
 
+            <!-- ** Line Separator ** -->
+            <div class="col-sm-12 col-xs-12">
+                <div class="box box-solid" style="height: 5px;">
+                </div>
+            </div>
+
+            <!-- Net Double Chart -->
+            <div class="col-md-12">
+                <div class="box box-solid box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Net Purchases vs Net Sales (€)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="net_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <ul id="net_legend" class="chart-legend clearfix"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 </div>
@@ -188,5 +214,7 @@
     <script src="~/Content/Core/Utils/CurrencyUtils.js"></script>
     <script src="~/Content/Core/Utils/DateUtils.js"></script>
     <script src="~/Content/Core/Elements/DatePicker.js"></script>
+    <script src="~/Content/Core/Elements/LineChart.js"></script>
+    <script src="~/Content/Core/Views/Dashboard/NetChart.js"></script>
     <script src="~/Content/dashboard.js"></script>
 }
