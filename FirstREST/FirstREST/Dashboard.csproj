@@ -266,6 +266,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\API\DashboardController.cs" />
     <Compile Include="Controllers\API\FinancialController.cs" />
     <Compile Include="Controllers\API\HumanResourcesController.cs" />
     <Compile Include="Controllers\API\PurchasesController.cs" />
@@ -282,6 +283,7 @@
     </Compile>
     <Compile Include="Models\Caching\Cache.cs" />
     <Compile Include="Models\Caching\UniqueCache.cs" />
+    <Compile Include="Models\DashboardManager.cs" />
     <Compile Include="Models\HumanResourcesManager.cs" />
     <Compile Include="Models\MetricsManager.cs" />
     <Compile Include="Models\Net\NetHelper.cs" />
@@ -347,7 +349,6 @@
     <Content Include="Content\dashboard.js" />
     <Content Include="Content\humanResources.js" />
     <Content Include="Content\purchases.js" />
-    <Content Include="Content\dashboard.js" />
     <Content Include="Content\financial.js" />
     <Content Include="Content\sales.js" />
     <Content Include="Content\themes\bootstrap\css\bootstrap.css" />
