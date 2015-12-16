@@ -1,12 +1,15 @@
 ﻿$(document).ready(ready);
 
-function drawDateSelection() {
+function drawDateSelection(initialDate, finalDate) {
     var datePicker = new DatePicker();
     datePicker.initialize(
         "#daterange-btn",
         function (start, end) {
             drawCharts(start, end);
-        }
+        },
+        initialDate,
+        finalDate,
+        DatePicker.defaultRange1
     );
 }
 
@@ -23,13 +26,14 @@ function drawCharts(initialDate, finalDate) {
     */
 }
 
-function ready() {
-    var initialDate = moment().subtract(1, 'year').startOf('year');
-    var finalDate = moment().subtract(1, 'year').endOf('year');
+function ready()
+{
+    var initialDate = DatePicker.defaultDate1[0];
+    var finalDate = DatePicker.defaultDate1[1];
 
     // Draw charts:
     drawCharts(initialDate, finalDate);
 
     // Load date selection:
-    drawDateSelection();
+    drawDateSelection(initialDate, finalDate);
 }
