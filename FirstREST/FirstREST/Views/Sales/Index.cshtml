@@ -8,21 +8,8 @@
     <!-- Main content -->
     <section class="content">
 
-        <div class="row" style="padding-bottom: 12px">
-            <div class="col-md-12">
-                <div class="form-group pull-right">
-                    <label>Date range button:</label>
-
-                    <div class="input-group">
-                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-                            <i class="fa fa-calendar"></i> Date range picker
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Date Picker -->
+        @DatePicker.Display()
 
         <!-- Info boxes -->
         <div class="row">
@@ -132,23 +119,8 @@
 {
     <!-- Date range picker -->
     <script src="~/Content/themes/plugins/daterangepicker/daterangepicker.js"></script>
-    <!--
-    <script>
-        $('#daterange-btn').daterangepicker(
-            {
-                ranges: {
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment()
-            },
-            function (start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            }
-        );
-    </script>
-        -->
 
+    <!-- Application includes -->
     <script src="~/Content/Core/Utils/ColorGenerator.js"></script>
     <script src="~/Content/Core/Utils/CurrencyUtils.js"></script>
     <script src="~/Content/Core/Utils/DateUtils.js"></script>

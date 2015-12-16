@@ -6,7 +6,7 @@ namespace Dashboard.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(); 
         }
     }
 
