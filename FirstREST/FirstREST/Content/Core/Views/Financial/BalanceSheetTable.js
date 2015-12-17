@@ -102,7 +102,7 @@ BalanceSheetTable.loadRowsMonths = function (line, metric, size) {
     var rowElem = [];
     rowElem.push(this.labels[line]);
     for (var i = 0; i < 12; i++) {
-        rowElem.push({ value: CurrencyUtils.format(metric[i]) + " €", size: size });
+        rowElem.push({ value: CurrencyUtils.format(metric[i], "EUR"), size: size });
     }
     this.rows.push(rowElem);
 }
@@ -111,7 +111,7 @@ BalanceSheetTable.loadRowsYears = function (line, metric, size) {
     var rowElem = [];
     rowElem.push(this.labels[line]);
     for (var i = 0; i < this.years.length; i++) {
-        rowElem.push({ value: CurrencyUtils.format(metric[i].total) + " €", size: size });
+        rowElem.push({ value: CurrencyUtils.format(metric[i].total, "EUR"), size: size });
     }
     this.rows.push(rowElem);
 }
