@@ -6,18 +6,30 @@ BalanceSheetTable.initialize = function (tableId, data)
 {
     this.tableId = tableId;
     this.state = 1;
+    /*
     this.total_non_current_assets = data.metrics.total_non_current_assets.years_data;
     this.total_current_assets = data.metrics.total_current_assets.years_data;
-    this.total_assets = data.metrics.total_assets.years_data;
     this.total_current_liabilities = data.metrics.total_current_liabilities.years_data;
     this.total_long_term_debt = data.metrics.total_long_term_debt.years_data;
+    */
+
+    this.total_assets = data.metrics.total_assets.years_data;
+    this.cash = data.metrics.cash.years_data;
+    this.sales = data.metrics.sales.years_data;
+    this.accounts_receivable = data.metrics.accounts_receivable.years_data;
     this.total_liabilities = data.metrics.total_liabilities.years_data;
+    this.accounts_payable = data.metrics.accounts_payable.years_data;
+    this.cost_of_goods_sold = data.metrics["custo merc. vend"].years_data;
+    this.unknown = data.metrics["estados e outros entes"].years_data;
+    this.investments = data.metrics["emprestimos obtidos"].years_data;
     this.years = [];
 
     this.labels = [
-        { value: "Total Long-term Assets", size: "medium_label" }, { value: "Total Current Assets", size: "medium_label" },
-        { value: "Total Assets", size: "big_label" }, { value: "Total Current Liabilities", size: "medium_label" },
-        { value: "Total Long-term Debt", size: "medium_label" }, { value: "Total Liabilities", size: "big_label" }];
+        { value: "Assets", size: "big_label" }, { value: "Cash", size: "medium_label" },
+        { value: "Sales", size: "medium_label" }, { value: "Accounts Receivable", size: "medium_label" },
+        { value: "Liabilities", size: "big_label" }, { value: "Accounts Payable", size: "medium_label" },
+        { value: "Cost of goods sold", size: "medium_label" }, { value: "Unknown", size: "medium_label" },
+        { value: "Investments", size: "medium_label" }];
 
     // Add years
     for (var i = 0; i < this.total_assets.length; i++) {
@@ -36,7 +48,6 @@ BalanceSheetTable.displayTable = function ()
     }
 
     BalanceSheetTable.loadTableYears();
-
     BalanceSheetTable.display(this.tableId);
 };
 
@@ -56,13 +67,15 @@ BalanceSheetTable.loadTableMonths = function (index) {
         this.columnLabels.push(DateUtils.formatLabelMonth(i));
     }
 
-    console.log(index);
-    BalanceSheetTable.loadRowsMonths(0, this.total_non_current_assets[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(1, this.total_current_assets[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(2, this.total_assets[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(3, this.total_current_liabilities[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(4, this.total_long_term_debt[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(5, this.total_liabilities[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(0, this.total_assets[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(1, this.cash[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(2, this.sales[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(3, this.accounts_receivable[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(4, this.total_liabilities[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(5, this.accounts_payable[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(6, this.cost_of_goods_sold[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(7, this.unknown[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(8, this.investments[index].months, "small_label");
 }
 
 BalanceSheetTable.loadTableYears = function () {
@@ -74,19 +87,22 @@ BalanceSheetTable.loadTableYears = function () {
         this.columnLabels.push(this.years[i]);
     }
 
-    BalanceSheetTable.loadRowsYears(0, this.total_non_current_assets, "small_label");
-    BalanceSheetTable.loadRowsYears(1, this.total_current_assets, "small_label");
-    BalanceSheetTable.loadRowsYears(2, this.total_assets, "small_label");
-    BalanceSheetTable.loadRowsYears(3, this.total_current_liabilities, "small_label");
-    BalanceSheetTable.loadRowsYears(4, this.total_long_term_debt, "small_label");
-    BalanceSheetTable.loadRowsYears(5, this.total_liabilities, "small_label");
+    BalanceSheetTable.loadRowsYears(0, this.total_assets, "small_label");
+    BalanceSheetTable.loadRowsYears(1, this.cash, "small_label");
+    BalanceSheetTable.loadRowsYears(2, this.sales, "small_label");
+    BalanceSheetTable.loadRowsYears(3, this.accounts_receivable, "small_label");
+    BalanceSheetTable.loadRowsYears(4, this.total_liabilities, "small_label");
+    BalanceSheetTable.loadRowsYears(5, this.accounts_payable, "small_label");
+    BalanceSheetTable.loadRowsYears(6, this.cost_of_goods_sold, "small_label");
+    BalanceSheetTable.loadRowsYears(7, this.unknown, "small_label");
+    BalanceSheetTable.loadRowsYears(8, this.investments, "small_label");
 }
 
 BalanceSheetTable.loadRowsMonths = function (line, metric, size) {
     var rowElem = [];
     rowElem.push(this.labels[line]);
     for (var i = 0; i < 12; i++) {
-        rowElem.push({ value: CurrencyUtils.format(metric[i]) + " €", size: size });
+        rowElem.push({ value: CurrencyUtils.format(metric[i], "EUR"), size: size });
     }
     this.rows.push(rowElem);
 }
@@ -95,7 +111,7 @@ BalanceSheetTable.loadRowsYears = function (line, metric, size) {
     var rowElem = [];
     rowElem.push(this.labels[line]);
     for (var i = 0; i < this.years.length; i++) {
-        rowElem.push({ value: CurrencyUtils.format(metric[i].total) + " €", size: size });
+        rowElem.push({ value: CurrencyUtils.format(metric[i].total, "EUR"), size: size });
     }
     this.rows.push(rowElem);
 }
@@ -114,9 +130,9 @@ BalanceSheetTable.onDrillUp = function () {
     BalanceSheetTable.display(this.tableId);
 }
 
-function thClicked(index) {
+BalanceSheetTable.thClicked = function(index) {
     if (BalanceSheetTable.state == 1) {
-        if (index > 1) {
+        if (index >= 1) {
             //BalanceSheetTable.onDrillDown(index);
             drillDown(this.years[index - 1]);
         }
@@ -134,7 +150,7 @@ BalanceSheetTable.display = function (tableId) {
     // Header:
     var header = '<thead><tr role="row">';
     for (var i = 0; i < this.columnLabels.length; i++)
-        header += '<th onclick="thClicked(' + i + ')">' + this.columnLabels[i] + '</th>';
+        header += '<th onclick="BalanceSheetTable.thClicked(' + i + ')">' + this.columnLabels[i] + '</th>';
     header += '</tr></thead>';
     table.append(header);
 

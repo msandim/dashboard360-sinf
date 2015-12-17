@@ -12,6 +12,13 @@ function drawAccountsChart(data) {
     AccountsChart.displayLegends();
 }
 
+function drawSuppliesVsSalesChart(data) {
+    var supplies = data.metrics["custo merc. vend"].years_data;
+    var sales = data.metrics.sales.years_data;
+    SuppliesVsSalesChart.displayChart("#supplies_vs_sales_chart", "#supplies_vs_sales_legend", supplies, sales);
+    SuppliesVsSalesChart.displayLegends();
+}
+
 function drawBalanceSheetTable(data) {
     BalanceSheetTable.initialize("#balance_sheet_table", data);
     BalanceSheetTable.displayTable();
@@ -22,6 +29,7 @@ function drawCharts(data) {
     console.log(data);
     drawCashChart(data);
     drawAccountsChart(data);
+    drawSuppliesVsSalesChart(data);
     drawBalanceSheetTable(data);
 }
 
@@ -32,12 +40,14 @@ function getBalanceSheet() {
         beforeSend: function () {
             $("#cash_chart").closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
             $("#accounts_chart").closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+            $("#supplies_vs_sales_chart").closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
             $("#balance_sheet_table").closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
         },
         success: function (data) {
             drawCharts(data);
             $("#cash_chart").closest("div .box").children("div .overlay").remove();
             $("#accounts_chart").closest("div .box").children("div .overlay").remove();
+            $("#supplies_vs_sales_chart").closest("div .box").children("div .overlay").remove();
             $("#balance_sheet_table").closest("div .box").children("div .overlay").remove();
         },
         failure: function () {
@@ -53,11 +63,13 @@ function ready() {
 function drillDown(year) {
     CashChart.onDrillDown(year);
     AccountsChart.onDrillDown(year);
+    SuppliesVsSalesChart.onDrillDown(year);
     BalanceSheetTable.onDrillDown(year);
 }
 
 function drillUp() {
     CashChart.onDrillUp();
     AccountsChart.onDrillUp();
+    SuppliesVsSalesChart.onDrillUp();
     BalanceSheetTable.onDrillUp();
 }

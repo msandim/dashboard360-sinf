@@ -32,12 +32,12 @@ TopSuppliersTable.displayTable = function (tableId, data)
     var table = new Table();
     table.initialize();
 
-    table.addColumnLabel("Client ID");
-    table.addColumnLabel("Client Name");
-    table.addColumnLabel("Value");
+    table.addColumnLabel("Supplier ID");
+    table.addColumnLabel("Supplier Name");
+    table.addColumnLabel("Value", "small_label");
 
     for (var i = 0; i < data.length; i++)
-        table.addRow(data[i].ClientId, data[i].ClientName, CurrencyUtils.format(data[i].Total) + " €");
+        table.addRow(data[i].ClientId, data[i].ClientName, CurrencyUtils.format(data[i].Total, "EUR"));
 
     table.display(tableId);
 };

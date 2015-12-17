@@ -2,23 +2,30 @@
 {    
 }
 
-LineChart.prototype.initialize = function (animation, responsive, maintainAspectRatio)
+LineChart.prototype.initialize = function (chartId, legendsId, animation, responsive, maintainAspectRatio)
 {
     this.labels = [];
     this.datasets = [];
     this.datasets2 = [];
     this.chart = null;
+    this.chartId = chartId;
+    this.legendsId = legendsId;
 
     // Create the options object:
     this.options = {
         animation: !animation ? false : animation,
         responsive: !responsive ? true : responsive,
-        maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio
+        maintainAspectRatio: !maintainAspectRatio ? true : maintainAspectRatio,
+        pointHitDetectionRadius: 0
     };
 };
 LineChart.prototype.shutdown = function() {
     if (this.chart != null)
         this.chart.destroy();
+
+    if (this.legendsId) {
+        $(this.legendsId).empty();
+    }
 }
 
 LineChart.prototype.addValue = function (label, value, dataset)
@@ -72,7 +79,7 @@ LineChart.prototype.getDatasets = function () {
             pointHighlightStroke: "rgba(151, 187, 205, 1)",
             data: this.datasets
         }
-    ]
+    ];
     if (this.datasets2.length > 0) {
         datasets.push({
             label: "My Second Dataset",
@@ -86,4 +93,22 @@ LineChart.prototype.getDatasets = function () {
         });
     }
     return datasets;
+};
+
+LineChart.prototype.displayLegends = function ()
+{
+    if (!this.legendsId)
+        return;
+
+    for (var i = 0; i < arguments.length; i++) {
+        $(this.legendsId).append("<li><i class=\"fa fa-square-o\"></i> " + arguments[i] + "</li>");
+    }
+};
+
+LineChart.prototype.addRefreshSpinner = function() {
+    $(this.chartId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+};
+LineChart.prototype.removeRefreshSpinner = function ()
+{
+    $(this.chartId).closest("div .box").children("div .overlay").remove();
 };

@@ -54,6 +54,28 @@
             </div>
 
             <div class="col-md-12">
+                <!-- Cost of goods sold vs Sales chart -->
+                <div class="box box-solid box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cost of goods sold vs Sales(€)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="supplies_vs_sales_chart" style="height: 250px; width: 364px;" width="364" height="250"></canvas>
+                            <ul id="supplies_vs_sales_legend" class="chart-legend clearfix"></ul>
+                        </div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>  
+
+            <div class="col-md-12">
 
                 <!-- Top 10 customers -->
                 <div class="box box-solid box-primary">
@@ -95,6 +117,7 @@
     <script src="~/Content/Core/Elements/Table.js"></script>
     <script src="~/Content/Core/Views/Financial/CashChart.js"></script>
     <script src="~/Content/Core/Views/Financial/AccountsChart.js"></script>
+    <script src="~/Content/Core/Views/Financial/SuppliesVsSalesChart.js"></script>
     <script src="~/Content/Core/Views/Financial/BalanceSheetTable.js"></script>
     <script src="~/Content/financial.js"></script>
 }
