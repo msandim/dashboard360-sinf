@@ -293,6 +293,7 @@
     <Compile Include="Models\Net\PathBuilder.cs" />
     <Compile Include="Models\Net\PathConstants.cs" />
     <Compile Include="Models\Primavera\Model\Absence.cs" />
+    <Compile Include="Models\Primavera\Model\EmployeeMovement.cs" />
     <Compile Include="Models\Primavera\Model\ClassLine.cs" />
     <Compile Include="Models\Primavera\Model\Employee.cs" />
     <Compile Include="Models\Primavera\Model\GenderCounter.cs" />

@@ -73,10 +73,14 @@ namespace Dashboard.Models
             get { return _overtimeHoursCache ?? (_overtimeHoursCache = new Cache<OvertimeHours>(PathConstants.BasePathApiPrimavera, "overtime_hour")); }
         }
 
+        //private static Cache<>
+
         public static Double GetHumanResourcesSpendings(DateTime initialDate, DateTime finalDate)
         {
-            EmployeeCache.UpdateData(initialDate, finalDate);
-            var documents = EmployeeCache.CachedData;
+            //EmployeeCache.UpdateData(initialDate, finalDate);
+            //var documents = EmployeeCache.CachedData;
+
+            //NetHelper.MakeRequest<>()
 
             // Query documents:
             var query = from document in documents
@@ -86,6 +90,7 @@ namespace Dashboard.Models
 
             // Calculate spendings total:
             return query.Sum();
+            //return 2.0;
         }
 
         public static IEnumerable<EmployeeCountByIntervalLine> GetEmployeeCountByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)

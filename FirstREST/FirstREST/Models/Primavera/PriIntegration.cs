@@ -415,6 +415,10 @@ namespace Dashboard.Models.Primavera
 
             return new GenderCounter(males, females, initialDate, finalDate);
         } // Returns <male,female> format
+        /*public static List<EmployeeMovement> GetEmployeesMovements(DateTime initialDate, DateTime finalDate)
+        {
+
+        }*/
 
         // Function to initialize the default company:
         private static bool InitializeCompany()
