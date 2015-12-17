@@ -27,7 +27,7 @@ namespace Dashboard.Models
             buttonValues.GrossPurchases = PurchasesManager.GetGrossPurchases(initialDate, finalDate);
             buttonValues.GrossSales = SalesManager.GetGrossSales(initialDate, finalDate);
             buttonValues.LaborCostValue = HumanResourcesManager.GetHumanResourcesSpendings(initialDate, finalDate);
-            buttonValues.Currency = "€";
+            buttonValues.Currency = "EUR";
 
             return buttonValues;
         }
