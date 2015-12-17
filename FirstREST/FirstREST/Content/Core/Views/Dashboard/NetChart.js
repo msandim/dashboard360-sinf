@@ -11,9 +11,14 @@ NetChart.getNetPurchasesAsync = function(initialDate, finalDate, timeInterval) {
             finalDate: DateUtils.formatDate(finalDate),
             timeInterval: timeInterval
         },
+        beforeSend: function ()
+        {
+            NetChart.chart.addRefreshSpinner();
+        },
         success: function (data)
         {
             NetChart.setNetPurchases(data);
+            NetChart.chart.removeRefreshSpinner();
         },
         failure: function ()
         {
@@ -99,6 +104,6 @@ NetChart.displayChart = function (canvasId, legendsId, initialDate, finalDate, t
         NetChart.chart.shutdown();
     }
 
-    NetChart.chart.initialize(legendsId);
+    NetChart.chart.initialize(canvasId, legendsId);
     NetChart.displayChartAsync(initialDate, finalDate, timeInterval);
 }
