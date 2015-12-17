@@ -2,12 +2,13 @@
 {    
 }
 
-LineChart.prototype.initialize = function (legendsId, animation, responsive, maintainAspectRatio)
+LineChart.prototype.initialize = function (chartId, legendsId, animation, responsive, maintainAspectRatio)
 {
     this.labels = [];
     this.datasets = [];
     this.datasets2 = [];
     this.chart = null;
+    this.chartId = chartId;
     this.legendsId = legendsId;
 
     // Create the options object:
@@ -102,4 +103,12 @@ LineChart.prototype.displayLegends = function ()
     for (var i = 0; i < arguments.length; i++) {
         $(this.legendsId).append("<li><i class=\"fa fa-square-o\"></i> " + arguments[i] + "</li>");
     }
+};
+
+LineChart.prototype.addRefreshSpinner = function() {
+    $(this.chartId).closest("div .box").append("<div class=\"overlay\"><i class=\"fa fa-refresh fa-spin\"></i></div>");
+};
+LineChart.prototype.removeRefreshSpinner = function ()
+{
+    $(this.chartId).closest("div .box").children("div .overlay").remove();
 };
