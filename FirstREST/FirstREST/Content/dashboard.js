@@ -76,7 +76,7 @@ function initializeDatePicker(initialDate, finalDate)
 
 function initializeNetChart(initialDate, finalDate)
 {
-    NetChart.displayChart("#net_chart", initialDate, finalDate, "month");
+    NetChart.displayChart("#net_chart", "#net_legend", initialDate, finalDate, "month");
 };
 
 function ready()

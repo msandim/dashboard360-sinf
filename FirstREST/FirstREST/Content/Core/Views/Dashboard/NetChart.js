@@ -62,6 +62,8 @@ NetChart.handleValues = function ()
         NetChart.addElementsToChart(NetChart.netPurchases, 0);
         NetChart.addElementsToChart(NetChart.netSales, 1);
         NetChart.chart.display(NetChart.canvasId);
+        NetChart.chart.displayLegends("Net Purchases");
+        NetChart.chart.displayLegends("Net Sales");
     }
 };
 
@@ -83,7 +85,7 @@ NetChart.displayChartAsync = function (initialDate, finalDate, timeInterval)
     NetChart.getNetSalesAsync(initialDate, finalDate, timeInterval);
 }
 
-NetChart.displayChart = function (canvasId, initialDate, finalDate, timeInterval)
+NetChart.displayChart = function (canvasId, legendsId, initialDate, finalDate, timeInterval)
 {
     NetChart.canvasId = canvasId;
     NetChart.timeInterval = timeInterval;
@@ -97,6 +99,6 @@ NetChart.displayChart = function (canvasId, initialDate, finalDate, timeInterval
         NetChart.chart.shutdown();
     }
 
-    NetChart.chart.initialize();
+    NetChart.chart.initialize(legendsId);
     NetChart.displayChartAsync(initialDate, finalDate, timeInterval);
 }
