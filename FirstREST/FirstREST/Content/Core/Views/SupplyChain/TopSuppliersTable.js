@@ -34,7 +34,7 @@ TopSuppliersTable.displayTable = function (tableId, data)
 
     table.addColumnLabel("Supplier ID");
     table.addColumnLabel("Supplier Name");
-    table.addColumnLabel("Value", "small_label");
+    table.addColumnLabel("Total Value", "small_label");
 
     for (var i = 0; i < data.length; i++)
         table.addRow(data[i].ClientId, data[i].ClientName, CurrencyUtils.format(data[i].Total, "EUR"));

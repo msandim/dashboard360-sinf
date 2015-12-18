@@ -32,6 +32,9 @@ LineChart.prototype.addValue = function (label, value, dataset)
 {
     var index = dataset ? dataset : 0;
 
+    // Format the value:
+    var value = (Math.round(value * 100) / 100);
+
     if (index == 0) {
         this.labels.push(label);
         this.datasets.push(value);
