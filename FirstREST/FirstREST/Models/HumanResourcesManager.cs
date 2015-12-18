@@ -87,10 +87,9 @@ namespace Dashboard.Models
             // Query documents:
             var query = from document in documents
                         where initialDate <= document.MovementDate && document.MovementDate <= finalDate
-                        group document by new { document.EmployeeId, document.MovementDate }
+                        group document by new { document.EmployeeId, document.MovementDate, document.ProcessNo }
                             into employeeMonthPayment
                             select employeeMonthPayment;
-                        //select (document.EstateCharges + document.EmployeePayment);
 
             Double value = query.Select(pair => pair.FirstOrDefault().EmployeePayment + pair.FirstOrDefault().EstateCharges).Sum();
 

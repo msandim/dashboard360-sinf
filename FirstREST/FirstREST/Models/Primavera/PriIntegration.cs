@@ -425,7 +425,7 @@ namespace Dashboard.Models.Primavera
 
             // Get Data of movements:
             StdBELista list = PriEngine.Engine.Consulta(
-                "SELECT TotalDeRemuneracoes, TotalEncargosEntPat, Funcionario, DataMov " +
+                "SELECT TotalDeRemuneracoes, TotalEncargosEntPat, Funcionario, DataMov, NumProc " +
                 "FROM MovimentosFuncionarios " +
                 "WHERE MovimentosFuncionarios.DataMov >= '" + initialDate.ToString("yyyyMMdd") + "' AND MovimentosFuncionarios.DataMov <= '" + finalDate.ToString("yyyyMMdd") + "' " +
                 "ORDER BY MovimentosFuncionarios.DataMov "
@@ -436,6 +436,7 @@ namespace Dashboard.Models.Primavera
                 EmployeeMovement employeeMovement = new EmployeeMovement();
                 employeeMovement.EmployeeId = list.Valor("Funcionario");
                 employeeMovement.MovementDate = list.Valor("DataMov");
+                employeeMovement.ProcessNo = list.Valor("NumProc");
                 employeeMovement.EmployeePayment = list.Valor("TotalDeRemuneracoes");
                 employeeMovement.EstateCharges = list.Valor("TotalEncargosEntPat");
 

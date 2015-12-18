@@ -206,7 +206,7 @@ namespace Dashboard.Models
                                           product.Key,
                                           product.Select(s => s.Product.Description).FirstOrDefault(),
                                           product.Select(s => s.Product.FamilyDescription).FirstOrDefault(),
-                                          product.Select(s => s.Value.Value).Sum()
+                                          - product.Select(s => s.Value.Value).Sum()
                                           );
 
             // Order by descending on total:

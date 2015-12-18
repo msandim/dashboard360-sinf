@@ -11,5 +11,6 @@ namespace Dashboard.Models.Primavera.Model
         public DateTime MovementDate { get; set; }
         public Double EmployeePayment { get; set; }
         public Double EstateCharges { get; set; }
+        public Int32 ProcessNo { get; set; }
     }
 }
