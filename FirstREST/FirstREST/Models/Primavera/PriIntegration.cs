@@ -415,6 +415,39 @@ namespace Dashboard.Models.Primavera
 
             return new GenderCounter(males, females, initialDate, finalDate);
         } // Returns <male,female> format
+        public static List<EmployeeMovement> GetEmployeesMovements(DateTime initialDate, DateTime finalDate)
+        {
+            // Create an empty list of employee movements:
+            List<EmployeeMovement> employeeMovements = new List<EmployeeMovement>();
+
+            if (!InitializeCompany())
+                return employeeMovements;
+
+            // Get Data of movements:
+            StdBELista list = PriEngine.Engine.Consulta(
+                "SELECT TotalDeRemuneracoes, TotalEncargosEntPat, Funcionario, DataMov " +
+                "FROM MovimentosFuncionarios " +
+                "WHERE MovimentosFuncionarios.DataMov >= '" + initialDate.ToString("yyyyMMdd") + "' AND MovimentosFuncionarios.DataMov <= '" + finalDate.ToString("yyyyMMdd") + "' " +
+                "ORDER BY MovimentosFuncionarios.DataMov "
+                );
+
+            while (!list.NoFim())
+            {
+                EmployeeMovement employeeMovement = new EmployeeMovement();
+                employeeMovement.EmployeeId = list.Valor("Funcionario");
+                employeeMovement.MovementDate = list.Valor("DataMov");
+                employeeMovement.EmployeePayment = list.Valor("TotalDeRemuneracoes");
+                employeeMovement.EstateCharges = list.Valor("TotalEncargosEntPat");
+
+                // Add absence to the list:
+                employeeMovements.Add(employeeMovement);
+
+                // Next item:
+                list.Seguinte();
+            }
+
+            return employeeMovements;
+        }
 
         // Function to initialize the default company:
         private static bool InitializeCompany()

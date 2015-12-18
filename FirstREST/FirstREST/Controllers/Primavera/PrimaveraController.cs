@@ -34,6 +34,12 @@ namespace Dashboard.Controllers.Primavera
             return PriIntegration.GetOvertimeHours(initialDate, finalDate); 
         }
 
+        [ActionName("employee_movement")]
+        public IEnumerable<EmployeeMovement> GetEmployeeMovements(DateTime initialDate, DateTime finalDate)
+        {
+            return PriIntegration.GetEmployeesMovements(initialDate, finalDate);
+        }
+
         [ActionName("payable")]
         public IEnumerable<Pending> GetPendingPayables(DateTime initialDate, DateTime finalDate)
         {
