@@ -73,24 +73,28 @@ namespace Dashboard.Models
             get { return _overtimeHoursCache ?? (_overtimeHoursCache = new Cache<OvertimeHours>(PathConstants.BasePathApiPrimavera, "overtime_hour")); }
         }
 
-        //private static Cache<>
+        private static UniqueCache<EmployeeMovement> _employeeMovementCache;
+        private static UniqueCache<EmployeeMovement> EmployeeMovementCache
+        {
+            get { return _employeeMovementCache ?? (_employeeMovementCache = new UniqueCache<EmployeeMovement>(PathConstants.BasePathApiPrimavera, "employee_movement")); }
+        }
 
         public static Double GetHumanResourcesSpendings(DateTime initialDate, DateTime finalDate)
         {
-            //EmployeeCache.UpdateData(initialDate, finalDate);
-            //var documents = EmployeeCache.CachedData;
-
-            //NetHelper.MakeRequest<>()
+            EmployeeMovementCache.UpdateData(initialDate, finalDate);
+            var documents = EmployeeMovementCache.CachedData;
 
             // Query documents:
             var query = from document in documents
-                        where document.HiredOn <= finalDate &&
-                              (document.FiredOn >= initialDate || document.FiredOn == DateTime.MinValue)
-                        select document.Salary.Value;
+                        where initialDate <= document.MovementDate && document.MovementDate <= finalDate
+                        group document by new { document.EmployeeId, document.MovementDate }
+                            into employeeMonthPayment
+                            select employeeMonthPayment;
+                        //select (document.EstateCharges + document.EmployeePayment);
 
-            // Calculate spendings total:
-            return query.Sum();
-            //return 2.0;
+            Double value = query.Select(pair => pair.FirstOrDefault().EmployeePayment + pair.FirstOrDefault().EstateCharges).Sum();
+
+            return value;
         }
 
         public static IEnumerable<EmployeeCountByIntervalLine> GetEmployeeCountByInterval(DateTime initialDate, DateTime finalDate, TimeIntervalType timeInterval)
@@ -100,9 +104,9 @@ namespace Dashboard.Models
 
             // Query:
             var employeesQuery = from employee in employees
-                where employee.HiredOn <= finalDate &&
-                      (employee.FiredOn >= initialDate || employee.FiredOn == DateTime.MinValue)
-                select employee;
+                                 where employee.HiredOn <= finalDate &&
+                                       (employee.FiredOn >= initialDate || employee.FiredOn == DateTime.MinValue)
+                                 select employee;
 
             var dateTimes = new List<DateTime>();
             if (timeInterval == TimeIntervalType.Year)
@@ -137,8 +141,8 @@ namespace Dashboard.Models
 
                 output.AddLast(e);
             }
-             
-            return output.OrderBy(x => x.Date); 
+
+            return output.OrderBy(x => x.Date);
         }
 
         public static GenderCounter GetGenderCount(DateTime initialDate, DateTime finalDate)
@@ -155,14 +159,14 @@ namespace Dashboard.Models
 
             // Query:
             var absencesQuery = from absence in absences
-                where initialDate <= absence.Date && absence.Date <= finalDate
-                group absence by absence.EmployeeId
-                into employee
-                select new EmployeeAbsenceCount(
-                    employee.Key,
-                    employee.Select(s => s.EmployeeName).FirstOrDefault(),
-                    employee.Count()
-                    );
+                                where initialDate <= absence.Date && absence.Date <= finalDate
+                                group absence by absence.EmployeeId
+                                    into employee
+                                    select new EmployeeAbsenceCount(
+                                        employee.Key,
+                                        employee.Select(s => s.EmployeeName).FirstOrDefault(),
+                                        employee.Count()
+                                        );
 
             // Order by descending on Count:
             absencesQuery = absencesQuery.OrderByDescending(employee => employee.Count);
@@ -174,18 +178,18 @@ namespace Dashboard.Models
         public static IEnumerable<OvertimeHourCount> GetOvertimeHourCount(DateTime initialDate, DateTime finalDate, Int32 limit)
         {
             OvertimeHoursCache.UpdateData(initialDate, finalDate);
-            var overtimeHours = OvertimeHoursCache.CachedData; 
+            var overtimeHours = OvertimeHoursCache.CachedData;
 
             // Query:
-            var overtimeHoursQuery = from overtimeHour in overtimeHours 
-                                where initialDate <= overtimeHour.Date && overtimeHour.Date <= finalDate
-                                group overtimeHour by overtimeHour.EmployeeId
-                into employee
-                                select new OvertimeHourCount(
-                                    employee.Key,
-                                    employee.Select(s => s.EmployeeName).FirstOrDefault(),
-                                    employee.Count()
-                                    );
+            var overtimeHoursQuery = from overtimeHour in overtimeHours
+                                     where initialDate <= overtimeHour.Date && overtimeHour.Date <= finalDate
+                                     group overtimeHour by overtimeHour.EmployeeId
+                                         into employee
+                                         select new OvertimeHourCount(
+                                             employee.Key,
+                                             employee.Select(s => s.EmployeeName).FirstOrDefault(),
+                                             employee.Count()
+                                             );
 
             // Order by descending on Count:
             overtimeHoursQuery = overtimeHoursQuery.OrderByDescending(employee => employee.Count);

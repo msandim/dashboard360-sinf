@@ -32,5 +32,11 @@ namespace Dashboard.Controllers.API
         {
             return HumanResourcesManager.GetOvertimeHourCount(initialDate, finalDate, limit);
         }
+
+        [ActionName("employee_movements")]
+        public Double GetEmployeeMovementCount(DateTime initialDate, DateTime finalDate)
+        {
+            return HumanResourcesManager.GetHumanResourcesSpendings(initialDate, finalDate);
+        }
     }
 }
