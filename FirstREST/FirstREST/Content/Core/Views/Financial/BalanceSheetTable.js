@@ -6,12 +6,6 @@ BalanceSheetTable.initialize = function (tableId, data)
 {
     this.tableId = tableId;
     this.state = 1;
-    /*
-    this.total_non_current_assets = data.metrics.total_non_current_assets.years_data;
-    this.total_current_assets = data.metrics.total_current_assets.years_data;
-    this.total_current_liabilities = data.metrics.total_current_liabilities.years_data;
-    this.total_long_term_debt = data.metrics.total_long_term_debt.years_data;
-    */
 
     this.total_assets = data.metrics.total_assets.years_data;
     this.cash = data.metrics.cash.years_data;
@@ -20,7 +14,7 @@ BalanceSheetTable.initialize = function (tableId, data)
     this.total_liabilities = data.metrics.total_liabilities.years_data;
     this.accounts_payable = data.metrics.accounts_payable.years_data;
     this.cost_of_goods_sold = data.metrics["custo merc. vend"].years_data;
-    this.unknown = data.metrics["estados e outros entes"].years_data;
+    this.income_taxes = data.metrics["estados e outros entes"].years_data;
     this.investments = data.metrics["emprestimos obtidos"].years_data;
     this.years = [];
 
@@ -28,7 +22,7 @@ BalanceSheetTable.initialize = function (tableId, data)
         { value: "Assets", size: "big_label" }, { value: "Cash", size: "medium_label" },
         { value: "Sales", size: "medium_label" }, { value: "Accounts Receivable", size: "medium_label" },
         { value: "Liabilities", size: "big_label" }, { value: "Accounts Payable", size: "medium_label" },
-        { value: "Cost of goods sold", size: "medium_label" }, { value: "Unknown", size: "medium_label" },
+        { value: "Cost of goods sold", size: "medium_label" }, { value: "Income taxes", size: "medium_label" },
         { value: "Investments", size: "medium_label" }];
 
     // Add years
@@ -74,7 +68,7 @@ BalanceSheetTable.loadTableMonths = function (index) {
     BalanceSheetTable.loadRowsMonths(4, this.total_liabilities[index].months, "small_label");
     BalanceSheetTable.loadRowsMonths(5, this.accounts_payable[index].months, "small_label");
     BalanceSheetTable.loadRowsMonths(6, this.cost_of_goods_sold[index].months, "small_label");
-    BalanceSheetTable.loadRowsMonths(7, this.unknown[index].months, "small_label");
+    BalanceSheetTable.loadRowsMonths(7, this.income_taxes[index].months, "small_label");
     BalanceSheetTable.loadRowsMonths(8, this.investments[index].months, "small_label");
 }
 
@@ -94,7 +88,7 @@ BalanceSheetTable.loadTableYears = function () {
     BalanceSheetTable.loadRowsYears(4, this.total_liabilities, "small_label");
     BalanceSheetTable.loadRowsYears(5, this.accounts_payable, "small_label");
     BalanceSheetTable.loadRowsYears(6, this.cost_of_goods_sold, "small_label");
-    BalanceSheetTable.loadRowsYears(7, this.unknown, "small_label");
+    BalanceSheetTable.loadRowsYears(7, this.income_taxes, "small_label");
     BalanceSheetTable.loadRowsYears(8, this.investments, "small_label");
 }
 
